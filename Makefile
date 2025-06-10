@@ -11,11 +11,18 @@ ifeq ($(shell uname), Darwin)
 	-framework Cocoa -framework OpenGL -framework IOKit
 endif
 
-SOURCES			:= srcs/...
+SOURCES			:=	srcs/check_args.c \
+					srcs/check_map.c \
+					srcs/ft_error.c \
+					srcs/ft_split_charset.c \
+					srcs/initialise.c \
+					srcs/main.c \
+					srcs/parsing_utils.c \
+					srcs/utils.c
 
 
 OBJECTS			:= $(SOURCES:.c=.o)
-HEADERS			:= -I ./incl -I $(MLX_DIR)/include
+HEADERS			:= -I incl/cub3d.h -I $(MLX_DIR)/include
 
 CC 				:= cc
 COMPILE_FLAGS	:= -Wall -Wextra -Werror -I./incl

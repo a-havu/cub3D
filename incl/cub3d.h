@@ -3,7 +3,10 @@
 
 # include "libft_plus.h"
 # include "libftprintf.h"
+# include "../MLX42/include/MLX42/MLX42.h"
 # include <math.h>
+# include <fcntl.h>
+# include <stdbool.h>
 
 # define W 13
 # define A 0
@@ -22,12 +25,18 @@ typedef struct	s_point
 
 typedef struct	s_map
 {
-	char	*name;
-	char	*file;
 	char	**array;
 	size_t	height;
 	size_t	width;
 	t_point	player_pos;
+	size_t	player;
+	size_t	no;
+	size_t	so;
+	size_t	we;
+	size_t	ea;
+	size_t	f;
+	size_t	c;
+	char	**identifiers;
 	//player facing direction (N, S, W or E)?
 }				t_map;
 
@@ -37,7 +46,7 @@ typedef struct	s_textures
 	mlx_texture_t   *e_wall;
 	mlx_texture_t   *s_wall;
 	mlx_texture_t   *w_wall;
-	mlx_texture_t	*floor;
+	mlx_texture_t	*sky;
 	mlx_texture_t   *ground;
 	mlx_texture_t   *door;
 	mlx_texture_t   *insect1;
@@ -70,6 +79,13 @@ typedef struct	s_game
 	//size_t	collected //number of insects found
 }				t_game;
 
+void	check_args(int argc, char *arg);
+void	check_map(char *arg, t_map *map);
+void	find_identifiers(char **elements, t_map *map);
+void	*free_2d_arr(char **arr);
+void	ft_error(int num);
+char    **ft_split_charset(char *str, char *charset);
 mlx_t	*initialise_mlx(mlx_t *mlx, t_map *map);
+bool	is_identifier(char *element);
 
 #endif

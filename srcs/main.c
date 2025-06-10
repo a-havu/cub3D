@@ -1,4 +1,4 @@
-#include "cub3d.h"
+#include "../incl/cub3d.h"
 
 int main(int argc, char **argv)
 {
@@ -13,8 +13,8 @@ int main(int argc, char **argv)
 	game.map = &map;
 	game.images = &images;
 	game.textures = &textures;
-	//parse args
-	//error check map
+	check_args(argc, argv);
+	check_map(argv[1], &map);
 	game.mlx = initialise_mlx(game.mlx, game.map);
 
 }
