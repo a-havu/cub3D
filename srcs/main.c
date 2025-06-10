@@ -1,4 +1,4 @@
-#include "cub3d.h"
+#include "../incl/cub3d.h"
 
 char	*sl_strjoin(char *s1, char const *s2)
 {
