@@ -26,8 +26,9 @@ typedef struct	s_point
 typedef struct	s_map
 {
 	char	**array;
-	size_t	height;
-	size_t	width;
+	char	*one_d_array;
+	size_t	height;//ei tartte?
+	size_t	width;//ei tartte?
 	t_point	player_pos;
 	size_t	player;
 	size_t	no;
@@ -80,12 +81,15 @@ typedef struct	s_game
 }				t_game;
 
 void	check_args(int argc, char *arg);
-void	check_map(char *arg, t_map *map);
-void	find_identifiers(char **elements, t_map *map);
+void	check_map(char *arg, t_game *game);
+void	clean_up(t_game *game);
+void	find_identifiers(char **elements, t_game *game);
 void	*free_2d_arr(char **arr);
-void	ft_error(int num);
+void	ft_error(int num, t_game *game);
 char    **ft_split_charset(char *str, char *charset);
+int		get_rows(char *arg, t_game *game);
 mlx_t	*initialise_mlx(mlx_t *mlx, t_map *map);
 bool	is_identifier(char *element);
+char    *sl_strjoin(char *s1, char const *s2);
 
 #endif

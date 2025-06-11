@@ -1,28 +1,26 @@
 #include "../incl/cub3d.h"
 
-static void	convert_cub_to_array(t_map *map, int fd, int rows)
+static void	convert_cub_to_array(t_game *game, int fd, int rows)
 {
 	char	*line;
-	int		y;
 
 	line = NULL;
-	y = 0;
-	map->array = ft_calloc(rows + 1, sizeof(char *));
-	if (!map->array)
-		ft_error(1);
+	game->map->one_d_array = ft_calloc(rows + 1, sizeof(char *));
+	if (!game->map->one_d_array)
+		ft_error(1, game);
 	while (1)
 	{
 		line = get_next_line(fd);
 		if (!line)
 			break ;
-		if (ft_strchr(line, '\n'))
-			*ft_strchr(line, '\n') = '\0';
-		y++;
+		game->map->one_d_array = ft_strjoin(game->map->one_d_array, line);
+		if(!game->map->one_d_array)
+			ft_error(5, game);
+		free(line);
 	}
-	map->array[y] = NULL;
 }
 
-static void	check_paths(char **elements)
+static void	check_paths(t_game *game, char **elements)
 {
 	int	i;
 
@@ -31,41 +29,37 @@ static void	check_paths(char **elements)
 	{
 		if (is_identifier(elements[i]))
 		{
-			i++;
-			if (open(elements[i], O_RDONLY) == -1)//vai mika tsekkausfunktio? read?
-				ft_error(66);
+			if (elements[i + 1] && !is_identifier(elements[i + 1]))
+				i++;
+			else
+				ft_error(66, game); //invalid texture path
 		}
 		i++;
 	}
 }
 
-static void	check_cub_elements(t_map *map, int fd)
+static void	check_cub_elements(t_game *game, int fd)
 {
-	int		i;
 	char	**elements;
+	int i = 0;
 
-	i = 0;
-	while(map->array[i])
-	{
-		elements = ft_split_charset(map->array[i], " \n");//tabs? also this doesnt work :D need to append somehow
-		i++;
-	}
-	find_identifiers(elements, map);
-	check_paths(elements);
+	elements = ft_split_charset(game->map->one_d_array, " \n");//tabs?
+	find_identifiers(elements, game);
+	check_paths(game, elements);
 	free_2d_arr(elements);
 }
 
-void	check_map(char *arg, t_map *map)
+void	check_map(char *arg, t_game *game)
 {
 	int		fd;
 	int		rows;
 
-	rows = get_rows(arg, map);
+	rows = get_rows(arg, game);
 	fd = open(arg, O_RDONLY);
 	if (fd == -1)
-		ft_error(8);
-	convert_cub_to_array(map, fd, rows);
-	check_cub_elements(map, fd); // check the NO, SO, WE, EA and the colours
+		ft_error(8, game);
+	convert_cub_to_array(game, fd, rows);
+	check_cub_elements(game, fd); // check the NO, SO, WE, EA and the colours
 	//copy the map to a separate map array
 	close(fd);
 }

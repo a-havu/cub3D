@@ -18,31 +18,33 @@ void	check_args(int argc, char *arg)
 	}
 }
 
-void	count_symbols(t_map *map)
+void	count_symbols(t_game *game)
 {
 	int	i;
 	int	k;
 
 	i = 0;
-	if (!map->array[i])
-		ft_error(11);
-	while (map->array[i])
+	if (!game->map->array[i])
+		ft_error(11, game);
+	while (game->map->array[i])
 	{
 		k = 0;
-		while (map->array[i][k])
+		while (game->map->array[i][k])
 		{
-			if (map->array[i][k] == 'N' || map->array[i][k] == 'S'
-					|| map->array[i][k] == 'E' || map->array[i][k] == 'W')
-				map->player++;
-			else if (map->array[i][k] != '0' && map->array[i][k] != '1')
-				ft_error(4);
+			if (game->map->array[i][k] == 'N' || game->map->array[i][k] == 'S'
+					|| game->map->array[i][k] == 'E'
+					|| game->map->array[i][k] == 'W')
+				game->map->player++;
+			else if (game->map->array[i][k] != '0'
+				&& game->map->array[i][k] != '1')
+				ft_error(4,  game);
 			k++;
 		}
 		i++;
 	}
-	if (map->player > 1)
-		ft_error(2);
-	else if (map->player == 0)
-		ft_error(3);
+	if (game->map->player > 1)
+		ft_error(2, game);
+	else if (game->map->player == 0)
+		ft_error(3, game);
 }
 
