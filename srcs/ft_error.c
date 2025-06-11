@@ -21,3 +21,17 @@ void	ft_error(int num, t_game *game)
 	clean_arena(game->arena);
 	exit(EXIT_FAILURE);
 }
+
+void	clean_up(t_game *game)
+{
+	if (game->map)
+	{
+		if (game->map->array)
+			free_2d_arr(game->map->array);
+		free(game->map);
+	}
+	if (game->mlx)
+		mlx_terminate(game->mlx);
+	if (game)
+		free(game);
+}
