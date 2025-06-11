@@ -25,6 +25,7 @@ static void	convert_cub_to_one_d_array(t_game *game, int fd)
 static void	check_cub_elements(t_game *game)
 {
 	char	**elements;
+	int i = 0;
 
 	elements = ft_split_charset(game->map->one_d_array, " \n"); //tabs?
 	if (!elements)

@@ -24,7 +24,7 @@ SOURCES			:= srcs/main.c srcs/initialise.c srcs/place_minimap.c \
 
 
 OBJECTS			:= $(SOURCES:.c=.o)
-HEADERS			:= -I incl/cub3d.h -I $(MLX_DIR)/include
+HEADERS			:= -I ./incl -I $(MLX_DIR)/include
 
 CC 				:= cc
 CFLAGS	:= -Wall -Wextra -Werror -I./incl
