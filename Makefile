@@ -15,7 +15,6 @@ SOURCES			:=	srcs/check_args.c \
 					srcs/check_map.c \
 					srcs/ft_error.c \
 					srcs/ft_split_charset.c \
-					srcs/initialise.c \
 					srcs/main.c \
 					srcs/parsing_utils.c \
 					srcs/utils.c
@@ -26,7 +25,7 @@ HEADERS			:= -I ./incl -I $(MLX_DIR)/include
 
 CC 				:= cc
 COMPILE_FLAGS	:= -Wall -Wextra -Werror -I./incl
-DEBLUG_FAGS		:= -g -fsanitize=address -fsanitize=undefined
+DEBUG_FLAGS		:= -g -fsanitize=address -fsanitize=undefined
 
 all: $(NAME)
 

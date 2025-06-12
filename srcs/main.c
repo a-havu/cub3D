@@ -15,5 +15,5 @@ int main(int argc, char **argv)
 	game.textures = &textures;
 	check_args(argc, argv[1]);
 	check_map(argv[1], &game);
-	game.mlx = initialise_mlx(game.mlx, game.map);
+	//game.mlx = initialise_mlx(game.mlx, game.map);
 }

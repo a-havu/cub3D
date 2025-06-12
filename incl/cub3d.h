@@ -27,8 +27,8 @@ typedef struct	s_map
 {
 	char	**array;
 	char	*one_d_array;
-	size_t	height;//ei tartte?
-	size_t	width;//ei tartte?
+	size_t	height;
+	size_t	width;
 	t_point	player_pos;
 	size_t	player;
 	size_t	no;
@@ -37,6 +37,7 @@ typedef struct	s_map
 	size_t	ea;
 	size_t	f;
 	size_t	c;
+	size_t	i;
 	char	**identifiers;
 	//player facing direction (N, S, W or E)?
 }				t_map;
@@ -83,6 +84,7 @@ typedef struct	s_game
 void	check_args(int argc, char *arg);
 void	check_map(char *arg, t_game *game);
 void	clean_up(t_game *game);
+void	count_symbols(t_game *game);
 void	find_identifiers(char **elements, t_game *game);
 void	*free_2d_arr(char **arr);
 void	ft_error(int num, t_game *game);

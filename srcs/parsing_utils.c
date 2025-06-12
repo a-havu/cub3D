@@ -1,33 +1,58 @@
 #include "../incl/cub3d.h"
 
+static void	validate_identifiers(t_game *game)
+{
+	if (game->map->no > 1 || game->map->so > 1
+		|| game->map->we > 1 || game->map->ea > 1
+		|| game->map->f > 1 || game->map->c > 1)
+		{
+			ft_putstr_fd("\033[91mError\nInvalid identifiers🧭\n\033[0m", 2);
+			free(game->map->one_d_array);
+			exit(EXIT_FAILURE);
+		}
+	if (game->map->no == 0 || game->map->so == 0
+		|| game->map->we == 0 || game->map->ea == 0
+		|| game->map->f == 0 || game->map->c == 0)
+		{
+			ft_putstr_fd("\033[91mError\nInvalid identifiers🧭\n\033[0m", 2);
+			free(game->map->one_d_array);
+			exit(EXIT_FAILURE);
+		}
+}
+
 void	find_identifiers(char **elements, t_game *game)
 {
 	int	i;
 
 	i = 0;
-	while(elements[i])
+	while(i <= 11)
 	{
-		if (!ft_strncmp(elements[i], "NO", 3))
-			game->map->no++;
-		else if (!ft_strncmp(elements[i], "SO", 3))
-			game->map->so++;
-		else if (!ft_strncmp(elements[i], "WE", 3))
-			game->map->we++;
-		else if (!ft_strncmp(elements[i], "EA", 3))
-			game->map->ea++;
-		else if (!ft_strncmp(elements[i], "F", 3))
-			game->map->f++;
-		else if (!ft_strncmp(elements[i], "C", 3))
-			game->map->c++;
+		if (i % 2 == 0)
+		{
+			if (!ft_strncmp(elements[i], "NO", 3))
+				game->map->no++;
+			else if (!ft_strncmp(elements[i], "SO", 3))
+				game->map->so++;
+			else if (!ft_strncmp(elements[i], "WE", 3))
+				game->map->we++;
+			else if (!ft_strncmp(elements[i], "EA", 3))
+				game->map->ea++;
+			else if (!ft_strncmp(elements[i], "F", 3))
+				game->map->f++;
+			else if (!ft_strncmp(elements[i], "C", 3))
+				game->map->c++;
+			else
+			{
+				ft_putstr_fd("\033[91mError\nInvalid identifiers🧭\n\033[0m", 2);
+				free(game->map->one_d_array);
+				exit(EXIT_FAILURE);
+			}
+			game->map->i += ft_strlen(elements[i]);
+		}
 		i++;
+		game->map->i += ft_strlen(elements[i]);
 	}
-	if (game->map->no > 1 || game->map->so > 1
-		|| game->map->we > 1 || game->map->ea > 1)
-		ft_error(6, game);
-	if (game->map->no == 0 || game->map->so == 0
-		|| game->map->we == 0 || game->map->ea == 0)
-		ft_error(6, game);
-	// if there are invalid extra identifiers, ft_error
+	validate_identifiers(game);
 }
 
 bool	is_identifier(char *element)
@@ -45,20 +70,6 @@ bool	is_identifier(char *element)
 	else if (!ft_strncmp(element, "C", 3))
 		return (true);
 	return (false);
-}
-
-char    *sl_strjoin(char *s1, char const *s2)
-{
-    int        len_s1;
-    int        len_s2;
-    int        total_len;
-
-    len_s1 = ft_strlen(s1);
-    len_s2 = ft_strlen(s2);
-    total_len = len_s1 + len_s2;
-    ft_memcpy((s1 + len_s1), s2, len_s2);
-    s1[total_len] = '\0';
-    return (s1);
 }
 
 int	get_rows(char *arg, t_game *game)
