@@ -20,6 +20,26 @@ static void	validate_identifiers(t_game *game)
 		}
 }
 
+static void	validate_identifiers(t_game *game)
+{
+	if (game->map->no > 1 || game->map->so > 1
+		|| game->map->we > 1 || game->map->ea > 1
+		|| game->map->f > 1 || game->map->c > 1)
+		{
+			ft_putstr_fd("\033[91mError\nInvalid identifiers🧭\n\033[0m", 2);
+			free(game->map->one_d_array);
+			exit(EXIT_FAILURE);
+		}
+	if (game->map->no == 0 || game->map->so == 0
+		|| game->map->we == 0 || game->map->ea == 0
+		|| game->map->f == 0 || game->map->c == 0)
+		{
+			ft_putstr_fd("\033[91mError\nInvalid identifiers🧭\n\033[0m", 2);
+			free(game->map->one_d_array);
+			exit(EXIT_FAILURE);
+		}
+}
+
 void	find_identifiers(char **elements, t_game *game)
 {
 	int	i;
@@ -67,6 +87,7 @@ void	find_identifiers(char **elements, t_game *game)
 			}
 		}
 		i++;
+		game->map->i += ft_strlen(elements[i]);
 	}
 	validate_identifiers(game);
 	game->map->last_identifier = ft_strjoin(elements[i - 2], " ");
@@ -95,10 +116,18 @@ bool	is_identifier(char *element)
 	return (false);
 }
 
-
-void	check_args(int argc, char *arg)
+int	get_rows(char *arg, t_game *game)
 {
-	if (argc != 2 || ft_strlen(arg) < 5)
+	int		fd;
+	int		rows;
+	char	*line;
+
+	rows = 0;
+	line = NULL;
+	fd = open(arg, O_RDONLY);
+	if (fd == -1)
+		ft_error(8, game);
+	while (1)
 	{
 		ft_putstr_fd("\033[91mError\nInvalid argument!☝️\n\033[0m", 2);
 		exit(EXIT_FAILURE);

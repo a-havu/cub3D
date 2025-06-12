@@ -7,39 +7,27 @@ void	check_args(int argc, char *arg)
 		ft_putstr_fd("\033[91mError\nInvalid argument!☝️\n\033[0m", 2);
 		exit(EXIT_FAILURE);
 	}
-	if (ft_strlen(arg) >= 5)
+	if (open(arg, O_RDONLY) == -1)
 	{
-		arg = arg + ft_strlen(arg) - 4;
-		if (ft_strncmp(arg, ".cub", 4))
-		{
-			ft_putstr_fd("\033[91mError\nMap needs to be .cub 🙄\n\033[0m", 2);
-			exit(EXIT_FAILURE);
-		}
+		ft_putstr_fd("\033[91mError\nYour map's not valid💅\n\033[0m", 2);
+		exit(EXIT_FAILURE);
 	}
 }
 
 void	count_symbols(t_game *game)
 {
 	int	i;
-	int	k;
 
-	i = 0;
-	if (!game->map->array[i])
-		ft_error(11, game);
-	while (game->map->array[i])
+	i = game->map->i;
+	while (game->map->one_d_array[i])
 	{
-		k = 0;
-		while (game->map->array[i][k])
-		{
-			if (game->map->array[i][k] == 'N' || game->map->array[i][k] == 'S'
-					|| game->map->array[i][k] == 'E'
-					|| game->map->array[i][k] == 'W')
-				game->map->player++;
-			else if (game->map->array[i][k] != '0'
-				&& game->map->array[i][k] != '1')
-				ft_error(4,  game);
-			k++;
-		}
+		if (game->map->one_d_array[i] == 'N' || game->map->one_d_array[i] == 'S'
+				|| game->map->one_d_array[i] == 'E'
+				|| game->map->one_d_array[i] == 'W')
+			game->map->player++;
+		else if (game->map->one_d_array[i] != '0' && game->map->one_d_array[i] != '1' 
+			 && game->map->one_d_array[i] != '\n' && game->map->one_d_array[i] != ' ')
+				ft_error(4, game);
 		i++;
 	}
 	if (game->map->player > 1)
@@ -47,4 +35,3 @@ void	count_symbols(t_game *game)
 	else if (game->map->player == 0)
 		ft_error(3, game);
 }
-
