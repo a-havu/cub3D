@@ -1,4 +1,4 @@
-#include "../incl/cub3d.h"
+#include "cub3d.h"
 
 static void	validate_identifiers(t_game *game)
 {
@@ -30,27 +30,43 @@ void	find_identifiers(char **elements, t_game *game)
 		if (i % 2 == 0)
 		{
 			if (!ft_strncmp(elements[i], "NO", 3))
+			{
 				game->map->no++;
+				game->map->no_wall = elements[i + 1];
+			}
 			else if (!ft_strncmp(elements[i], "SO", 3))
+			{
 				game->map->so++;
+				game->map->so_wall = elements[i + 1];
+			}
 			else if (!ft_strncmp(elements[i], "WE", 3))
+			{
 				game->map->we++;
+				game->map->we_wall = elements[i + 1];
+			}
 			else if (!ft_strncmp(elements[i], "EA", 3))
+			{
 				game->map->ea++;
+				game->map->ea_wall = elements[i + 1];
+			}
 			else if (!ft_strncmp(elements[i], "F", 3))
+			{
 				game->map->f++;
+				game->map->f_value = elements[i + 1];
+			}
 			else if (!ft_strncmp(elements[i], "C", 3))
+			{
 				game->map->c++;
+				game->map->c_value = elements[i + 1];
+			}
 			else
 			{
 				ft_putstr_fd("\033[91mError\nInvalid identifiers🧭\n\033[0m", 2);
 				free(game->map->one_d_array);
 				exit(EXIT_FAILURE);
 			}
-			game->map->i += ft_strlen(elements[i]);
 		}
 		i++;
-		game->map->i += ft_strlen(elements[i]);
 	}
 	validate_identifiers(game);
 }
@@ -72,25 +88,42 @@ bool	is_identifier(char *element)
 	return (false);
 }
 
-int	get_rows(char *arg, t_game *game)
-{
-	int		fd;
-	int		rows;
-	char	*line;
 
-	rows = 0;
-	line = NULL;
-	fd = open(arg, O_RDONLY);
-	if (fd == -1)
-		ft_error(8, game);
-	while (1)
+void	check_args(int argc, char *arg)
+{
+	if (argc != 2 || ft_strlen(arg) < 5)
 	{
-		line = get_next_line(fd);
-		if (!line)
-			break ;
-		rows++;
-		free(line);
+		ft_putstr_fd("\033[91mError\nInvalid argument!☝️\n\033[0m", 2);
+		exit(EXIT_FAILURE);
 	}
-	close(fd);
-	return (rows);
+	if (open(arg, O_RDONLY) == -1)
+	{
+		ft_putstr_fd("\033[91mError\nYour map's not valid💅\n\033[0m", 2);
+		exit(EXIT_FAILURE);
+	}
+}
+
+void	count_symbols(t_game *game)
+{
+	int	i;
+
+	i = 0;
+	while (game->map->one_d_array[i])
+	{
+		if (game->map->one_d_array[i] == 'N' || game->map->one_d_array[i] == 'S'
+				|| game->map->one_d_array[i] == 'E'
+				|| game->map->one_d_array[i] == 'W')
+			game->map->player++;
+		else if (game->map->one_d_array[i] != '0' && game->map->one_d_array[i] != '1' 
+			 && game->map->one_d_array[i] != '\n' && game->map->one_d_array[i] != ' ')
+			 {
+				ft_printf("%c\n", game->map->one_d_array[i]);
+				ft_error(4, game);
+			 }
+		i++;
+	}
+	if (game->map->player > 1)
+		ft_error(2, game);
+	else if (game->map->player == 0)
+		ft_error(3, game);
 }

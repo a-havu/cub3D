@@ -1,4 +1,4 @@
-#include "../incl/cub3d.h"
+#include "cub3d.h"
 
 mlx_t	*initialise_mlx(mlx_t *mlx, t_map *map)
 {
