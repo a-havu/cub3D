@@ -1,4 +1,4 @@
-#include "../incl/cub3d.h"
+#include "cub3d.h"
 
 void	exit_process(t_map *map)
 {
@@ -20,4 +20,27 @@ void	*free_2d_arr(char **arr)
 		free(arr[i++]);
 	free(arr);
 	return (NULL);
+}
+
+int	get_rows(char *arg, t_game *game)
+{
+	int		fd;
+	int		rows;
+	char	*line;
+
+	rows = 0;
+	line = NULL;
+	fd = open(arg, O_RDONLY);
+	if (fd == -1)
+		ft_error(8, game);
+	while (1)
+	{
+		line = get_next_line(fd);
+		if (!line)
+			break ;
+		rows++;
+		free(line);
+	}
+	close(fd);
+	return (rows);
 }
