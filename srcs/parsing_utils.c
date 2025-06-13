@@ -87,7 +87,6 @@ void	find_identifiers(char **elements, t_game *game)
 			}
 		}
 		i++;
-		game->map->i += ft_strlen(elements[i]);
 	}
 	validate_identifiers(game);
 	game->map->last_identifier = ft_strjoin(elements[i - 2], " ");
@@ -116,18 +115,10 @@ bool	is_identifier(char *element)
 	return (false);
 }
 
-int	get_rows(char *arg, t_game *game)
-{
-	int		fd;
-	int		rows;
-	char	*line;
 
-	rows = 0;
-	line = NULL;
-	fd = open(arg, O_RDONLY);
-	if (fd == -1)
-		ft_error(8, game);
-	while (1)
+void	check_args(int argc, char *arg)
+{
+	if (argc != 2 || ft_strlen(arg) < 5)
 	{
 		ft_putstr_fd("\033[91mError\nInvalid argument!☝️\n\033[0m", 2);
 		exit(EXIT_FAILURE);
