@@ -18,14 +18,16 @@ SOURCES			:=	srcs/check_map.c \
 					srcs/main.c \
 					srcs/parsing_utils.c \
 					srcs/utils.c
+SOURCES			:= srcs/main.c srcs/initialise.c srcs/place_minimap.c \
+				srcs/utils.c srcs/key_input.c
 
 
 OBJECTS			:= $(SOURCES:.c=.o)
 HEADERS			:= -I ./incl -I $(MLX_DIR)/include
 
 CC 				:= cc
-CFLAGS			:= -Wall -Wextra -Werror -I./incl
-DEBUG_FLAGS		:= -g #-fsanitize=address -fsanitize=undefined
+CFLAGS	:= -Wall -Wextra -Werror -I./incl
+DEBUG_FLAGS		:= -g -fsanitize=address -fsanitize=undefined
 
 all: $(NAME)
 

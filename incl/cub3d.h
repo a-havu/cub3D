@@ -57,6 +57,7 @@ typedef struct	s_textures
 	mlx_texture_t	*sky;
 	mlx_texture_t   *ground;
 	mlx_texture_t   *door;
+	mlx_texture_t   *camera;
 	mlx_texture_t   *insect1;
 	mlx_texture_t   *insect2;
 	mlx_texture_t   *insect3;
@@ -69,9 +70,11 @@ typedef struct	s_images
 	mlx_image_t *e_wall;
 	mlx_image_t *s_wall;
 	mlx_image_t *w_wall;
-	mlx_image_t *floor;
-	mlx_image_t *ground;
+	mlx_image_t *miniwall;
+	mlx_image_t *empty;
+	mlx_image_t *offedge;
 	mlx_image_t *door;
+	mlx_image_t *camera;
 	mlx_image_t *insect1;
 	mlx_image_t *insect2;
 	mlx_image_t *insect3;
@@ -101,5 +104,17 @@ char    **ft_split_charset(char *str, char *charset);
 int		get_rows(char *arg, t_game *game);
 mlx_t	*initialise_mlx(mlx_t *mlx, t_map *map);
 bool	is_identifier(char *element);
+// initialisation
+mlx_t	*initialise_mlx(mlx_t *mlx, t_map *map);
+void	initialise_images(t_game *game, t_images *images);
+void	place_minimap(t_map *map, t_images *images, mlx_t *mlx);
+
+// utilities
+void	exit_process(t_map *map);
+void	img_error(t_game *game, char signal);
+void	delete_textures(t_game *game);
+
+// movement
+void	key_input(mlx_key_data_t keydata, void *param);
 
 #endif
