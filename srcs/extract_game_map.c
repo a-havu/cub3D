@@ -15,14 +15,84 @@ static void	get_map_array(t_game *game, int fd)
 		line = get_next_line(fd);
 		if (!line)
 			break ;
-		// if (ft_strchr(line, '\n'))
-		// 	*ft_strchr(line, '\n') = '\0';
+		// if (ft_strchr(line, '\n')) //laitoin takas
+		// 	*ft_strchr(line, '\n') = '\0'; //taa kans
 		if (ft_strlen(line) > game->map->width)
 			game->map->width = ft_strlen(line);
 		game->map->array[i] = ft_strdup(line);
 		i++;
 	}
 	game->map->array[i] = NULL;
+	i = 0;
+}
+
+//worry later: Swen & Bug in same room
+
+static void	flood_fill(t_game *game, int y, int x)
+{
+	game->map_cpy[y][x] = '1';
+	if (game->map_cpy[y][x - 1] != '1' && game->map_cpy[y][x - 1] != ' ')
+	{
+		if (x == 0)
+		{
+			// ft_printf("x: %i\n", x);//
+			// ft_printf("error: %c\n", game->map_cpy[y][x - 1]);
+			ft_error(6, game);
+		}
+		flood_fill(game, y, (x - 1));
+	}
+	if (game->map_cpy[y + 1][x] != '1' && game->map_cpy[y + 1][x] != ' ')
+	{
+		if (y == 22)// game->map->height)
+		{
+			// ft_printf("y: %i, x: %i, height: %i\n", y, x, game->map->height);
+			// ft_printf("error: %c\n", game->map_cpy[y + 1][x]);
+			ft_error(6, game);
+		}
+		flood_fill(game, (y + 1), x);
+	}
+	if (game->map_cpy[y][x + 1] != '1' && game->map_cpy[y][x + 1] != ' ')
+	{
+		if (x == ft_len(game->map_cpy[y]))
+		{
+			// ft_printf("x: %i\n", x);
+			// ft_printf("error: %c\n", game->map_cpy[y][x + 1]);
+			ft_error(6, game);
+		}
+		flood_fill(game, y, (x + 1));
+	}
+	if (game->map_cpy[y - 1][x] != '1' && game->map_cpy[y - 1][x] != ' ')
+	{
+		if (y == 0)
+		{
+			// ft_printf("y: %i\n", y);
+			// ft_printf("error: %c\n", game->map_cpy[y - 1][x]);
+			ft_error(6, game);
+		}
+		flood_fill(game, (y - 1), x);
+	}
+}
+
+static void	copy_map(t_game *game)
+{
+	int	y;
+
+	y = game->map->last_id + 2;
+	game->map_cpy = ft_calloc((game->map->height), sizeof(char *));
+	ft_printf("height: %d\n", y);
+	if (!game->map_cpy)
+		ft_error(1, game);
+	while (game->map->array[y])
+	{
+		ft_printf("%s", game->map->array[y]);
+		game->map_cpy[y] = ft_strdup(game->map->array[y]);
+		if (!game->map_cpy[y])
+			ft_error(5, game);
+		y++;
+	}
+	ft_printf("helo\n");
+	game->map_cpy[y] = NULL;
+	ft_printf("%s", game->map_cpy[0]);
 }
 
 //worry later: Swen & Bug in same room

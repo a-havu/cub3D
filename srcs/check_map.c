@@ -30,7 +30,6 @@ static void	check_cub_elements(t_game *game)
 	if (!elements)
 		ft_error(5, game);
 	find_identifiers(elements, game);
-//	count_symbols(game); this needs to happen later on
 	free(game->map->one_d_array);
 	//tallenna viimeinen identifier?
 }

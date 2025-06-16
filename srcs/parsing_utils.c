@@ -132,7 +132,7 @@ void	check_args(int argc, char *arg)
 
 void	check_walls(t_game *game)
 {
-	int	i;
+	int	k;
 
 	i = 0;
 	while(game->map->array[0][i])
