@@ -69,6 +69,13 @@ void	find_identifiers(char **elements, t_game *game)
 		i++;
 	}
 	validate_identifiers(game);
+	game->map->last_identifier = ft_strjoin(elements[i - 2], " ");
+	if (!game->map->last_identifier)
+		ft_error(5, game);
+	game->map->last_identifier = ft_strjoin(game->map->last_identifier, elements[i - 1]);
+	if (!game->map->last_identifier)
+		ft_error(5, game);
+	game->map->last_id = i / 2;
 }
 
 bool	is_identifier(char *element)
@@ -103,23 +110,24 @@ void	check_args(int argc, char *arg)
 	}
 }
 
-void	count_symbols(t_game *game)
+void	count_symbols(t_game *game, int i)
 {
-	int	i;
+	int	k;
 
-	i = 0;
-	while (game->map->one_d_array[i])
+	while (game->map->array[i])
 	{
-		if (game->map->one_d_array[i] == 'N' || game->map->one_d_array[i] == 'S'
-				|| game->map->one_d_array[i] == 'E'
-				|| game->map->one_d_array[i] == 'W')
-			game->map->player++;
-		else if (game->map->one_d_array[i] != '0' && game->map->one_d_array[i] != '1' 
-			 && game->map->one_d_array[i] != '\n' && game->map->one_d_array[i] != ' ')
-			 {
-				ft_printf("%c\n", game->map->one_d_array[i]);
-				ft_error(4, game);
-			 }
+		k = 0;
+		while (game->map->array[i][k])
+		{
+			if (game->map->array[i][k] == 'N' || game->map->array[i][k] == 'S'
+					|| game->map->array[i][k] == 'E'
+					|| game->map->array[i][k] == 'W')
+					game->map->player++;
+			else if (game->map->array[i][k] != '0' && game->map->array[i][k] != '1' 
+				&& game->map->array[i][k] != '\n' && game->map->array[i][k] != ' ')
+					ft_error(4, game);
+			k++;
+		}
 		i++;
 	}
 	if (game->map->player > 1)

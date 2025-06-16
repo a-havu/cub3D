@@ -14,8 +14,8 @@ void	get_map_array(t_game *game, int fd, t_arena *arena)
 		line = arena_next_line(fd, arena);
 		if (!line)
 			break ;
-		// if (ft_strchr(line, '\n'))
-		// 	*ft_strchr(line, '\n') = '\0';
+		// if (ft_strchr(line, '\n')) //laitoin takas
+		// 	*ft_strchr(line, '\n') = '\0'; //taa kans
 		if (ft_strlen(line) > game->map->width)
 			game->map->width = ft_strlen(line);
 		game->map->array[i] = arena_strdup(arena, line);
