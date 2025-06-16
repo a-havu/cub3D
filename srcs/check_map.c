@@ -20,6 +20,8 @@ static void	convert_cub_to_one_d_array(t_game *game, int fd)
 	}
 }
 
+/* splitting the created 1D array to extract the elements (texture paths & colour codes)*/
+
 static void	check_cub_elements(t_game *game)
 {
 	char	**elements;
@@ -28,7 +30,6 @@ static void	check_cub_elements(t_game *game)
 	if (!elements)
 		ft_error(5, game);
 	find_identifiers(elements, game);
-//	count_symbols(game); this needs to happen later on
 	free(game->map->one_d_array);
 	//tallenna viimeinen identifier?
 }

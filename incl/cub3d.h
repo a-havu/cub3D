@@ -27,7 +27,7 @@ typedef struct	s_map
 {
 	char	**array;
 	char	*one_d_array;
-	size_t	height;
+	int		height;
 	size_t	width;
 	t_point	player_pos;
 	size_t	player;
@@ -43,7 +43,8 @@ typedef struct	s_map
 	char	*ea_wall;
 	char	*f_value;
 	char	*c_value;
-	char	**ids;
+	char	*last_identifier;
+	int		last_id;
 	//player facing direction (N, S, W or E)?
 }				t_map;
 
@@ -81,6 +82,7 @@ typedef struct	s_game
 {
 	mlx_t		*mlx;
 	t_map		*map;
+	char		**map_cpy;
 	t_images	*images;
 	t_textures	*textures;
 	//size_t	collected //number of insects found
@@ -89,15 +91,15 @@ typedef struct	s_game
 void	check_args(int argc, char *arg);
 void	check_map(char *arg, t_game *game);
 void	clean_up(t_game *game);
-void	count_symbols(t_game *game);
+void	count_symbols(t_game *game, int i);
 void	extract_game_map(char *arg, t_game *game);
 void	find_identifiers(char **elements, t_game *game);
 void	*free_2d_arr(char **arr);
 void	ft_error(int num, t_game *game);
+int		ft_len(const char *s);
 char    **ft_split_charset(char *str, char *charset);
 int		get_rows(char *arg, t_game *game);
 mlx_t	*initialise_mlx(mlx_t *mlx, t_map *map);
 bool	is_identifier(char *element);
-char    *sl_strjoin(char *s1, char const *s2);
 
 #endif
