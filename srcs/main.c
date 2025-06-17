@@ -130,17 +130,43 @@ char	**map_to_array(t_map *map) //remove
 		j = 0;
 		while (map->array[i][j])
 		{
+			//ft_printf("%c", map->array[i][j]);
 			if (map->array[i][j] == 'N')
 			{
-				//ft_printf("i: %i j: %i\n", i, j);
 				map->plr_pos.x = j;
 				map->plr_pos.y = i;
+				//ft_printf("p pos x: %i y: %i\n", map->plr_pos.x, map->plr_pos.y);//
 			}
 			j++;
 		}
 		i++;
+		//ft_printf("\n");
 	}
 	return (map->array);
+}
+
+// bool	fits_monitor(mlx_t *mlx)
+// {
+// 	int32_t	width;
+// 	int32_t	height;
+
+// 	mlx_get_monitor_size(0, &width, &height);
+// 	if (width < MAX_W || height < MAX_H)
+// 	{
+// 		ft_printf("error\n");
+// 		return (false);
+// 	}
+// 	return (true);
+// }
+
+void	hook(void *param)
+{
+	t_game	*game;
+
+	game = param;
+	for (uint32_t x = 0; x < game->minimap_base->width; x++)
+		for(uint32_t y = 0; y < game->minimap_base->height; y++)
+			mlx_put_pixel(game->minimap_base, x, y, 0xffffff);
 }
 
 int main(int argc, char **argv)
