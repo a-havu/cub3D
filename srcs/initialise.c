@@ -100,6 +100,8 @@ void	initialise_images(t_game *game, t_images *images)
 	load_item_textures(game);
 	initialise_space(game, images);
 	initialise_items(game, images);
+	game->minimap_base = mlx_new_image(game->mlx, 128 * 5, 128 * 3);
+	mlx_image_to_window(game->mlx, game->minimap_base, 0, 0);
 }
 
 mlx_t	*initialise_mlx(mlx_t *mlx, t_map *map)
