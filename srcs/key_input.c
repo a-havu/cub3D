@@ -6,16 +6,18 @@ void	move(t_game *game, char dir, int new_pos)
 	{
 		if (game->map->array[new_pos][game->map->plr_pos.x] != '1')
 		{
-			game->images->door->instances[0].y = new_pos * PXL;
+			game->images->door->instances[0].y = new_pos * 32;
 			game->map->plr_pos.y = new_pos;
+			//ft_printf("y = %d\n", game->map->plr_pos.y);
 		}
 	}
 	else if (dir == 'h')
 	{
 		if (game->map->array[game->map->plr_pos.y][new_pos] != '1')
 		{
-			game->images->door->instances[0].x = new_pos * PXL;
+			game->images->door->instances[0].x = new_pos * 32;
 			game->map->plr_pos.x = new_pos;
+			//ft_printf("x = %d\n", game->map->plr_pos.x);
 		}
 	}
 	//ft_printf("\nx: %i y: %i\n", game->map->plr_pos.x, game->map->plr_pos.y);//
@@ -29,6 +31,7 @@ void	key_input(mlx_key_data_t keydata, void *param)
 
 	game = param;
 	new_pos = 0;
+	ft_printf("\nSTARTkey input\nplr pos x = %d plrpos y = %d\n", game->map->plr_pos.x, game->map->plr_pos.y);
 	dir = 'v';
 	if (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT)
 	{
@@ -46,5 +49,7 @@ void	key_input(mlx_key_data_t keydata, void *param)
 				new_pos = game->map->plr_pos.x + 1;
 		}
 		move(game, dir, new_pos);
+		ft_printf("\nENDkey input\nplr pos x = %d plrpos y = %d\n", game->map->plr_pos.x, game->map->plr_pos.y);
+		//place_minimap(game->map, game->images, game->mlx);
 	}
 }

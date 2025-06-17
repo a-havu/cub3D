@@ -1,5 +1,46 @@
 #include "cub3d.h"
 
+
+
+// int	ft_pituus(const char *s)
+// {
+// 	int	counter;
+
+// 	counter = 0;
+// 	while (*s != '\0')
+// 	{
+// 		s++;
+// 		counter++;
+// 	}
+// 	return (counter);
+// }
+
+// void	place_minimap(t_map *map, t_images *images, mlx_t *mlx)
+// {
+// 	size_t	x;
+// 	size_t	y;
+
+// 	y = 0;
+// 	while (y < map->height)
+// 	{
+// 		x = 0;
+// 		while (x < ft_strlen(map->array[y]))
+// 		{
+// 			if (map->array[y][x] == '1')
+// 				mlx_image_to_window(mlx, images->miniwall, x * 32, y * 32);
+// 			else if (map->array[y][x] == '0')
+// 				mlx_image_to_window(mlx, images->empty, x * 32, y * 32);
+// 			else if (map->array[y][x] == 'N')
+// 			{
+// 				mlx_image_to_window(mlx, images->empty, x * 32, y * 32);
+// 				mlx_image_to_window(mlx, images->door, x * 32, y * 32);
+// 			}
+// 			x++;
+// 		}
+// 		y++;
+// 	}
+// }
+
 // void	place_minimap(t_map *map, t_images *images, mlx_t *mlx)
 // {
 // 	size_t	x;
@@ -30,66 +71,106 @@
 // 	}
 // }
 
-int	ft_pituus(const char *s)
-{
-	int	counter;
 
-	counter = 0;
-	while (*s != '\0')
-	{
-		s++;
-		counter++;
-	}
-	return (counter);
-}
+// #define MAP_SIZE 5
+// void	place_minimap(t_map *map, t_images *images, mlx_t *mlx)
+// {
+// 	int x;
+// 	int y;
+// 	int	start_x;
+// 	int	start_y;
+	
+// 	y = 0;
+// 	//ft_printf("FUNCTIONING YYAY\n");
+// 	//ft_printf("\nstart of minimap\nmap x = %d map y = %d\n", map->plr_pos.x, map->plr_pos.y);
+// 	start_y = map->plr_pos.y - MAP_SIZE;
+// 	start_x = map->plr_pos.x - MAP_SIZE;
+// 	//ft_printf("map x = %d map y = %d\n", map->plr_pos.x, map->plr_pos.y);
 
-void	place_minimap(t_map *map, t_images *images, mlx_t *mlx)
-{
-	int	x;
-	int	y;
-	int	start_x;
-	int	start_y;
-	int	final_x;
+// 	//clearing the map 
+// 	while (y != 2 * MAP_SIZE + 1) 
+// 	{
+// 		x = 0;
+// 		while (x != 2 * MAP_SIZE + 1) 
+// 		{
+// 			mlx_image_to_window(mlx, images->offedge, x * 32, y * 32);
+// 			x++;
+// 		}
+// 		y++;
+// 	}
+// 	y = 0;
+// 	//drawing the map
+// 	while (y != 2 * MAP_SIZE + 1) 
+// 	{
+// 		start_x = map->plr_pos.x - MAP_SIZE;
+// 		x = 0;
+// 		while (x != 2 * MAP_SIZE + 1) 
+// 		{
+// 			if (start_x < 0 || start_y < 0 || start_x >= ft_pituus(map->array[start_y]) || start_y >= map->height)
+// 				mlx_image_to_window(mlx, images->camera, x * 32, y * 32);
+// 			else if (map->array[start_y][start_x] == '1')
+// 				mlx_image_to_window(mlx, images->miniwall, x * 32, y * 32);
+// 			else if (map->array[start_y][start_x] == '0' || map->array[start_y][start_x] == 'N')
+// 				mlx_image_to_window(mlx, images->empty, x * 32, y * 32);
+// 			x++;
+// 			start_x++;
+// 		}
+// 		y++;
+// 		start_y++;
+// 		ft_printf("map x = %d map y = %d\n", map->plr_pos.x, map->plr_pos.y);
+// 	}
+// 	//drawing the player
+//  	mlx_image_to_window(mlx, images->door, (MAP_SIZE * 32), (MAP_SIZE * 32));
+// }
 
-	//ft_printf("x: %i y: %i\n", map->plr_pos.x, map->plr_pos.y);//
-	start_x = map->plr_pos.x - 11;
-	if (start_x < 0)
-		start_x = 0;
-	start_y = map->plr_pos.y - 7;
-	if (start_y < 0)
-		start_y = 0;
-	final_x = start_x;
-	y = 0;
-	while (y < 15) //percentage of width
-	{
-		x = 0;
-		start_x = final_x;
-		//ft_printf("x: %i y: %i\n", start_y, start_x);//
-		while (x < 23) //percentage of height
-		{
-			if (start_y < map->height && start_x < ft_pituus(map->array[start_y]))
-			{
-				if (map->array[start_y][start_x] == '1')
-					mlx_image_to_window(mlx, images->miniwall, x * 32, y * 32);
-				else if (map->array[start_y][start_x] == '0')
-					mlx_image_to_window(mlx, images->empty, x * 32, y * 32);
-				else if (map->array[start_y][start_x] == 'N')
-				{
-					mlx_image_to_window(mlx, images->empty, x * 32, y * 32);
-					mlx_image_to_window(mlx, images->door, (x * 32 + 8), (y * 32 + 8));
-				}
-				else
-					mlx_image_to_window(mlx, images->offedge, x * 32, y * 32);
-			}
-			else
-				mlx_image_to_window(mlx, images->camera, x * 32, y * 32);
-			x++;
-			start_x++;
-		}
-		y++;
-		start_y++;
-	}
-}
+
+// void	place_minimap(t_map *map, t_images *images, mlx_t *mlx)
+// {
+// 	int	x;
+// 	int	y;
+// 	int	start_x;
+// 	int	start_y;
+// 	int	final_x;
+
+// 	//ft_printf("x: %i y: %i\n", map->plr_pos.x, map->plr_pos.y);//
+// 	start_x = map->plr_pos.x - 11;
+// 	if (start_x < 0)
+// 		start_x = 0;
+// 	start_y = map->plr_pos.y - 7;
+// 	if (start_y < 0)
+// 		start_y = 0;
+// 	final_x = start_x;
+// 	y = 0;
+// 	while (y < 15) //percentage of width
+// 	{
+// 		x = 0;
+// 		start_x = final_x;
+// 		//ft_printf("x: %i y: %i\n", start_y, start_x);//
+// 		while (x < 23) //percentage of height
+// 		{
+// 			if (start_y < map->height && start_x < ft_pituus(map->array[start_y]))
+// 			{
+// 				if (map->array[start_y][start_x] == '1')
+// 					mlx_image_to_window(mlx, images->miniwall, x * 32, y * 32);
+// 				else if (map->array[start_y][start_x] == '0')
+// 					mlx_image_to_window(mlx, images->empty, x * 32, y * 32);
+// 				else if (map->array[start_y][start_x] == 'N')
+// 				{
+// 					mlx_image_to_window(mlx, images->empty, x * 32, y * 32);
+// 					mlx_image_to_window(mlx, images->door, (map->plr_pos.x * 32), (map->plr_pos.y * 32));
+// 				}
+// 				else
+// 					mlx_image_to_window(mlx, images->offedge, x * 32, y * 32);
+// 			}
+// 			else
+// 				mlx_image_to_window(mlx, images->camera, x * 32, y * 32);
+// 			x++;
+// 			start_x++;
+// 		}
+// 		y++;
+// 		start_y++;
+// 	}
+// }
 
 // void	place_minimap(t_map *map, t_images *images, mlx_t *mlx)
 // {

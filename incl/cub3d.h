@@ -28,9 +28,11 @@ typedef struct	s_map
 	char	*line;
 	char	*file;
 	char	**array;
-	int		height;
+	size_t		height;
 	int		width;
 	t_point	plr_pos;
+	t_point	dir;
+	t_point	plane;
 	int		len;
 	//player facing direction (N, S, W or E)?
 }				t_map;
@@ -74,6 +76,7 @@ typedef struct	s_game
 	mlx_t		*mlx;
 	t_map		*map;
 	t_images	*images;
+	mlx_image_t	*minimap_base;
 	t_textures	*textures;
 	//size_t	collected //number of insects found
 }				t_game;

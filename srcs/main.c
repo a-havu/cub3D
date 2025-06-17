@@ -85,17 +85,43 @@ char	**map_to_array(t_map *map) //remove
 		j = 0;
 		while (map->array[i][j])
 		{
+			//ft_printf("%c", map->array[i][j]);
 			if (map->array[i][j] == 'N')
 			{
-				//ft_printf("i: %i j: %i\n", i, j);
 				map->plr_pos.x = j;
 				map->plr_pos.y = i;
+				//ft_printf("p pos x: %i y: %i\n", map->plr_pos.x, map->plr_pos.y);//
 			}
 			j++;
 		}
 		i++;
+		//ft_printf("\n");
 	}
 	return (map->array);
+}
+
+// bool	fits_monitor(mlx_t *mlx)
+// {
+// 	int32_t	width;
+// 	int32_t	height;
+
+// 	mlx_get_monitor_size(0, &width, &height);
+// 	if (width < MAX_W || height < MAX_H)
+// 	{
+// 		ft_printf("error\n");
+// 		return (false);
+// 	}
+// 	return (true);
+// }
+
+void	hook(void *param)
+{
+	t_game	*game;
+
+	game = param;
+	for (uint32_t x = 0; x < game->minimap_base->width; x++)
+		for(uint32_t y = 0; y < game->minimap_base->height; y++)
+			mlx_put_pixel(game->minimap_base, x, y, 0xffffff);
 }
 
 int main(int argc, char **argv)
@@ -109,18 +135,18 @@ int main(int argc, char **argv)
 	ft_memset(&game, 0, sizeof(t_game));
 	ft_memset(&map, 0, sizeof(t_map));
 	ft_memset(&textures, 0, sizeof(t_textures));
-	game.map = &map;
+	game.map = &map; // create a set game info function for next 5 lines
 	game.images = &images;
 	game.textures = &textures;
 	map.name = ft_strdup(argv[1]);//
-	//parse args
-	//error check map
 	game.mlx = initialise_mlx(game.mlx, game.map);
 	initialise_images(&game, &images);
 	map.array = map_to_array(&map); //remove
 	//place game image
-	place_minimap(&map, &images, game.mlx); //
+	//place_minimap(&map, &images, game.mlx); //
 	mlx_key_hook(game.mlx, &key_input, &game);
+	mlx_loop_hook(game.mlx, &hook, &game);
+	//mlx_loop_hook(game.mlx, &key_input, &game);
 	mlx_loop(game.mlx);
 	delete_textures(&game);
 	mlx_terminate(game.mlx);
