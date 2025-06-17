@@ -87,6 +87,7 @@ typedef struct	s_game
 	t_map		*map;
 	char		**map_cpy;
 	t_images	*images;
+	mlx_image_t	*minimap_base;
 	t_textures	*textures;
 	//size_t	collected //number of insects found
 }				t_game;
