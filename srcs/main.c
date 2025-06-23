@@ -164,18 +164,19 @@ void	hook(void *param)
 	t_game	*game;
 
 	game = param;
-	for (uint32_t x = 0; x < game->minimap_base->width; x++)
-		for(uint32_t y = 0; y < game->minimap_base->height; y++)
-			mlx_put_pixel(game->minimap_base, x, y, 0xffffff);
+	
 }
 
 int main(int argc, char **argv)
 {
 	t_game		game;
 	t_map		map;
-	t_arena		*arena;
+	t_images	images;
+	t_textures	textures;
+	t_arena		arena;
 
-	arena = create_arena(CAPACITY);
+	(void)argc;//
+	create_arena(&arena, CAPACITY)
 	ft_memset(&game, 0, sizeof(t_game));
 	ft_memset(&map, 0, sizeof(t_map));
 	game.map = &map; // create a set game info function for next 5 lines
