@@ -30,8 +30,6 @@ static void	check_cub_elements(t_game *game)
 	if (!elements)
 		ft_error(5, game);
 	find_identifiers(elements, game);
-	free(game->map->one_d_array);
-	//tallenna viimeinen identifier?
 }
 
 void	check_map(char *arg, t_game *game)
