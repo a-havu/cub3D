@@ -12,7 +12,8 @@ ifeq ($(shell uname), Darwin)
 endif
 
 SOURCES			:= srcs/main.c srcs/initialise.c srcs/place_minimap.c \
-				srcs/utils.c srcs/key_input.c
+				srcs/utils.c srcs/key_input.c srcs/arena.c \
+				srcs/arena_utils.c srcs/arena_split.c srcs/arena_setsplit.c \
 
 
 OBJECTS			:= $(SOURCES:.c=.o)

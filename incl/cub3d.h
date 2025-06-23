@@ -6,6 +6,7 @@
 # include <math.h>
 # include <fcntl.h>
 # include "../MLX42/include/MLX42/MLX42.h"
+# include <stdio.h> //remove
 
 # define W 13
 # define A 0
@@ -15,11 +16,12 @@
 # define PXL 64 //tai kuinka iso se oliska
 # define MAX_H 2160 // full screen
 # define MAX_W 3840 // full screen
+# define CAPACITY 1250000 // 10 mb
 
 typedef struct	s_point
 {
-	int	x;
-	int	y;
+	double	x;
+	double	y;
 }				t_point;
 
 typedef struct	s_map
@@ -71,6 +73,15 @@ typedef struct	s_images
 	mlx_image_t *insect4;
 }				t_images;
 
+typedef struct	s_arena
+{
+	size_t			capacity;
+    size_t			size;
+    uint8_t			*data;
+    struct s_arena	*next;
+}				t_arena;
+
+
 typedef struct	s_game
 {
 	mlx_t		*mlx;
@@ -82,6 +93,7 @@ typedef struct	s_game
 }				t_game;
 
 // initialisation
+int create_arena(t_arena *arena, size_t capacity);
 mlx_t	*initialise_mlx(mlx_t *mlx, t_map *map);
 void	initialise_images(t_game *game, t_images *images);
 void	place_minimap(t_map *map, t_images *images, mlx_t *mlx);
@@ -90,6 +102,9 @@ void	place_minimap(t_map *map, t_images *images, mlx_t *mlx);
 void	exit_process(t_map *map);
 void	img_error(t_game *game, char signal);
 void	delete_textures(t_game *game);
+char	*arena_join(t_arena *arena, const *s1, char const *s2);
+char	*arena_strdup(const char *s);
+char	**arena_setsplit(t_arena *arena, char *str, char *charset);
 
 // movement
 void	key_input(mlx_key_data_t keydata, void *param);
