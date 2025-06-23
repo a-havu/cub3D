@@ -30,8 +30,8 @@ static void	get_map_array(t_game *game, int fd)
 
 static void	flood_fill(t_game *game, int y, int x)
 {
-	game->map_cpy[y][x] = '1';
-	if (game->map_cpy[y][x - 1] != '1' && game->map_cpy[y][x - 1] != ' ')
+	game->map_cpy[y][x] = 'A';
+	if (game->map_cpy[y][x - 1] != '1' && game->map_cpy[y][x - 1] != ' ' && game->map_cpy[y][x - 1] != 'A')
 	{
 		if (x == 0)
 		{
@@ -41,7 +41,7 @@ static void	flood_fill(t_game *game, int y, int x)
 		}
 		flood_fill(game, y, (x - 1));
 	}
-	if (game->map_cpy[y + 1][x] != '1' && game->map_cpy[y + 1][x] != ' ')
+	if (game->map_cpy[y + 1][x] != '1' && game->map_cpy[y + 1][x] != ' ' && game->map_cpy[y + 1][x] != 'A')
 	{
 		if (y == 22)// game->map->height)
 		{
@@ -51,7 +51,7 @@ static void	flood_fill(t_game *game, int y, int x)
 		}
 		flood_fill(game, (y + 1), x);
 	}
-	if (game->map_cpy[y][x + 1] != '1' && game->map_cpy[y][x + 1] != ' ')
+	if (game->map_cpy[y][x + 1] != '1' && game->map_cpy[y][x + 1] != ' ' && game->map_cpy[y][x + 1] != 'A')
 	{
 		if (x == ft_len(game->map_cpy[y]))
 		{
@@ -61,7 +61,7 @@ static void	flood_fill(t_game *game, int y, int x)
 		}
 		flood_fill(game, y, (x + 1));
 	}
-	if (game->map_cpy[y - 1][x] != '1' && game->map_cpy[y - 1][x] != ' ')
+	if (game->map_cpy[y - 1][x] != '1' && game->map_cpy[y - 1][x] != ' ' && game->map_cpy[y - 1][x] != 'A')
 	{
 		if (y == 0)
 		{
