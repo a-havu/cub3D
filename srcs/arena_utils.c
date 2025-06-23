@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-char	*arena_join(t_arena *arena, const *s1, char const *s2)
+char	*arena_join(t_arena *arena, char const *s1, char const *s2)
 {
 	char	*new_str;
 	size_t	total_len;
@@ -26,7 +26,7 @@ char	*arena_join(t_arena *arena, const *s1, char const *s2)
 	return (new_str);
 }
 
-char	*arena_strdup(const char *s)
+char	*arena_strdup(t_arena *arena, const char *s)
 {
 	int		i;
 	char	*new;

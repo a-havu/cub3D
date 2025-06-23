@@ -21,8 +21,8 @@ void    *arena_alloc(t_arena *arena, size_t size)
 {
     void    *data;
     t_arena *current;
-    int     i;
 
+	current = NULL;
     if (size > current->capacity)
         return (NULL);
     current = arena;
@@ -47,7 +47,7 @@ void    clean_arena(t_arena *arena)
     while (current)
     {
         current->capacity = 0;
-        current->size_t = 0;
+        current->size = 0;
         free(current->data);
         temp = current->next;
         free(current);

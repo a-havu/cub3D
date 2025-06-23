@@ -114,26 +114,26 @@ void	check_walls(t_game *game)
 {
 	int	i;
 
-	i = 0;
-	while(game->map->array[0][i])
-	{
-		if (game->map->array[0][i] != '1')
-			ft_error(6, game);
-		i++;
-	}
-	while(game->map->array[i])
-	{
-		if (game->map->array[i][0] != ' ' && game->map->array[i][0] != '1')
-			ft_error(6, game);
+// 	i = 0;
+// 	while(game->map->array[0][i])
+// 	{
+// 		if (game->map->array[0][i] != '1')
+// 			ft_error(6, game);
+// 		i++;
+// 	}
+// 	while(game->map->array[i])
+// 	{
+// 		if (game->map->array[i][0] != ' ' && game->map->array[i][0] != '1')
+// 			ft_error(6, game);
 		
-	}
-}
+// 	}
+// }
 
 void	count_symbols(t_game *game, int i)
 {
 	int	k;
 
-	check_walls(game);
+	//check_walls(game);
 	while (game->map->array[i])
 	{
 		k = 0;
