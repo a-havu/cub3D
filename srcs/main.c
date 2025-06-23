@@ -119,9 +119,7 @@ void	hook(void *param)
 	t_game	*game;
 
 	game = param;
-	for (uint32_t x = 0; x < game->minimap_base->width; x++)
-		for(uint32_t y = 0; y < game->minimap_base->height; y++)
-			mlx_put_pixel(game->minimap_base, x, y, 0xffffff);
+	
 }
 
 int main(int argc, char **argv)
@@ -130,8 +128,10 @@ int main(int argc, char **argv)
 	t_map		map;
 	t_images	images;
 	t_textures	textures;
+	t_arena		arena;
 
 	(void)argc;//
+	create_arena(&arena, CAPACITY)
 	ft_memset(&game, 0, sizeof(t_game));
 	ft_memset(&map, 0, sizeof(t_map));
 	ft_memset(&textures, 0, sizeof(t_textures));
@@ -145,6 +145,7 @@ int main(int argc, char **argv)
 	game.mlx = initialise_mlx(game.mlx, game.map);
 	initialise_images(&game, &images);
 	map.array = map_to_array(&map); //remove
+	printf("x: %f y %f\n", map.plr_pos.x, map.plr_pos.y);
 	//place game image
 	//place_minimap(&map, &images, game.mlx); //
 	mlx_key_hook(game.mlx, &key_input, &game);
