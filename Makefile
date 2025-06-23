@@ -14,14 +14,16 @@ endif
 SOURCES			:=	srcs/check_map.c \
 					srcs/extract_game_map.c \
 					srcs/ft_error.c \
-					srcs/ft_split_charset.c \
 					srcs/main.c \
 					srcs/parsing_utils.c \
-					srcs/utils.c
-SOURCES			:= srcs/main.c srcs/initialise.c srcs/place_minimap.c \
-				srcs/utils.c srcs/key_input.c srcs/arena.c \
-				srcs/arena_utils.c srcs/arena_split.c srcs/arena_setsplit.c \
-
+					srcs/utils.c \
+					srcs/main.c \
+					srcs/initialise.c \
+					srcs/utils.c \
+					srcs/arena.c \
+					srcs/arena_utils.c \
+					srcs/arena_split.c \
+					srcs/arena_setsplit.c \
 
 OBJECTS			:= $(SOURCES:.c=.o)
 HEADERS			:= -I ./incl -I $(MLX_DIR)/include

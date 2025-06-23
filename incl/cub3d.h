@@ -102,6 +102,7 @@ typedef struct	s_game
 	//size_t	collected //number of insects found
 }				t_game;
 
+//parsing
 void	check_args(int argc, char *arg);
 void	check_map(char *arg, t_game *game);
 void	clean_up(t_game *game);
@@ -115,8 +116,9 @@ char    **ft_split_charset(char *str, char *charset);
 int		get_rows(char *arg, t_game *game);
 mlx_t	*initialise_mlx(mlx_t *mlx, t_map *map);
 bool	is_identifier(char *element);
+
 // initialisation
-int create_arena(t_arena *arena, size_t capacity);
+int 	create_arena(t_arena *arena, size_t capacity);
 mlx_t	*initialise_mlx(mlx_t *mlx, t_map *map);
 void	initialise_images(t_game *game, t_images *images);
 void	place_minimap(t_map *map, t_images *images, mlx_t *mlx);
@@ -125,8 +127,9 @@ void	place_minimap(t_map *map, t_images *images, mlx_t *mlx);
 void	exit_process(t_map *map);
 void	img_error(t_game *game, char signal);
 void	delete_textures(t_game *game);
-char	*arena_join(t_arena *arena, const *s1, char const *s2);
-char	*arena_strdup(const char *s);
+void    *arena_alloc(t_arena *arena, size_t size);
+char	*arena_join(t_arena *arena, char const *s1, char const *s2);
+char	*arena_strdup(t_arena *arena, const char *s);
 char	**arena_setsplit(t_arena *arena, char *str, char *charset);
 
 // movement

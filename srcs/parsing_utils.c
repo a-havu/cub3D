@@ -20,26 +20,6 @@ static void	validate_identifiers(t_game *game)
 		}
 }
 
-static void	validate_identifiers(t_game *game)
-{
-	if (game->map->no > 1 || game->map->so > 1
-		|| game->map->we > 1 || game->map->ea > 1
-		|| game->map->f > 1 || game->map->c > 1)
-		{
-			ft_putstr_fd("\033[91mError\nInvalid identifiers🧭\n\033[0m", 2);
-			free(game->map->one_d_array);
-			exit(EXIT_FAILURE);
-		}
-	if (game->map->no == 0 || game->map->so == 0
-		|| game->map->we == 0 || game->map->ea == 0
-		|| game->map->f == 0 || game->map->c == 0)
-		{
-			ft_putstr_fd("\033[91mError\nInvalid identifiers🧭\n\033[0m", 2);
-			free(game->map->one_d_array);
-			exit(EXIT_FAILURE);
-		}
-}
-
 void	find_identifiers(char **elements, t_game *game)
 {
 	int	i;
@@ -130,30 +110,31 @@ void	check_args(int argc, char *arg)
 	}
 }
 
-void	check_walls(t_game *game)
-{
-	int	k;
+// void	check_walls(t_game *game)
+// {
+// 	int	k;
+// 	int	i;
 
-	i = 0;
-	while(game->map->array[0][i])
-	{
-		if (game->map->array[0][i] != '1')
-			ft_error(6, game);
-		i++;
-	}
-	while(game->map->array[i])
-	{
-		if (game->map->array[i][0] != ' ' && game->map->array[i][0] != '1')
-			ft_error(6, game);
+// 	i = 0;
+// 	while(game->map->array[0][i])
+// 	{
+// 		if (game->map->array[0][i] != '1')
+// 			ft_error(6, game);
+// 		i++;
+// 	}
+// 	while(game->map->array[i])
+// 	{
+// 		if (game->map->array[i][0] != ' ' && game->map->array[i][0] != '1')
+// 			ft_error(6, game);
 		
-	}
-}
+// 	}
+// }
 
 void	count_symbols(t_game *game, int i)
 {
 	int	k;
 
-	check_walls(game);
+	//check_walls(game);
 	while (game->map->array[i])
 	{
 		k = 0;
