@@ -22,17 +22,17 @@ static void	convert_cub_to_one_d_array(t_game *game, int fd)
 
 /* splitting the created 1D array to extract the elements (texture paths & colour codes)*/
 
-static void	check_cub_elements(t_game *game)
+static void	check_cub_elements(t_game *game, t_arena *arena)
 {
 	char	**elements;
 
-	elements = ft_split_charset(game->map->one_d_array, " \n"); //tabs?
+	elements = arena_setsplit(arena, game->map->one_d_array, " \n"); //tabs?
 	if (!elements)
 		ft_error(5, game);
 	find_identifiers(elements, game);
 }
 
-void	check_map(char *arg, t_game *game)
+void	check_map(char *arg, t_game *game, t_arena *arena)
 {
 	int		fd;
 
@@ -40,7 +40,7 @@ void	check_map(char *arg, t_game *game)
 	if (fd == -1)
 		ft_error(8, game);
 	convert_cub_to_one_d_array(game, fd);
-	check_cub_elements(game);
+	check_cub_elements(game, arena);
 	extract_game_map(arg, game);
 	close(fd);
 }

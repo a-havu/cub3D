@@ -104,7 +104,7 @@ typedef struct	s_game
 
 //parsing
 void	check_args(int argc, char *arg);
-void	check_map(char *arg, t_game *game);
+void	check_map(char *arg, t_game *game, t_arena *arena);
 void	clean_up(t_game *game);
 void	count_symbols(t_game *game, int i);
 void	extract_game_map(char *arg, t_game *game);

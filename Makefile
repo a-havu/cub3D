@@ -14,7 +14,6 @@ endif
 SOURCES			:=	srcs/check_map.c \
 					srcs/extract_game_map.c \
 					srcs/ft_error.c \
-					srcs/main.c \
 					srcs/parsing_utils.c \
 					srcs/utils.c \
 					srcs/main.c \

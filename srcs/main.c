@@ -39,7 +39,7 @@ int main(int argc, char **argv)
 	game.images = &images;
 	game.textures = &textures;
 	check_args(argc, argv[1]);
-	check_map(argv[1], &game);
+	check_map(argv[1], &game, &arena);
 	//game.mlx = initialise_mlx(game.mlx, game.map);
 	game.mlx = initialise_mlx(game.mlx, game.map);
 	// mlx_key_hook(game.mlx, &key_input, &game);
