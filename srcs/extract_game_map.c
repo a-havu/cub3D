@@ -1,180 +1,78 @@
 #include "cub3d.h"
 
-static void	get_map_array(t_game *game, int fd)
+static void	get_map_array(t_game *game, int fd, t_arena *arena)
 {
 	char	*line;
 	int		i;
 
 	line = NULL;
 	i = 0;
-	game->map->array = ft_calloc(game->map->height + 1, sizeof(char *));//arena_alloc
+	game->map->array = arena_alloc(arena, game->map->height + 1 * sizeof(char *));
 	if (!game->map->array)
 		ft_error(1, game);
 	while (1)
 	{
-		line = get_next_line(fd);
+		line = arena_next_line(fd, arena);
 		if (!line)
 			break ;
-		// if (ft_strchr(line, '\n')) //laitoin takas
-		// 	*ft_strchr(line, '\n') = '\0'; //taa kans
+		if (ft_strchr(line, '\n'))
+			*ft_strchr(line, '\n') = '\0';
 		if (ft_strlen(line) > game->map->width)
 			game->map->width = ft_strlen(line);
-		game->map->array[i] = ft_strdup(line);
+		game->map->array[i] = arena_strdup(arena, line);
 		i++;
 	}
 	game->map->array[i] = NULL;
-	i = 0;
 }
 
 //worry later: Swen & Bug in same room
 
-static void	flood_fill(t_game *game, int y, int x)
-{
-	game->map_cpy[y][x] = 'A';
-	if (game->map_cpy[y][x - 1] != '1' && game->map_cpy[y][x - 1] != ' ' && game->map_cpy[y][x - 1] != 'A')
-	{
-		if (x == 0)
-		{
-			// ft_printf("x: %i\n", x);//
-			// ft_printf("error: %c\n", game->map_cpy[y][x - 1]);
-			ft_error(6, game);
-		}
-		flood_fill(game, y, (x - 1));
-	}
-	if (game->map_cpy[y + 1][x] != '1' && game->map_cpy[y + 1][x] != ' ' && game->map_cpy[y + 1][x] != 'A')
-	{
-		if (y == 22)// game->map->height)
-		{
-			// ft_printf("y: %i, x: %i, height: %i\n", y, x, game->map->height);
-			// ft_printf("error: %c\n", game->map_cpy[y + 1][x]);
-			ft_error(6, game);
-		}
-		flood_fill(game, (y + 1), x);
-	}
-	if (game->map_cpy[y][x + 1] != '1' && game->map_cpy[y][x + 1] != ' ' && game->map_cpy[y][x + 1] != 'A')
-	{
-		if (x == ft_len(game->map_cpy[y]))
-		{
-			// ft_printf("x: %i\n", x);
-			// ft_printf("error: %c\n", game->map_cpy[y][x + 1]);
-			ft_error(6, game);
-		}
-		flood_fill(game, y, (x + 1));
-	}
-	if (game->map_cpy[y - 1][x] != '1' && game->map_cpy[y - 1][x] != ' ' && game->map_cpy[y - 1][x] != 'A')
-	{
-		if (y == 0)
-		{
-			// ft_printf("y: %i\n", y);
-			// ft_printf("error: %c\n", game->map_cpy[y - 1][x]);
-			ft_error(6, game);
-		}
-		flood_fill(game, (y - 1), x);
-	}
-}
-
-//worry later: Swen & Bug in same room
-
-// static void	flood_fill(t_game *game, int y, int x)
-// {
-// 	game->map_cpy[y][x] = 'A';
-// 	if (game->map_cpy[y][x - 1] != '1' && game->map_cpy[y][x - 1] != ' ' && game->map_cpy[y][x - 1] != 'A')
-// 	{
-// 		if (x == 0)
-// 		{
-// 			// ft_printf("x: %i\n", x);//
-// 			// ft_printf("error: %c\n", game->map_cpy[y][x - 1]);
-// 			ft_error(6, game);
-// 		}
-// 		flood_fill(game, y, (x - 1));
-// 	}
-// 	if (game->map_cpy[y + 1][x] != '1' && game->map_cpy[y + 1][x] != ' ' && game->map_cpy[y + 1][x] != 'A')
-// 	{
-// 		if (y == game->map->height)
-// 		{
-// 			// ft_printf("y: %i, x: %i, height: %i\n", y, x, game->map->height);
-// 			// ft_printf("error: %c\n", game->map_cpy[y + 1][x]);
-// 			ft_error(6, game);
-// 		}
-// 		flood_fill(game, (y + 1), x);
-// 	}
-// 	if (game->map_cpy[y][x + 1] != '1' && game->map_cpy[y][x + 1] != ' ' && game->map_cpy[y][x + 1] != 'A')
-// 	{
-// 		if (x == ft_len(game->map_cpy[y]))
-// 		{
-// 			// ft_printf("x: %i\n", x);
-// 			// ft_printf("error: %c\n", game->map_cpy[y][x + 1]);
-// 			ft_error(6, game);
-// 		}
-// 		flood_fill(game, y, (x + 1));
-// 	}
-// 	if (game->map_cpy[y - 1][x] != '1' && game->map_cpy[y - 1][x] != ' ' && game->map_cpy[y - 1][x] != 'A')
-// 	{
-// 		if (y == 0)
-// 		{
-// 			// ft_printf("y: %i\n", y);
-// 			// ft_printf("error: %c\n", game->map_cpy[y - 1][x]);
-// 			ft_error(6, game);
-// 		}
-// 		flood_fill(game, (y - 1), x);
-// 	}
-// }
-
-static void	copy_map(t_game *game)
+static void	copy_map(t_game *game, t_arena *arena)
 {
 	int	y;
 	int	i;
 
 	i = 0;
-	y = game->map->last_id + 2;
-	game->map_cpy = ft_calloc((game->map->height + 1), sizeof(char *));//arena_alloc
+	y = game->map->last_id + 1;
+	game->map_cpy = arena_alloc(arena, (game->map->height + 1) * sizeof(char *));
 	if (!game->map_cpy)
 		ft_error(1, game);
 	while (game->map->array[y])
 	{
-		game->map_cpy[i] = ft_strdup(game->map->array[y]);
+		game->map_cpy[i] = arena_strdup(arena, game->map->array[y]);
 		if (!game->map_cpy[i])
 			ft_error(5, game);
 		y++;
 		i++;
 	}
 	game->map_cpy[i] = NULL;
+	game->map->height = i;
 }
 
-void	extract_game_map(char *arg, t_game *game)
+void	extract_game_map(char *arg, t_game *game, t_arena *arena)
 {
 	int		i;
-	int		y;
-	int		x;
+	int		k;
 	int		fd;
 
 	fd = open(arg, O_RDONLY);
 	i = 0;
-	y = 0;
+	k = 0;
 	game->map->height = get_rows(arg, game);
-	get_map_array(game, fd);
+	game->final_map = arena_alloc(arena, (game->map->height + 1) * sizeof(char *));
+	get_map_array(game, fd, arena);
 	while (ft_strncmp(game->map->array[i],
 		game->map->last_identifier, ft_strlen(game->map->last_identifier)))
 			i++;
-	i++;
-	free(game->map->last_identifier);
-	copy_map(game);
-	//check_spaces();
-	while (y <= game->map->height)
+	i += 2;
+	copy_map(game, arena);
+	while(game->map->array[i])
 	{
-		x = 0;
-		while (x < ft_len(game->map_cpy[y]))
-		{
-			//ft_printf("y: %d x: %d game->map_cpy[y][x]: %c\n", y, x, game->map_cpy[y][x]);
-			if (game->map_cpy[y][x] != ' ' && game->map_cpy[y][x] != '\0' 
-				&& game->map_cpy[y][x] != '1' && game->map_cpy[y][x] != '\n')
-			{
-				//ft_printf("Sending: %c from y: %i, x: %i\n", game->map_cpy[y][x], y, x);
-				flood_fill(game, y, x);
-			}
-			x++;
-		}
-		y++;
+		game->final_map[k] = arena_strdup(arena, game->map->array[i]);
+		if (!game->final_map[k])
+			ft_error(5, game);
+		i++;
 	}
-	count_symbols(game, i);
+	game->final_map[k] = NULL;
+	count_symbols(game);
 }

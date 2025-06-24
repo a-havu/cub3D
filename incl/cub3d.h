@@ -26,12 +26,13 @@ typedef struct	s_point
 
 typedef struct	s_map
 {
+	char	player;
 	char	**array;
 	char	*one_d_array;
 	int		height;
 	size_t	width;
 	t_point	player_pos;
-	size_t	player;
+	size_t	player_count;
 	size_t	no;
 	size_t	so;
 	size_t	we;
@@ -93,44 +94,47 @@ typedef struct	s_arena
 
 typedef struct	s_game
 {
-	mlx_t		*mlx;
-	t_map		*map;
-	char		**map_cpy;
-	t_images	*images;
-	mlx_image_t	*minimap_base;
-	t_textures	*textures;
+	mlx_t			*mlx;
+	t_map			*map;
+	char			**map_cpy;
+	char			**final_map;
+	t_images		*images;
+	mlx_image_t		*minimap_base;
+	t_textures		*textures;
+	struct s_arena	*arena;
 	//size_t	collected //number of insects found
 }				t_game;
 
 //parsing
-void	check_args(int argc, char *arg);
+void	check_args(int argc, char *arg, t_game *game);
 void	check_map(char *arg, t_game *game, t_arena *arena);
-void	clean_up(t_game *game);
-void	count_symbols(t_game *game, int i);
-void	extract_game_map(char *arg, t_game *game);
+void	count_symbols(t_game *game);
+void	execute_flood_fill(t_game *game);
+void	extract_game_map(char *arg, t_game *game, t_arena *arena);
 void	find_identifiers(char **elements, t_game *game);
 void	*free_2d_arr(char **arr);
 void	ft_error(int num, t_game *game);
 int		ft_len(const char *s);
-char    **ft_split_charset(char *str, char *charset);
 int		get_rows(char *arg, t_game *game);
 mlx_t	*initialise_mlx(mlx_t *mlx, t_map *map);
 bool	is_identifier(char *element);
 
 // initialisation
-int 	create_arena(t_arena *arena, size_t capacity);
+t_arena *create_arena(size_t capacity);
 mlx_t	*initialise_mlx(mlx_t *mlx, t_map *map);
 void	initialise_images(t_game *game, t_images *images);
 void	place_minimap(t_map *map, t_images *images, mlx_t *mlx);
 
 // utilities
-void	exit_process(t_map *map);
 void	img_error(t_game *game, char signal);
 void	delete_textures(t_game *game);
 void    *arena_alloc(t_arena *arena, size_t size);
 char	*arena_join(t_arena *arena, char const *s1, char const *s2);
+char	*arena_next_line(int fd, t_arena *arena);
 char	*arena_strdup(t_arena *arena, const char *s);
 char	**arena_setsplit(t_arena *arena, char *str, char *charset);
+void    clean_arena(t_arena *arena);
+size_t	round_to_eight(size_t num);
 
 // movement
 void	key_input(mlx_key_data_t keydata, void *param);

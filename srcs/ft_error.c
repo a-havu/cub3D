@@ -16,19 +16,6 @@ void	ft_error(int num, t_game *game)
 		ft_putstr_fd("\033[91mError\nYour map's not valid💅\n\033[0m", 2);
 	else if (num == 7)
 		ft_putstr_fd("\033[91mError\nInvalid identifiers🧭\n\033[0m", 2);
-	clean_up(game);
+	clean_arena(game->arena);
 	exit(EXIT_FAILURE);
-}
-
-void	clean_up(t_game *game)
-{
-	if (game->map)
-	{
-		if (game->map->one_d_array)
-			free(game->map->one_d_array);
-		if (game->map->array)
-			free_2d_arr(game->map->array);
-	}
-	if (game->mlx)
-		mlx_terminate(game->mlx);
 }

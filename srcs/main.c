@@ -1,4 +1,5 @@
 #include "cub3d.h"
+#include <stdio.h>
 
 // bool	fits_monitor(mlx_t *mlx)
 // {
@@ -28,25 +29,24 @@ int main(int argc, char **argv)
 	t_map		map;
 	t_images	images;
 	t_textures	textures;
-	t_arena		arena;
+	t_arena		*arena;
 
-	(void)argc;//
-	create_arena(&arena, CAPACITY);
+	arena = create_arena(CAPACITY);
 	ft_memset(&game, 0, sizeof(t_game));
 	ft_memset(&map, 0, sizeof(t_map));
 	ft_memset(&textures, 0, sizeof(t_textures));
 	game.map = &map; // create a set game info function for next 5 lines
 	game.images = &images;
 	game.textures = &textures;
-	check_args(argc, argv[1]);
-	check_map(argv[1], &game, &arena);
+	game.arena = arena;
+	check_args(argc, argv[1], &game);
+	check_map(argv[1], &game, arena);
 	//game.mlx = initialise_mlx(game.mlx, game.map);
-	game.mlx = initialise_mlx(game.mlx, game.map);
 	// mlx_key_hook(game.mlx, &key_input, &game);
 	// mlx_loop_hook(game.mlx, &hook, &game);
 	//mlx_loop_hook(game.mlx, &key_input, &game);
-	mlx_loop(game.mlx);
-	mlx_terminate(game.mlx);
-	exit_process(&map);
+	//mlx_loop(game.mlx);
+	//mlx_terminate(game.mlx);
+	clean_arena(arena);
 	return (0);
 }

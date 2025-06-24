@@ -6,7 +6,7 @@
 /*   By: ahavu <ahavu@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 09:23:50 by ahavu             #+#    #+#             */
-/*   Updated: 2025/01/09 16:39:40 by ahavu            ###   ########.fr       */
+/*   Updated: 2025/06/24 10:00:52 by ahavu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static char	*join(char *next_line, char stash[BUFFER_SIZE + 1])
 	tmp = ft_strjoin(next_line, stash);
 	if (!tmp)
 		return (NULL);
-	free (next_line);
+	free(next_line);
 	return (tmp);
 }
 

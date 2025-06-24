@@ -7,7 +7,7 @@ static void	validate_identifiers(t_game *game)
 		|| game->map->f > 1 || game->map->c > 1)
 		{
 			ft_putstr_fd("\033[91mError\nInvalid identifiers🧭\n\033[0m", 2);
-			free(game->map->one_d_array);
+			clean_arena(game->arena);
 			exit(EXIT_FAILURE);
 		}
 	if (game->map->no == 0 || game->map->so == 0
@@ -15,7 +15,7 @@ static void	validate_identifiers(t_game *game)
 		|| game->map->f == 0 || game->map->c == 0)
 		{
 			ft_putstr_fd("\033[91mError\nInvalid identifiers🧭\n\033[0m", 2);
-			free(game->map->one_d_array);
+			clean_arena(game->arena);
 			exit(EXIT_FAILURE);
 		}
 }
@@ -62,17 +62,17 @@ void	find_identifiers(char **elements, t_game *game)
 			else
 			{
 				ft_putstr_fd("\033[91mError\nInvalid identifiers🧭\n\033[0m", 2);
-				free(game->map->one_d_array);
+				clean_arena(game->arena);
 				exit(EXIT_FAILURE);
 			}
 		}
 		i++;
 	}
 	validate_identifiers(game);
-	game->map->last_identifier = ft_strjoin(elements[i - 2], " ");
+	game->map->last_identifier = arena_join(game->arena, elements[i - 2], " ");
 	if (!game->map->last_identifier)
 		ft_error(5, game);
-	game->map->last_identifier = ft_strjoin(game->map->last_identifier, elements[i - 1]);
+	game->map->last_identifier = arena_join(game->arena, game->map->last_identifier, elements[i - 1]);
 	if (!game->map->last_identifier)
 		ft_error(5, game);
 	game->map->last_id = i / 2;
@@ -96,63 +96,56 @@ bool	is_identifier(char *element)
 }
 
 
-void	check_args(int argc, char *arg)
+void	check_args(int argc, char *arg, t_game *game)
 {
 	if (argc != 2 || ft_strlen(arg) < 5)
 	{
 		ft_putstr_fd("\033[91mError\nInvalid argument!☝️\n\033[0m", 2);
+		clean_arena(game->arena);
 		exit(EXIT_FAILURE);
 	}
 	if (open(arg, O_RDONLY) == -1)
 	{
 		ft_putstr_fd("\033[91mError\nYour map's not valid💅\n\033[0m", 2);
+		clean_arena(game->arena);
 		exit(EXIT_FAILURE);
 	}
 }
 
-// void	check_walls(t_game *game)
-// {
-// 	int	k;
-// 	int	i;
-
-// 	i = 0;
-// 	while(game->map->array[0][i])
-// 	{
-// 		if (game->map->array[0][i] != '1')
-// 			ft_error(6, game);
-// 		i++;
-// 	}
-// 	while(game->map->array[i])
-// 	{
-// 		if (game->map->array[i][0] != ' ' && game->map->array[i][0] != '1')
-// 			ft_error(6, game);
-		
-// 	}
-// }
-
-void	count_symbols(t_game *game, int i)
+void	count_symbols(t_game *game)
 {
-	int	k;
+	int	x;
+	int	y;
 
-	//check_walls(game);
-	while (game->map->array[i])
+	y = 0;
+	while (ft_strncmp(game->map->array[y],
+		game->map->last_identifier, ft_strlen(game->map->last_identifier)))
+			y++;
+	y += 2;
+	while (y <= game->map->height)
 	{
-		k = 0;
-		while (game->map->array[i][k])
+		x = 0;
+		while (game->final_map[y][x])
 		{
-			if (game->map->array[i][k] == 'N' || game->map->array[i][k] == 'S'
-					|| game->map->array[i][k] == 'E'
-					|| game->map->array[i][k] == 'W')
-					game->map->player++;
-			else if (game->map->array[i][k] != '0' && game->map->array[i][k] != '1' 
-				&& game->map->array[i][k] != '\n' && game->map->array[i][k] != ' ')
+			if (game->final_map[y][x] == ' ')
+				game->final_map[y][x] = '1';
+			if (game->final_map[y][x] == 'N' || game->final_map[y][x] == 'S'
+					|| game->final_map[y][x] == 'E'
+					|| game->final_map[y][x] == 'W')
+					{
+						game->map->player_count++;
+						game->map->player = game->final_map[y][x];
+						game->map->player_pos.y = y;
+						game->map->player_pos.x = x;
+					}
+			else if (game->final_map[y][x] != '0' && game->final_map[y][x] != '1')
 					ft_error(4, game);
-			k++;
+			x++;
 		}
-		i++;
+		y++;
 	}
-	if (game->map->player > 1)
+	if (game->map->player_count > 1)
 		ft_error(2, game);
-	else if (game->map->player == 0)
+	else if (game->map->player_count == 0)
 		ft_error(3, game);
 }

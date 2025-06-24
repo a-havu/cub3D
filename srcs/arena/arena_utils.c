@@ -43,3 +43,16 @@ char	*arena_strdup(t_arena *arena, const char *s)
 	new[i] = '\0';
 	return (new);
 }
+
+/*the number needs to be rounded to eights to please the chip*/
+
+size_t	round_to_eight(size_t num)
+{
+	size_t result;
+
+	if ((num & 7) == 0)
+		return (num);
+	result = (num + 7) & ~7;
+	return (result);
+}
+
