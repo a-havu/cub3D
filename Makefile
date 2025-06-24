@@ -11,9 +11,15 @@ ifeq ($(shell uname), Darwin)
 	-framework Cocoa -framework OpenGL -framework IOKit
 endif
 
-SOURCES			:= srcs/main.c srcs/initialise.c srcs/place_minimap.c \
-				srcs/utils.c srcs/key_input.c srcs/arena.c \
-				srcs/arena_utils.c srcs/arena_split.c srcs/arena_setsplit.c \
+SOURCES			:= srcs/main.c \
+				srcs/initialise.c \
+				srcs/place_minimap.c \
+				srcs/utils.c
+				srcs/arena/arena.c \
+				srcs/arena/arena_utils.c \
+				srcs/arena/arena_split.c \
+				srcs/arena/arena_setsplit.c \
+				srcs/graphics.c \
 
 
 OBJECTS			:= $(SOURCES:.c=.o)

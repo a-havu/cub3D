@@ -32,11 +32,13 @@ typedef struct	s_map
 	char	**array;
 	size_t		height;
 	int		width;
+	char	*no_wall;
+	char	*so_wall;
+	char	*ea_wall;
+	char	*we_wall;
 	t_point	plr_pos;
-	t_point	dir;
-	t_point	plane;
 	int		len;
-	//player facing direction (N, S, W or E)?
+	char	player; // N S W or E
 }				t_map;
 
 typedef struct	s_textures
@@ -89,6 +91,10 @@ typedef struct	s_game
 	t_images	*images;
 	mlx_image_t	*minimap_base;
 	t_textures	*textures;
+	t_point		dir;
+	t_point		raydir;
+	t_point		camera;
+	t_point		plane;
 	//size_t	collected //number of insects found
 }				t_game;
 
@@ -108,5 +114,8 @@ char	**arena_setsplit(t_arena *arena, char *str, char *charset);
 
 // movement
 void	key_input(mlx_key_data_t keydata, void *param);
+
+// graphics
+int get_colour(int r, int g, int b, int a);
 
 #endif
