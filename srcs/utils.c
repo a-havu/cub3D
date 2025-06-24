@@ -57,11 +57,10 @@ int	get_rows(char *arg, t_game *game)
 		ft_error(8, game);
 	while (1)
 	{
-		line = get_next_line(fd);
+		line = arena_next_line(fd, game->arena);
 		if (!line)
 			break ;
 		rows++;
-		free(line);
 	}
 	close(fd);
 	return (rows);

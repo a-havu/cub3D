@@ -65,8 +65,8 @@ int main(int argc, char **argv)
 	// mlx_key_hook(game.mlx, &key_input, &game);
 	// mlx_loop_hook(game.mlx, &hook, &game);
 	//mlx_loop_hook(game.mlx, &key_input, &game);
-	mlx_loop(game.mlx);
-	mlx_terminate(game.mlx);
-	exit_process(&map);
+	//mlx_loop(game.mlx);
+	//mlx_terminate(game.mlx);
+	clean_arena(arena);
 	return (0);
 }
