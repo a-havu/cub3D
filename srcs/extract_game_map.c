@@ -12,13 +12,15 @@ void	get_map_array(t_game *game, int fd, t_arena *arena)
 	while (1)
 	{
 		line = arena_next_line(fd, arena);
+		ft_printf("line: %s\n", line);
 		if (!line)
 			break ;
-		if (ft_strchr(line, '\n'))
-			*ft_strchr(line, '\n') = '\0';
+		// if (ft_strchr(line, '\n'))
+		// 	*ft_strchr(line, '\n') = '\0';
 		if (ft_strlen(line) > game->map->width)
 			game->map->width = ft_strlen(line);
 		game->map->array[i] = arena_strdup(arena, line);
+		ft_printf("get_map_array: %s", game->map->array[i]);
 		i++;
 	}
 	game->map->array[i] = NULL;
@@ -56,6 +58,26 @@ char	**copy_map(t_game *game, t_arena *arena)
 	copy[i] = NULL;
 	game->map->height = i;
 	return(copy);
+}
+
+static void	do_final_map(t_game *game, t_arena *arena, int i)
+{
+	int	k;
+
+	k = 0;
+	game->final_map = arena_alloc(arena, (game->map->char_count * sizeof(char) + sizeof(char *)));
+	while(game->map->array[i])
+	{
+		if (game->map->array[i][0] != '\n')
+		{
+			game->final_map[k] = arena_strdup(arena, game->map->array[i]);
+			if (!game->final_map[k])
+				ft_error(5, game);
+		}
+		i++;
+		k++;
+	}
+	game->final_map[k] = NULL;
 }
 
 void	extract_game_map(char *arg, t_game *game, t_arena *arena)
