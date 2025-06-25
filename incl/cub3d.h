@@ -30,6 +30,7 @@ typedef struct	s_map
 	char	**array;
 	char	*one_d_array;
 	int		height;
+	int		char_count;
 	size_t	width;
 	t_point	player_pos;
 	size_t	player_count;
@@ -108,6 +109,7 @@ typedef struct	s_game
 //parsing
 void	check_args(int argc, char *arg, t_game *game);
 void	check_map(char *arg, t_game *game, t_arena *arena);
+void	copy_map(t_game *game, t_arena *arena);
 void	count_symbols(t_game *game);
 void	execute_flood_fill(t_game *game);
 void	extract_game_map(char *arg, t_game *game, t_arena *arena);
@@ -115,6 +117,7 @@ void	find_identifiers(char **elements, t_game *game);
 void	*free_2d_arr(char **arr);
 void	ft_error(int num, t_game *game);
 int		ft_len(const char *s);
+void	get_map_array(t_game *game, int fd, t_arena *arena);
 int		get_rows(char *arg, t_game *game);
 mlx_t	*initialise_mlx(mlx_t *mlx, t_map *map);
 bool	is_identifier(char *element);

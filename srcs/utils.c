@@ -16,6 +16,7 @@ int	get_rows(char *arg, t_game *game)
 		line = arena_next_line(fd, game->arena);
 		if (!line)
 			break ;
+		game->map->char_count += ft_strlen(line);
 		rows++;
 	}
 	close(fd);

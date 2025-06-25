@@ -25,7 +25,7 @@ static void	check_cub_elements(t_game *game, t_arena *arena)
 {
 	char	**elements;
 
-	elements = arena_setsplit(arena, game->map->one_d_array, " \n"); //tabs?
+	elements = arena_setsplit(arena, game->map->one_d_array, " \n");
 	if (!elements)
 		ft_error(5, game);
 	find_identifiers(elements, game);
@@ -40,6 +40,14 @@ void	check_map(char *arg, t_game *game, t_arena *arena)
 		ft_error(8, game);
 	convert_cub_to_one_d_array(game, fd, arena);
 	check_cub_elements(game, arena);
+	get_map_array(game, fd, arena);
+	int i = 0;
+	while(i < 20)
+	{
+		//ft_printf("array %d: %s\n", i, game->map->array[i]);
+		i++;
+	}
+	copy_map(game, arena);
+	execute_flood_fill(game);
 	extract_game_map(arg, game, arena);
-	close(fd);
 }

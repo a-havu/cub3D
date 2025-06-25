@@ -60,11 +60,7 @@ void	find_identifiers(char **elements, t_game *game)
 				game->map->c_value = elements[i + 1];
 			}
 			else
-			{
-				ft_putstr_fd("\033[91mError\nInvalid identifiers🧭\n\033[0m", 2);
-				clean_arena(game->arena);
-				exit(EXIT_FAILURE);
-			}
+				ft_error(7, game);
 		}
 		i++;
 	}
@@ -94,7 +90,6 @@ bool	is_identifier(char *element)
 		return (true);
 	return (false);
 }
-
 
 void	check_args(int argc, char *arg, t_game *game)
 {
@@ -138,7 +133,9 @@ void	count_symbols(t_game *game)
 						game->map->player_pos.y = y;
 						game->map->player_pos.x = x;
 					}
-			else if (game->final_map[y][x] != '0' && game->final_map[y][x] != '1')
+			else if (game->final_map[y][x] != '0'
+				&& game->final_map[y][x] != '1'
+				&& game->final_map[y][x] != '\n')
 					ft_error(4, game);
 			x++;
 		}
