@@ -109,7 +109,7 @@ typedef struct	s_game
 //parsing
 void	check_args(int argc, char *arg, t_game *game);
 void	check_map(char *arg, t_game *game, t_arena *arena);
-void	copy_map(t_game *game, t_arena *arena);
+char	**copy_map(t_game *game, t_arena *arena);
 void	count_symbols(t_game *game);
 void	execute_flood_fill(t_game *game);
 void	extract_game_map(char *arg, t_game *game, t_arena *arena);

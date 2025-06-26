@@ -113,11 +113,7 @@ void	count_symbols(t_game *game)
 	int	y;
 
 	y = 0;
-	while (ft_strncmp(game->map->array[y],
-		game->map->last_identifier, ft_strlen(game->map->last_identifier)))
-			y++;
-	y += 2;
-	while (y <= game->map->height)
+	while (game->final_map[y])
 	{
 		x = 0;
 		while (game->final_map[y][x])

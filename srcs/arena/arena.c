@@ -1,4 +1,5 @@
 #include "cub3d.h"
+#include <stdio.h>
 
 t_arena *create_arena(size_t capacity)
 {
@@ -27,6 +28,7 @@ void    *arena_alloc(t_arena *arena, size_t size)
     void    *data;
     t_arena *current;
 
+	size = round_to_eight(size);
 	current = arena;
     if (size > current->capacity)
         return (NULL);
