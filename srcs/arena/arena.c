@@ -1,4 +1,5 @@
 #include "cub3d.h"
+#include <stdio.h>
 
 t_arena *create_arena(size_t capacity)
 {

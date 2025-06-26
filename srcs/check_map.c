@@ -10,7 +10,7 @@ static void	convert_cub_to_one_d_array(t_game *game, int fd, t_arena *arena)
 		ft_error(1, game);
 	while (1)
 	{
-		line = arena_next_line(fd, arena);
+		line = arena_next_line(fd, arena); //tässä kohtaa ei tuu NULLii
 		if (!line)
 			break ;
 		game->map->one_d_array = arena_join(arena, game->map->one_d_array, line);
