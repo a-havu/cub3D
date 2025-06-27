@@ -3,10 +3,10 @@
 
 # include "libft_plus.h"
 # include "libftprintf.h"
+# include "../MLX42/include/MLX42/MLX42.h"
 # include <math.h>
 # include <fcntl.h>
-# include "../MLX42/include/MLX42/MLX42.h"
-# include <stdio.h> //remove
+# include <stdbool.h>
 
 # define W 13
 # define A 0
@@ -26,16 +26,29 @@ typedef struct	s_point
 
 typedef struct	s_map
 {
-	char	*name;
-	char	*line;
-	char	*file;
+	char	player;
 	char	**array;
-	size_t		height;
-	int		width;
-	t_point	plr_pos;
-	t_point	dir;
-	t_point	plane;
-	int		len;
+	char	*one_d_array;
+	int		height;
+	int		char_count;
+	size_t	width;
+	t_point	player_pos;
+	size_t	player_count;
+	size_t	no;
+	size_t	so;
+	size_t	we;
+	size_t	ea;
+	size_t	f;
+	size_t	c;
+	char	*no_wall;
+	char	*so_wall;
+	char	*we_wall;
+	char	*ea_wall;
+	char	*f_value;
+	char	*c_value;
+	char	*last_identifier;
+	int		last_id;
+
 	//player facing direction (N, S, W or E)?
 }				t_map;
 
@@ -45,9 +58,8 @@ typedef struct	s_textures
 	mlx_texture_t   *e_wall;
 	mlx_texture_t   *s_wall;
 	mlx_texture_t   *w_wall;
-	mlx_texture_t   *miniwall;
-	mlx_texture_t   *empty;
-	mlx_texture_t   *offedge;
+	mlx_texture_t	*sky;
+	mlx_texture_t   *ground;
 	mlx_texture_t   *door;
 	mlx_texture_t   *camera;
 	mlx_texture_t   *insect1;
@@ -84,27 +96,47 @@ typedef struct	s_arena
 
 typedef struct	s_game
 {
-	mlx_t		*mlx;
-	t_map		*map;
-	t_images	*images;
-	mlx_image_t	*minimap_base;
-	t_textures	*textures;
+	mlx_t			*mlx;
+	t_map			*map;
+	char			**map_cpy;
+	char			**final_map;
+	t_images		*images;
+	mlx_image_t		*minimap_base;
+	t_textures		*textures;
+	struct s_arena	*arena;
 	//size_t	collected //number of insects found
 }				t_game;
 
-// initialisation
-int create_arena(t_arena *arena, size_t capacity);
+//parsing
+void	check_args(int argc, char *arg, t_game *game);
+void	check_map(char *arg, t_game *game, t_arena *arena);
+char	**copy_map(t_game *game, t_arena *arena);
+void	count_symbols(t_game *game);
+void	execute_flood_fill(t_game *game);
+void	extract_game_map(char *arg, t_game *game, t_arena *arena);
+void	find_identifiers(char **elements, t_game *game);
+void	*free_2d_arr(char **arr);
+void	ft_error(int num, t_game *game);
+int		ft_len(const char *s);
+void	get_map_array(t_game *game, int fd, t_arena *arena);
+int		get_rows(char *arg, t_game *game);
 mlx_t	*initialise_mlx(mlx_t *mlx, t_map *map);
-void	initialise_images(t_game *game, t_images *images);
-void	place_minimap(t_map *map, t_images *images, mlx_t *mlx);
+bool	is_identifier(char *element);
+
+// initialisation
+t_arena *create_arena(size_t capacity);
+mlx_t	*initialise_mlx(mlx_t *mlx, t_map *map);
 
 // utilities
-void	exit_process(t_map *map);
 void	img_error(t_game *game, char signal);
 void	delete_textures(t_game *game);
-char	*arena_join(t_arena *arena, const *s1, char const *s2);
-char	*arena_strdup(const char *s);
+void    *arena_alloc(t_arena *arena, size_t size);
+char	*arena_join(t_arena *arena, char const *s1, char const *s2);
+char	*arena_next_line(int fd, t_arena *arena);
+char	*arena_strdup(t_arena *arena, const char *s);
 char	**arena_setsplit(t_arena *arena, char *str, char *charset);
+void    clean_arena(t_arena *arena);
+size_t	round_to_eight(size_t num);
 
 // movement
 void	key_input(mlx_key_data_t keydata, void *param);

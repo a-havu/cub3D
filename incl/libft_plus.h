@@ -13,7 +13,7 @@
 #ifndef LIBFT_PLUS_H
 # define LIBFT_PLUS_H
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 10
+#  define BUFFER_SIZE 100
 # endif
 
 # include <stdlib.h>

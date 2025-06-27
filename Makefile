@@ -11,10 +11,18 @@ ifeq ($(shell uname), Darwin)
 	-framework Cocoa -framework OpenGL -framework IOKit
 endif
 
-SOURCES			:= srcs/main.c srcs/initialise.c srcs/place_minimap.c \
-				srcs/utils.c srcs/key_input.c srcs/arena.c \
-				srcs/arena_utils.c srcs/arena_split.c srcs/arena_setsplit.c \
-
+SOURCES			:=	srcs/check_map.c \
+					srcs/extract_game_map.c \
+					srcs/ft_error.c \
+					srcs/main.c \
+					srcs/arena/arena.c \
+					srcs/arena/arena_next_line.c \
+					srcs/arena/arena_setsplit.c \
+					srcs/arena/arena_split.c \
+					srcs/arena/arena_utils.c \
+					srcs/utils/flood_fill.c \
+					srcs/utils/parsing_utils.c \
+					srcs/utils/utils.c \
 
 OBJECTS			:= $(SOURCES:.c=.o)
 HEADERS			:= -I ./incl -I $(MLX_DIR)/include
@@ -35,7 +43,7 @@ $(MLX_AR):
 $(NAME): $(MLX_AR) $(OBJECTS)
 	@echo "\033[36m-----making libft-----\033[0m"
 	@make -C $(LIBFT_PATH)
-	$(CC) $(CFLAGS) $(OBJECTS) $(LIBFT_PATH)libft_plus.a \
+	$(CC) $(OBJECTS) $(LIBFT_PATH)libft_plus.a \
 		$(HEADERS) $(LIB) -o $(NAME)
 
 clean:
@@ -52,7 +60,7 @@ fclean: clean
 
 re: fclean all
 
-debug: COMPILE_FLAGS += $(DEBUG_FLAGS)
+debug: CFLAGS += $(DEBUG_FLAGS)
 debug: re
 
 .PHONY: all clean fclean re debug
