@@ -103,11 +103,6 @@ void	load_images(t_game *game)
 		ft_error_graphics(game);
 }
 
-void	place_minimap(t_game *game)
-{
-
-}
-
 void	run_game(t_game *game)
 {
 	t_images 	*images;
@@ -124,7 +119,7 @@ void	run_game(t_game *game)
 	render everything, sit mlx_key_hook ja mlx_loop */
 	load_images(game);
 	//colours??
-	place_minimap(game)
+	//place_minimap(game)
 	// mlx_key_hook(game.mlx, &key_input, &game);
 	// mlx_loop_hook(game.mlx, &hook, &game); //mika taa on? "executes a function per frame so be careful" :D
 	// mlx_loop(game->mlx);
