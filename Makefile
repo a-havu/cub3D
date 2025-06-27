@@ -14,7 +14,6 @@ endif
 SOURCES			:=	srcs/check_map.c \
 					srcs/extract_game_map.c \
 					srcs/ft_error.c \
-					srcs/initialise.c \
 					srcs/main.c \
 					srcs/arena/arena.c \
 					srcs/arena/arena_next_line.c \
