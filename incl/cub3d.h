@@ -151,8 +151,8 @@ void	count_symbols(t_game *game);
 void	execute_flood_fill(t_game *game);
 void	extract_game_map(char *arg, t_game *game, t_arena *arena);
 void	find_identifiers(char **elements, t_game *game);
-void	*free_2d_arr(char **arr); // onko tata enaa?
 void	ft_error(int num, t_game *game);
+void	ft_error_graphics(t_game *game);
 int		ft_len(const char *s);
 void	get_map_array(t_game *game, int fd, t_arena *arena);
 int		get_rows(char *arg, t_game *game);
@@ -160,8 +160,9 @@ bool	is_identifier(char *element);
 
 // initialisation
 t_arena *create_arena(size_t capacity);
-mlx_t	*initialise_mlx(mlx_t *mlx, t_arena *arena);
-void	initialise_images(t_game *game);
+mlx_t	*initialise_mlx(t_game *game);
+void	initialise_images(t_game *game, t_images *images);
+void	place_minimap(t_game *game);
 
 // utilities
 void	img_error(t_game *game, char signal);

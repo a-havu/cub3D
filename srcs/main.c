@@ -83,6 +83,54 @@ void	key_input(mlx_key_data_t keydata, void *param)
 	rayhook(game);
 }
 
+void	load_images(t_game *game)
+{
+	game->textures->n_wall = mlx_load_png(game->map->no_wall);
+	game->textures->s_wall = mlx_load_png(game->map->so_wall);
+	game->textures->e_wall = mlx_load_png(game->map->ea_wall);
+	game->textures->w_wall = mlx_load_png(game->map->we_wall);
+	//and the rest of them
+	if (!game->textures->n_wall || !game->textures->s_wall
+		|| !game->textures->e_wall || !game->textures->w_wall)//and the rest of them
+		ft_error_graphics(game);
+	game->images->n_wall = mlx_texture_to_image(game->mlx, game->textures->n_wall);
+	game->images->s_wall = mlx_texture_to_image(game->mlx, game->textures->s_wall);
+	game->images->e_wall = mlx_texture_to_image(game->mlx, game->textures->e_wall);
+	game->images->w_wall = mlx_texture_to_image(game->mlx, game->textures->w_wall);
+	//and the rest of them
+	if (!game->images->n_wall || !game->images->s_wall
+		|| !game->images->e_wall || !game->images->w_wall)//and the rest of them
+		ft_error_graphics(game);
+}
+
+void	place_minimap(t_game *game)
+{
+
+}
+
+void	run_game(t_game *game)
+{
+	t_images 	*images;
+	t_textures	*textures;
+
+	ft_memset(&images, 0, sizeof(t_textures));
+	ft_memset(&textures, 0, sizeof(t_textures));
+	game->mlx = mlx_init(MAX_W, MAX_H, "SWEN THE BUGBOI", true);
+	if (!game->mlx)
+		ft_error(8, game);
+	game->images = images;
+	game->textures = textures;
+	/* mun so_longissa jarjestys on: load images, delete textures,
+	render everything, sit mlx_key_hook ja mlx_loop */
+	load_images(game);
+	//colours??
+	place_minimap(game)
+	// mlx_key_hook(game.mlx, &key_input, &game);
+	// mlx_loop_hook(game.mlx, &hook, &game); //mika taa on? "executes a function per frame so be careful" :D
+	// mlx_loop(game->mlx);
+	// mlx_terminate(game->mlx);
+}
+
 int main(int argc, char **argv)
 {
 	t_game		game;
@@ -92,20 +140,11 @@ int main(int argc, char **argv)
 	arena = create_arena(CAPACITY);
 	ft_memset(&game, 0, sizeof(t_game));
 	ft_memset(&map, 0, sizeof(t_map));
-	game.map = &map; // init game values in separate function?
+	game.map = &map; // create a set game info function for next 5 lines
 	game.arena = arena;
 	check_args(argc, argv[1], &game);
 	check_map(argv[1], &game, arena);
 	run_game(&game);
-	init_game(&game);//needs to happen after map parsing, player SNWE set
-	initialise_images(&game);
-	rayhook(&game);
-	mlx_key_hook(game.mlx, &key_input, &game);
-	//mlx_loop_hook(game.mlx, &rayhook, &game);
-	//mlx_loop_hook(game.mlx, &keyhook, &game);
-	mlx_loop(game.mlx);
-	//delete_textures(&game);
-	mlx_terminate(game.mlx);
-	clean_arena(arena);
-	return (0);
+	// clean_arena(arena);
+	// return (0); TODO: exit happens in run_game?
 }
