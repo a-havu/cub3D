@@ -49,24 +49,16 @@ int main(int argc, char **argv)
 {
 	t_game		game;
 	t_map		map;
-	t_images	images;
-	t_textures	textures;
 	t_arena		*arena;
 
 	arena = create_arena(CAPACITY);
 	ft_memset(&game, 0, sizeof(t_game));
 	ft_memset(&map, 0, sizeof(t_map));
-	ft_memset(&textures, 0, sizeof(t_textures));
 	game.map = &map; // create a set game info function for next 5 lines
-	game.images = &images;
-	game.textures = &textures;
-	map.name = ft_strdup(argv[1]);//
-	game.mlx = initialise_mlx(game.mlx, game.map);
-	// mlx_key_hook(game.mlx, &key_input, &game);
-	// mlx_loop_hook(game.mlx, &hook, &game);
-	//mlx_loop_hook(game.mlx, &key_input, &game);
-	//mlx_loop(game.mlx);
-	//mlx_terminate(game.mlx);
-	clean_arena(arena);
-	return (0);
+	game.arena = arena;
+	check_args(argc, argv[1], &game);
+	check_map(argv[1], &game, arena);
+	//run_game(&game);
+	// clean_arena(arena);
+	// return (0); TODO: exit happens in run_game?
 }

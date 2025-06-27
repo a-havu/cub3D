@@ -60,26 +60,6 @@ char	**copy_map(t_game *game, t_arena *arena)
 	return(copy);
 }
 
-static void	do_final_map(t_game *game, t_arena *arena, int i)
-{
-	int	k;
-
-	k = 0;
-	game->final_map = arena_alloc(arena, (game->map->char_count * sizeof(char) + sizeof(char *)));
-	while(game->map->array[i])
-	{
-		if (game->map->array[i][0] != '\n')
-		{
-			game->final_map[k] = arena_strdup(arena, game->map->array[i]);
-			if (!game->final_map[k])
-				ft_error(5, game);
-		}
-		i++;
-		k++;
-	}
-	game->final_map[k] = NULL;
-}
-
 void	extract_game_map(char *arg, t_game *game, t_arena *arena)
 {
 	int		fd;
