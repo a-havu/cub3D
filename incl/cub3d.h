@@ -48,6 +48,7 @@ typedef struct	s_map
 	char	*c_value;
 	char	*last_identifier;
 	int		last_id;
+
 	//player facing direction (N, S, W or E)?
 }				t_map;
 
@@ -125,8 +126,6 @@ bool	is_identifier(char *element);
 // initialisation
 t_arena *create_arena(size_t capacity);
 mlx_t	*initialise_mlx(mlx_t *mlx, t_map *map);
-void	initialise_images(t_game *game, t_images *images);
-void	place_minimap(t_map *map, t_images *images, mlx_t *mlx);
 
 // utilities
 void	img_error(t_game *game, char signal);
