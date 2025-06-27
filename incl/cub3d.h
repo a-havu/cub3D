@@ -24,13 +24,20 @@ typedef struct	s_point
 	double	y;
 }				t_point;
 
+typedef struct s_spot
+{
+	int	x;
+	int	y;
+}				t_spot;
+
+
 typedef struct	s_map
 {
 	char	*name;
 	char	*line;
 	char	*file;
 	char	**array;
-	size_t		height;
+	size_t	height;
 	int		width;
 	char	*no_wall;
 	char	*so_wall;
@@ -93,8 +100,19 @@ typedef struct	s_game
 	t_textures	*textures;
 	t_point		dir;
 	t_point		raydir;
-	t_point		camera;
 	t_point		plane;
+	t_point		side_dist;
+	t_point		delta;
+	t_spot		map;
+	t_spot		step;
+	int			side;
+	int			line_height;
+	int			draw_start;
+	int			draw_end;
+	bool		hit;
+	double		wall_dist;
+	double		camera_x;
+	double		wall_x;
 	//size_t	collected //number of insects found
 }				t_game;
 
@@ -113,9 +131,10 @@ char	*arena_strdup(const char *s);
 char	**arena_setsplit(t_arena *arena, char *str, char *charset);
 
 // movement
-void	key_input(mlx_key_data_t keydata, void *param);
+void	keyhook(mlx_key_data_t keydata, void *param);
 
 // graphics
-int get_colour(int r, int g, int b, int a);
+int 	get_colour(int r, int g, int b, int a);
+void	rayhook(void *param);
 
 #endif

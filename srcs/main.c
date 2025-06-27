@@ -14,23 +14,21 @@
 // 	return (true);
 // }
 
-void	rayhook(void *param)
+/* initial values for direction and plane vectors.
+Rotating based on direction faced */
+
+void	init_game(t_game *game)
 {
-	t_game	*game;
-	int		x;
-
-	game = param;
-	x = 0;
-	while (x < MAX_W) // screen width
-	{
-		game->camera.x = 2 * x / (double)MAX_W - 1; // screen width
-		game->raydir.x = game->dir.x + game->plane.x * game->camera.x;
-		game->raydir.y = game->dir.y + game->plane.y * game->camera.x;
-		//game->map_x = (int)game->pos_x; check what is map_x and pos_x
-		//game->map_y = (int)game->pos_y;
-	}
-
-	
+	game->dir.x = 1;
+	game->dir.y = 0;
+	game->plane.x = 0;
+	game->plane.x = 0.66;
+	// if (game->map->player == 'S')
+	// 	rotate(game, M_PI / 2);
+	// else if (game->map->player == 'N')
+	// 	rotate(game, M_PI / 1.5);
+	// else if (game->map->player == 'W')
+	// 	rotate(game, M_PI);
 }
 
 int main(int argc, char **argv)
@@ -49,10 +47,12 @@ int main(int argc, char **argv)
 	game.map = &map; // create a set game info function for next 5 lines
 	game.images = &images;
 	game.textures = &textures;
+	init_cast(&game);//needs to happen after map parsing, player SNWE set
 	game.mlx = initialise_mlx(game.mlx, game.map);
 	initialise_images(&game, &images);
 	//mlx_key_hook(game.mlx, &key_input, &game);
 	mlx_loop_hook(game.mlx, &rayhook, &game);
+	//mlx_loop_hook(game.mlx, &keyhook, &game);
 	//mlx_loop(game.mlx);
 	delete_textures(&game);
 	mlx_terminate(game.mlx);
