@@ -20,6 +20,7 @@ SOURCES			:= srcs/main.c \
 				srcs/arena/arena_split.c \
 				srcs/arena/arena_setsplit.c \
 				srcs/graphics.c \
+				srcs/cast_walls.c \
 
 
 OBJECTS			:= $(SOURCES:.c=.o)

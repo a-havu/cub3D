@@ -40,9 +40,6 @@ wall_dist: perpendicular wall distance from camera plane to avoid fisheye effect
 
 line_height: by modifying what you multiply h with you an make taller or smaller walls.
 Higher values create higher boxes.
-
-wall_x: represents the exact value where the wall was hit, tells which x-coordinate
-of the texture to use. Can be y-coordinate of the wall, if side is 1, but always x of tex.
 */
 
 static void calc_wall_h(t_game *game)
@@ -120,30 +117,6 @@ static void calc_ray_n_delta(t_game *game, int x)
 		game->delta.y = 1e30;
 	else
 		game->delta.y = fabs(1 / game->raydir.y);
-}
-
-void    check_side(t_game *game, int x)
-{
-    if (game->side == 0 && game->step.x < 0) //check which wall hit and from which side
-    {
-        //get texture --> mlx textures are structs with height & width, need to set these?
-        //draw east wall
-    }
-    if (game->side == 0 && game->step.x > 0)
-    {
-        //get texture
-        //draw west wall
-    }
-    if (game->side == 1 && game->step.x < 0)
-    {
-        //get texture
-        //draw north wall
-    }
-    if (game->side == 1 && game->step.x > 0)
-    {
-        //get texture
-        //draw south wall
-    }
 }
 
 void	rayhook(void *param)

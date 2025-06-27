@@ -136,5 +136,6 @@ void	keyhook(mlx_key_data_t keydata, void *param);
 // graphics
 int 	get_colour(int r, int g, int b, int a);
 void	rayhook(void *param);
+void    check_side(t_game *game, int x);
 
 #endif
