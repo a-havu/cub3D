@@ -25,7 +25,7 @@ void	get_map_array(t_game *game, int fd, t_arena *arena)
 	close(fd);
 }
 
-//worry later: Swen & Bug in same room
+//: Swen & Bug in same room
 
 char	**copy_map(t_game *game, t_arena *arena)
 {
@@ -35,18 +35,23 @@ char	**copy_map(t_game *game, t_arena *arena)
 
 	i = 0;
 	y = game->map->last_id + 1;
+	while(game->map->array[y][0] == '\n' || is_identifier(game->map->array[y]))
+		y++;
 	copy = arena_alloc(arena, (game->map->char_count * sizeof(char)) + sizeof(char *));
 	if (!copy)
 		ft_error(1, game);
-	while(game->map->array[y][0] == '\n')
-		y++;
 	while (game->map->array[y])
 	{
-		copy[i] = arena_strdup(arena, game->map->array[y]);
-		if (!copy[i])
-			ft_error(5, game);
-		y++;
-		i++;
+		if (game->map->array[y][0] != '\n')
+		{
+			copy[i] = arena_strdup(arena, game->map->array[y]);
+			if (!copy[i])
+				ft_error(5, game);
+			y++;
+			i++;
+		}
+		else
+			y++;
 	}
 	copy[i] = NULL;
 	game->map->height = i;

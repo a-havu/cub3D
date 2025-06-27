@@ -6,7 +6,7 @@ static void	validate_identifiers(t_game *game)
 		|| game->map->we > 1 || game->map->ea > 1
 		|| game->map->f > 1 || game->map->c > 1)
 		{
-			ft_putstr_fd("\033[91mError\nInvalid identifiers🧭\n\033[0m", 2);
+			ft_putstr_fd("\033[91mError\nToo many identifiers🧭\n\033[0m", 2);
 			clean_arena(game->arena);
 			exit(EXIT_FAILURE);
 		}
@@ -14,7 +14,7 @@ static void	validate_identifiers(t_game *game)
 		|| game->map->we == 0 || game->map->ea == 0
 		|| game->map->f == 0 || game->map->c == 0)
 		{
-			ft_putstr_fd("\033[91mError\nInvalid identifiers🧭\n\033[0m", 2);
+			ft_putstr_fd("\033[91mError\nMissing identifier/s🧭\n\033[0m", 2);
 			clean_arena(game->arena);
 			exit(EXIT_FAILURE);
 		}
@@ -76,17 +76,17 @@ void	find_identifiers(char **elements, t_game *game)
 
 bool	is_identifier(char *element)
 {
-	if (!ft_strncmp(element, "NO", 3))
+	if (!ft_strncmp(element, "NO ", 3))
 		return (true);
-	else if (!ft_strncmp(element, "SO", 3))
+	else if (!ft_strncmp(element, "SO ", 3))
 		return (true);
-	else if (!ft_strncmp(element, "WE", 3))
+	else if (!ft_strncmp(element, "WE ", 3))
 		return (true);
-	else if (!ft_strncmp(element, "EA", 3))
+	else if (!ft_strncmp(element, "EA ", 3))
 		return (true);
-	else if (!ft_strncmp(element, "F", 3))
+	else if (!ft_strncmp(element, "F ", 2))
 		return (true);
-	else if (!ft_strncmp(element, "C", 3))
+	else if (!ft_strncmp(element, "C ", 2))
 		return (true);
 	return (false);
 }

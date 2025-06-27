@@ -5,7 +5,7 @@ void	ft_error(int num, t_game *game)
 	if (num == 1)
 		ft_putstr_fd("\033[91mError\nInitialising failed😤😤🥺\n\033[0m", 2);
 	else if (num == 2)
-		ft_putstr_fd("\033[91mError\nExtra players! It's not a co-op\n\033[0m", 2);
+		ft_putstr_fd("\033[91mError\nExtra players!👯‍♀️\033[0m", 2);
 	else if (num == 3)
 		ft_putstr_fd("\033[91mError\nCan't play with no players😔\n\033[0m", 2);
 	else if (num == 4)
@@ -17,7 +17,7 @@ void	ft_error(int num, t_game *game)
 	else if (num == 7)
 		ft_putstr_fd("\033[91mError\nInvalid identifiers🧭\n\033[0m", 2);
 	else if (num == 666)
-		ft_putstr_fd("\033[91mhoplaa\n\033[0m", 2);
+		ft_putstr_fd("\033[91mhoplaa\n\033[0m", 2);//for error checking
 	clean_arena(game->arena);
 	exit(EXIT_FAILURE);
 }
