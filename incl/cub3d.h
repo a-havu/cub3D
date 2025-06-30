@@ -109,6 +109,7 @@ typedef struct	s_game
 	int			line_height;
 	int			draw_start;
 	int			draw_end;
+	int			tex_num;
 	bool		hit;
 	double		wall_dist;
 	double		camera_x;
