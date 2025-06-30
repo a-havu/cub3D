@@ -1,34 +1,40 @@
 #include "cub3d.h"
+#include <stdio.h>
 
-int create_arena(t_arena *arena, size_t capacity)
+t_arena *create_arena(size_t capacity)
 {
     void    *data;
+	t_arena	*arena;
+	size_t	size;
+	size_t	data_cap;
 
-    arena = ft_calloc(sizeof(t_arena), 1);
+	size = round_to_eight(sizeof(t_arena));
+	data_cap = round_to_eight(capacity);
+    arena = ft_calloc(size, 1);
     if (!arena)
-        return(1);
-    data = ft_calloc(sizeof(uint8_t), capacity);
+        return(NULL);
+    data = ft_calloc(sizeof(uint8_t), data_cap);
     if (!data)
-        return (2);
+        return (NULL);
     arena->capacity = capacity;
     arena->size = 0;
     arena->data = data;
     arena->next = NULL;
-    return (0);
+    return (arena);
 }
 
 void    *arena_alloc(t_arena *arena, size_t size)
 {
     void    *data;
     t_arena *current;
-    int     i;
 
+	size = round_to_eight(size);
+	current = arena;
     if (size > current->capacity)
         return (NULL);
-    current = arena;
     if ((current->size + size) > current->capacity && current->next == NULL)
     {
-        create_arena(current->next, current->capacity);
+        current->next = create_arena(current->capacity);
         if (current->next == NULL || current->next->data == NULL)
             return (NULL);
         current = current->next;
@@ -47,7 +53,7 @@ void    clean_arena(t_arena *arena)
     while (current)
     {
         current->capacity = 0;
-        current->size_t = 0;
+        current->size = 0;
         free(current->data);
         temp = current->next;
         free(current);
