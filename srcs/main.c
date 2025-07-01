@@ -83,46 +83,67 @@ void	key_input(mlx_key_data_t keydata, void *param)
 	rayhook(game);
 }
 
+void	move_player(t_game *game, char axis, int dir)
+{
+	(void)axis;
+	(void)dir;
+	(void)game;
+}
+
+void	key_input(mlx_key_data_t keydata, void *param)
+{
+	t_game *game;
+
+	game = param;
+	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
+	{
+		clean_arena(game->arena);
+		exit(EXIT_SUCCESS);
+	}
+	else if (keydata.key == MLX_KEY_W
+		&& (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
+		move_player(game, 'y', UP);
+	else if (keydata.key == MLX_KEY_A
+		&& (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
+		move_player(game, 'x', LEFT);
+	else if (keydata.key == MLX_KEY_S
+		&& (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
+		move_player(game, 'y', DOWN);
+	else if (keydata.key == MLX_KEY_D
+		&& (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
+		move_player(game, 'x', RIGHT);
+	// else if (keydata.key == MLX_KEY_LEFT
+	// 	&& (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
+	// 	//move POV to left
+	// else if (keydata.key == MLX_KEY_RIGHT 
+	// 	&& (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
+	// //	move POV to right
+}
+
 void	load_images(t_game *game)
 {
+	game->textures = arena_alloc(game->arena, sizeof(t_textures));
+	if (!game->textures)
+		ft_error(5, game);
 	game->textures->n_wall = mlx_load_png(game->map->no_wall);
 	game->textures->s_wall = mlx_load_png(game->map->so_wall);
 	game->textures->e_wall = mlx_load_png(game->map->ea_wall);
 	game->textures->w_wall = mlx_load_png(game->map->we_wall);
 	//and the rest of them
-	if (!game->textures->n_wall || !game->textures->s_wall
-		|| !game->textures->e_wall || !game->textures->w_wall)//and the rest of them
-		ft_error_graphics(game);
-	game->images->n_wall = mlx_texture_to_image(game->mlx, game->textures->n_wall);
-	game->images->s_wall = mlx_texture_to_image(game->mlx, game->textures->s_wall);
-	game->images->e_wall = mlx_texture_to_image(game->mlx, game->textures->e_wall);
-	game->images->w_wall = mlx_texture_to_image(game->mlx, game->textures->w_wall);
-	//and the rest of them
-	if (!game->images->n_wall || !game->images->s_wall
-		|| !game->images->e_wall || !game->images->w_wall)//and the rest of them
-		ft_error_graphics(game);
+	//put pixel tai sitten mlx_new_image
 }
 
 void	run_game(t_game *game)
 {
-	t_images 	*images;
-	t_textures	*textures;
-
-	ft_memset(&images, 0, sizeof(t_textures));
-	ft_memset(&textures, 0, sizeof(t_textures));
 	game->mlx = mlx_init(MAX_W, MAX_H, "SWEN THE BUGBOI", true);
 	if (!game->mlx)
 		ft_error(8, game);
-	game->images = images;
-	game->textures = textures;
-	/* mun so_longissa jarjestys on: load images, delete textures,
-	render everything, sit mlx_key_hook ja mlx_loop */
 	load_images(game);
 	//colours??
-	//place_minimap(game)
-	// mlx_key_hook(game.mlx, &key_input, &game);
-	// mlx_loop_hook(game.mlx, &hook, &game); //mika taa on? "executes a function per frame so be careful" :D
-	// mlx_loop(game->mlx);
+	place_minimap(game);
+	mlx_key_hook(game->mlx, key_input, &game);
+	// mlx_loop_hook(game.mlx, &rayhook, &game);
+	mlx_loop(game->mlx);
 	// mlx_terminate(game->mlx);
 }
 
@@ -141,5 +162,5 @@ int main(int argc, char **argv)
 	check_map(argv[1], &game, arena);
 	run_game(&game);
 	// clean_arena(arena);
-	// return (0); TODO: exit happens in run_game?
+	// return (0); exit happens in run_game?
 }

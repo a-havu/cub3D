@@ -23,6 +23,7 @@ SOURCES			:=	srcs/main.c \
 					srcs/arena/arena_setsplit.c \
 					srcs/arena/arena_split.c \
 					srcs/arena/arena_utils.c \
+					srcs/minimap/minimap.c \
 					srcs/utils/flood_fill.c \
 					srcs/utils/parsing_utils.c \
 					srcs/utils/utils.c \

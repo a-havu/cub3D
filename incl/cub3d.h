@@ -19,6 +19,11 @@
 # define MAX_W 3840 // full screen
 # define CAPACITY 1250000 // 10 mb
 
+# define UP -1
+# define LEFT -1
+# define DOWN 1
+# define RIGHT 1
+
 typedef struct	s_point
 {
 	double	x;
@@ -102,46 +107,32 @@ typedef struct	s_arena
     struct s_arena	*next;
 }				t_arena;
 
-
-typedef struct	s_game
+typedef struct    s_game
 {
-	mlx_t			*mlx;
-	t_map			*map;
-	t_images		images;
-	mlx_image_t		*minimap_base;
-	t_textures		*textures;
-	t_point			dir;
-	t_point			raydir;
-	t_point			plane;
-	t_point			side_dist;
-	t_point			delta;
-	t_spot			sqr;
-	t_spot			step;
-	t_spot			tex;
-	int				ceiling[3];
-	int				floor[3];
-	int				side;
-	int				line_height;
-	int				draw_start;
-	int				draw_end;
-	int				tex_num;
-	int				tex_w;
-	int				tex_h;
-	bool			hit;
-	double			wall_dist;
-	double			camera_x;
-	double			wall_x;
-	double			incr;
-	double			tex_pos;
+    mlx_t			*mlx;
+    t_map			*map;
 	char			**map_cpy;
 	char			**final_map;
-	int				**e;
-	int				**w;
-	int				**n;
-	int				**s;
+    t_images		*images;
+    mlx_image_t		*minimap_base;
+    t_textures		*textures;
+    t_point			dir;
+    t_point			raydir;
+    t_point			plane;
+    t_point			side_dist;
+    t_point			delta;
+    int				side;
+    int				line_height;
+    int				draw_start;
+    int				draw_end;
+    int				tex_num;
+    bool			hit;
+    double			wall_dist;
+    double			camera_x;
+    double			wall_x;
 	struct s_arena	*arena;
-	//size_t	collected //number of insects found
-}				t_game;
+    //size_t    collected //number of insects found
+}                t_game;
 
 //parsing
 void	check_args(int argc, char *arg, t_game *game);
