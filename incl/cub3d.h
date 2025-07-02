@@ -107,30 +107,37 @@ typedef struct	s_arena
     struct s_arena	*next;
 }				t_arena;
 
+typedef struct s_minimap
+{
+	int			tile_size;
+	mlx_image_t	*map;
+	mlx_image_t	*player;
+}				t_minimap;
+
 typedef struct    s_game
 {
-    mlx_t			*mlx;
-    t_map			*map;
-	char			**map_cpy;
-	char			**final_map;
-    t_images		*images;
-    mlx_image_t		*minimap_base;
-    t_textures		*textures;
-    t_point			dir;
-    t_point			raydir;
-    t_point			plane;
-    t_point			side_dist;
-    t_point			delta;
-    int				side;
-    int				line_height;
-    int				draw_start;
-    int				draw_end;
-    int				tex_num;
-    bool			hit;
-    double			wall_dist;
-    double			camera_x;
-    double			wall_x;
-	struct s_arena	*arena;
+    mlx_t				*mlx;
+    t_map				*map;
+	char				**map_cpy;
+	char				**final_map;
+    t_images			*images;
+    t_textures			*textures;
+    t_point				dir;
+    t_point				raydir;
+    t_point				plane;
+    t_point				side_dist;
+    t_point				delta;
+    int					side;
+    int					line_height;
+    int					draw_start;
+    int					draw_end;
+    int					tex_num;
+    bool				hit;
+    double				wall_dist;
+    double				camera_x;
+    double				wall_x;
+	struct s_arena		*arena;
+	struct s_minimap	*minimap;
     //size_t    collected //number of insects found
 }                t_game;
 
@@ -167,11 +174,8 @@ void    clean_arena(t_arena *arena);
 size_t	round_to_eight(size_t num);
 
 // movement
-void	keyhook(mlx_key_data_t keydata, void *param);
-
-// graphics
-uint32_t 	get_colour(int r, int g, int b);
-void	rayhook(t_game *game);//oid *param);
-void    draw(t_game *game, int x);
+void	draw_player(t_game *game);
+void	key_input(mlx_key_data_t keydata, void *param);
+void	move_player(t_game *game, char axis, int dir);
 
 #endif
