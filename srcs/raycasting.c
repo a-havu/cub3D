@@ -42,6 +42,9 @@ line_height: by modifying what you multiply h with you an make taller or smaller
 Higher values create higher boxes.
 */
 
+/** Calculates the height of line to draw on scree and lowest and highest pixel to fill in current stripe
+ * @param game the game struct
+ */
 static void calc_wall_h(t_game *game)
 {
     if (game->side == 0) //calc perpendicular distance TODO: instead of 0, EW or NS
@@ -56,6 +59,10 @@ static void calc_wall_h(t_game *game)
     if (game->draw_end >= MAX_H)
         game->draw_end = MAX_H - 1;
 }
+
+/** Performs the digital differential analysis to find where wall is hit.
+ * @param game the game struct
+*/
 
 static void perform_dda(t_game *game)
 {
@@ -78,6 +85,9 @@ static void perform_dda(t_game *game)
     }
 }
 
+/** Calculates the distance the ray has to travel to the relevant wall edge.
+ * @param game the game struct
+ */
 static void calc_side_dist(t_game *game)
 {
     if (game->raydir.x < 0) //calc step and initial side distance
@@ -102,6 +112,10 @@ static void calc_side_dist(t_game *game)
 	}
 }
 
+/** Calculates the direction of the ray and the distance the ray has to travel to cross to next x/y position
+ * @param game the game struct
+ * @param x the x-coordinate we are at on game window
+ */
 static void calc_ray_n_delta(t_game *game, int x)
 {
     game->camera_x = 2 * x / (double)MAX_W - 1; // cal ray pos and dir
@@ -119,6 +133,9 @@ static void calc_ray_n_delta(t_game *game, int x)
 		game->delta.y = fabs(1 / game->raydir.y);
 }
 
+/** The loop hook for raycasting
+ * @param param the game struct
+ */
 void	rayhook(void *param)
 {
 	t_game			*game;

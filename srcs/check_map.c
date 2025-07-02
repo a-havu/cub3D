@@ -41,7 +41,7 @@ int	cub_atoi(t_game *game, char *str)
 
 /** Sets the ceiling and floor colour identifiers into int arrays. */
 
-void	set_cf_colours(t_game *game, char *id)
+void	set_cf_colours(t_game *game, char *id, int info)
 {
 	int		i;
 	char	**colours;
@@ -59,7 +59,10 @@ void	set_cf_colours(t_game *game, char *id)
 	{
 		if (ft_strlen(colours[i]) > 3)
 			ft_error(7, game);
-		game->ceiling[i] = cub_atoi(game, colours[i]);
+		if (info == 1)
+			game->ceiling[i] = cub_atoi(game, colours[i]);
+		else
+			game->floor[i] = cub_atoi(game, colours[i]);
 		i++;
 	}
 }
@@ -74,8 +77,8 @@ static void	check_cub_elements(t_game *game, t_arena *arena)
 	if (!elements)
 		ft_error(5, game);
 	find_identifiers(elements, game);
-	set_cf_colours(game, game->map->c_value);
-	set_cf_colours(game, game->map->f_value);
+	set_cf_colours(game, game->map->c_value, 1);
+	set_cf_colours(game, game->map->f_value, 2);
 }
 
 void	check_map(char *arg, t_game *game, t_arena *arena)
