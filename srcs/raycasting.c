@@ -14,7 +14,7 @@ in x direction and vice versa
 
 plane.x/y: camera plane vector (perpedicular to dir, defines FOV)
 
-map_x/y: which box of the map we're in
+sqr: which square of the map we're in
 
 delta: the distance the ray has to travel to go from one x/y side to the next
 eg. delta.x = sqrt(1 + (rayDirY * rayDirY) / (rayDirX * rayDirX))
@@ -44,15 +44,15 @@ Higher values create higher boxes.
 
 static void calc_wall_h(t_game *game)
 {
-    if (wall->side == 0) //calc perpendicular distance TODO: instead of 0, EW or NS
-        game->wall_dist = (game->side_dist.x - game->delta.x)
+    if (game->side == 0) //calc perpendicular distance TODO: instead of 0, EW or NS
+        game->wall_dist = (game->side_dist.x - game->delta.x);
     else
-        game->wall_dist = (game->side_dist.y - game->delta.y)
+        game->wall_dist = (game->side_dist.y - game->delta.y);
     game->line_height = (int)(MAX_H / game->wall_dist); // calc height
     game->draw_start = MAX_H / 2 - game->line_height / 2;
     if (game->draw_start < 0)
         game->draw_start = 0;
-    game->draw_end = game->line_height / 2 + game->MAX_H / 2;
+    game->draw_end = game->line_height / 2 + MAX_H / 2; //shoud be height of screen
     if (game->draw_end >= MAX_H)
         game->draw_end = MAX_H - 1;
 }
@@ -64,16 +64,16 @@ static void perform_dda(t_game *game)
         if (game->side_dist.x < game->side_dist.y)
         {
             game->side_dist.x += game->delta.x; // increments by delta distance
-            game->map.x += game->step.x; //increments by one square
+            game->sqr.x += game->step.x; //increments by one square
             game->side = 0;//EW
         }
         else
         {
             game->side_dist.y += game->delta.y;
-            game->map.y += game->step.y;
+            game->sqr.y += game->step.y;
             game->side = 1;//NS
         }
-        if (game->map->array[game->map.y][game->map.x] == '1') //||door ||collectible
+        if (game->map->array[game->sqr.y][game->sqr.x] == '1') //||door ||collectible
             game->hit = true;
     }
 }
@@ -83,22 +83,22 @@ static void calc_side_dist(t_game *game)
     if (game->raydir.x < 0) //calc step and initial side distance
 	{
 		game->step.x = -1;
-		game->side_dist.x = (game->map->plr_pos.x - game->map.x) * game->delta.x;
+		game->side_dist.x = (game->map->plr_pos.x - game->sqr.x) * game->delta.x;
 	}
 	else
 	{
-		game->step_x = 1;
-		game->side_dist.x = (game->map.x + 1.0 - game->map->plr_pos.x) * game->delta.x;
+		game->step.x = 1;
+		game->side_dist.x = (game->sqr.x + 1.0 - game->map->plr_pos.x) * game->delta.x;
 	}
 	if (game->raydir.y < 0)
 	{
 		game->step.y = -1;
-		game->side_dist.y = (game->map->plr_pos.y - game->map.y) * game->delta.y;
+		game->side_dist.y = (game->map->plr_pos.y - game->sqr.y) * game->delta.y;
 	}
 	else
 	{
 		game->step.y = 1;
-		game->side_dist.y = (game->map.y + 1.0 - game->map->plr_pos.y) * game->delta.y;
+		game->side_dist.y = (game->sqr.y + 1.0 - game->map->plr_pos.y) * game->delta.y;
 	}
 }
 
@@ -107,8 +107,8 @@ static void calc_ray_n_delta(t_game *game, int x)
     game->camera_x = 2 * x / (double)MAX_W - 1; // cal ray pos and dir
 	game->raydir.x = game->dir.x + game->plane.x * game->camera_x;
 	game->raydir.y = game->dir.y + game->plane.y * game->camera_x;
-	game->map.x = (int)game->plr_pos.x; // update location on map
-	game->map.y = (int)game->plr_pos.y;
+	game->sqr.x = (int)game->map->plr_pos.x; // update location on map
+	game->sqr.y = (int)game->map->plr_pos.y;
     if (game->raydir.x == 0) //calc length of ray
 		game->delta.x = 1e30;
 	else
@@ -121,11 +121,12 @@ static void calc_ray_n_delta(t_game *game, int x)
 
 void	rayhook(void *param)
 {
-	t_game	*game;
-	int		x;
+	t_game			*game;
+	unsigned int	x;
 
 	game = param;
 	x = 0;
+	//ft_memset(game->images.screen->pixels, 0, game->images.screen->width * game->images.screen->height * sizeof(int));
 	while (x < MAX_W) // screen width
 	{
 		calc_ray_n_delta(game, x);
@@ -133,5 +134,6 @@ void	rayhook(void *param)
         perform_dda(game);
         calc_wall_h(game);
         check_side(game, x);
+		x++;
 	}
 }

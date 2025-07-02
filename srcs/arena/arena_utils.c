@@ -7,8 +7,8 @@ char	*arena_join(t_arena *arena, char const *s1, char const *s2)
 	int		i;
 	int		k;
 
-	if (!s1 || !s2)
-		return (NULL);
+	if (!s1)
+		s1 = arena_strdup(arena, "");
 	i = 0;
 	k = 0;
 	total_len = ft_strlen(s1) + ft_strlen(s2);
