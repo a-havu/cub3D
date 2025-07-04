@@ -20,7 +20,11 @@ static void	convert_cub_to_one_d_array(t_game *game, int fd, t_arena *arena)
 	}
 	close(fd);
 }
-
+/** A simplified atoi for numbers between 0 and 255
+ * @param game	the game struct
+ * @param str	the string to convert to integer
+ * @returns		the integer resulting from the conversion, exits on error
+ */
 int	cub_atoi(t_game *game, char *str)
 {
 	int	res;
@@ -39,8 +43,11 @@ int	cub_atoi(t_game *game, char *str)
 	return (res);
 }
 
-/** Sets the ceiling and floor colour identifiers into int arrays. */
-
+/** Sets the ceiling and floor colour identifiers into int arrays.
+ * @param game	the game struct
+ * @param id	the identifier being parsed
+ * @param info	1 = ceiling, 2 = floor
+*/
 void	set_cf_colours(t_game *game, char *id, int info)
 {
 	int		i;

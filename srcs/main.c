@@ -15,77 +15,6 @@
 // 	return (true);
 // }
 
-// void	hook(void *param)
-// {
-// 	t_game	*game;
-
-// 	game = param;
-	
-// }
-
-// bool	fits_monitor(mlx_t *mlx)
-// {
-// 	int32_t	width;
-// 	int32_t	height;
-
-// 	mlx_get_monitor_size(0, &width, &height);
-// 	if (width < MAX_W || height < MAX_H)
-// 	{
-// 		ft_printf("error\n");
-// 		return (false);
-// 	}
-// 	return (true);
-// }
-
-// void	hook(void *param)
-// {
-// 	t_game	*game;
-
-// 	game = param;
-	
-// }
-
-
-
-// bool	fits_monitor(mlx_t *mlx)
-// {
-// 	int32_t	width;
-// 	int32_t	height;
-
-// 	mlx_get_monitor_size(0, &width, &height);
-// 	if (width < MAX_W || height < MAX_H)
-// 	{
-// 		ft_printf("error\n");
-// 		return (false);
-// 	}
-// 	return (true);
-// }
-
-void	hook(void *param)
-{
-	t_game	*game;
-
-	game = param;
-	
-}
-
-// bool	fits_monitor(mlx_t *mlx)
-// {
-// 	int32_t	width;
-// 	int32_t	height;
-
-// 	mlx_get_monitor_size(0, &width, &height);
-// 	if (width < MAX_W || height < MAX_H)
-// 	{
-// 		ft_printf("error\n");
-// 		return (false);
-// 	}
-// 	return (true);
-// }
-
-/* initial values for direction and plane vectors.
-Rotating based on direction faced */
-
 mlx_t	*initialise_mlx(mlx_t *mlx, t_arena *arena)
 {
 	// if (map->width * PXL > MAX_W || map->height * PXL > MAX_H)
@@ -103,19 +32,6 @@ mlx_t	*initialise_mlx(mlx_t *mlx, t_arena *arena)
  * @param game	the game struct
  * @param rot	by how much we rotate player's view
  */
-// void	rotate(t_game *game, double rot)
-// {
-// 	double	old_dir_x;
-// 	double	old_plane_x;
-
-// 	old_dir_x = game->dir.x;
-// 	old_plane_x = game->plane.x;
-// 	game->dir.x = game->dir.x * cos(rot) - game->dir.y * sin(rot);
-// 	game->dir.y = old_dir_x * sin(rot) - game->dir.y * cos(rot);
-// 	game->plane.x = game->plane.x * cos(rot) - game->plane.x * sin(rot);
-// 	game->plane.y = old_plane_x * cos(rot) - game->plane.y * sin(rot);
-// }
-
 void rotate(t_game *game, double rot)
 {
     double odx = game->dir.x;
@@ -146,34 +62,6 @@ void	init_game(t_game *game)
 		rotate(game, M_PI);
 }
 
-// void	init_game(t_game *game)
-// {
-// 	if (game->map->player == 'N') {
-//     game->dir.x = 0;
-//     game->dir.y = -1;
-//     game->plane.x = 0.66;
-//     game->plane.y = 0;
-// 	}
-// 	else if (game->map->player == 'S') {
-//     game->dir.x = 0;
-//     game->dir.y = 1;
-//     game->plane.x = -0.66;
-//     game->plane.y = 0;
-// 	}
-// 	else if (game->map->player == 'E') {
-//     game->dir.x = 1;
-//     game->dir.y = 0;
-//     game->plane.x = 0;
-//     game->plane.y = 0.66;
-// 	}
-// 	else if (game->map->player == 'W') {
-//     game->dir.x = -1;
-//     game->dir.y = 0;
-//     game->plane.x = 0;
-//     game->plane.y = -0.66;
-// 	}
-// }
-
 void	run_game(t_game *game)
 {
 	t_textures	textures;
@@ -199,20 +87,17 @@ int main(int argc, char **argv)
 {
 	t_game		game;
 	t_map		map;
-	//t_textures	textures;
 	t_arena		*arena;
 
 	arena = create_arena(CAPACITY);
 	ft_memset(&game, 0, sizeof(t_game));
 	ft_memset(&map, 0, sizeof(t_map));
 	game.map = &map; // init game values in separate function?
-	//game.textures = &textures;
 	game.arena = arena;
 	check_args(argc, argv[1], &game);
 	check_map(argv[1], &game, arena);
 	run_game(&game);
 	init_game(&game);//needs to happen after map parsing, player SNWE set
-	//game.mlx = initialise_mlx(game.mlx, game.arena);
 	initialise_images(&game);
 	rayhook(&game);
 	mlx_key_hook(game.mlx, &key_input, &game);
@@ -223,8 +108,4 @@ int main(int argc, char **argv)
 	mlx_terminate(game.mlx);
 	clean_arena(arena);
 	return (0);
-
-	//run_game(&game);
-	// clean_arena(arena);
-	// return (0); TODO: exit happens in run_game?
 }

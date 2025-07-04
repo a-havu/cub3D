@@ -68,7 +68,6 @@ static void    draw_wall(t_game *game, unsigned x, mlx_texture_t *wall)
     y = game->draw_start;
     while (y < game->draw_end)
     {
-        //printf("y: %i, draw end: %i\n", y, game->draw_end);
         game->tex.y = (int)game->tex_pos;
         if (game->tex_pos > (int)wall->height - 1)
             game->tex_pos = wall->height - 1;
@@ -106,85 +105,3 @@ void    draw(t_game *game, int x)
         draw_wall(game, x, game->textures->s_wall);
     }
 }
-
-
-
-
-
-
-// void    draw_floor(mlx_image_t *screen, int end, t_game *game, int x)
-// {
-//     unsigned    y;
-//     uint32_t    colour;
-
-//     y = MAX_H / 2;//end;
-//     end = 0;
-//     colour = get_colour(game->floor[0], game->floor[1], game->floor[2]);
-//     while (y < MAX_H)//screen->height - 1)
-//     {
-//         mlx_put_pixel(screen, x, y, colour);
-//         y++;        
-//     }
-// }
-
-// void    draw_floor(mlx_image_t *screen, int end, t_game *game, int x)
-// {
-//     unsigned    y;
-//     unsigned    half;
-//     uint32_t    colour;
-
-//     y = MAX_H;//end;
-//     end = 0;
-//     half = MAX_H / 2;
-//     colour = get_colour(game->floor[0], game->floor[1], game->floor[2]);
-//     //printf("r = %i, g = %i, b = %i\n", game->floor[0], game->floor[1], game->floor[2]);
-//     while (half < MAX_H)//screen->height - 1)
-//     {
-//         mlx_put_pixel(screen, x, half, colour);
-//         half++;        
-//     }
-// }
-
-// void    draw_ceiling(mlx_image_t *screen, int start, t_game *game, int x)
-// {
-//     unsigned    y;
-//     uint32_t    c_colour;
-//     //uint32_t    f_colour;
-
-//     y = 0;
-//     start = 0;
-//     c_colour = get_colour(game->ceiling[0], game->ceiling[1], game->ceiling[2]);
-//     //printf("r = %i, g = %i, b = %i\n", game->ceiling[0], game->ceiling[1], game->ceiling[2]);
-//     //f_colour = get_colour(game->floor[0], game->floor[1], game->floor[2]);
-//     while (y  < MAX_H / 2)//<= (unsigned)start && y < MAX_H / 2)
-//     {
-//         mlx_put_pixel(screen, x, y, c_colour);
-//         y++;
-//     }
-// }
-
-// void    draw_cf(mlx_image_t *screen, t_game *game)
-// {
-//     int y;
-//     int x;
-//     uint32_t    c_colour;
-//     uint32_t    f_colour;
-
-//     y = 0;
-//     f_colour = get_colour(game->floor[0], game->floor[1], game->floor[2]);
-//     c_colour = get_colour(game->ceiling[0], game->ceiling[1], game->ceiling[2]);
-//     while (y < MAX_H)
-//     {
-//         x = 0;
-//         while (x < MAX_W)
-//         {
-//             if (y < MAX_H / 2)
-//                 mlx_put_pixel(screen, x, y, c_colour);
-//             else
-//                 mlx_put_pixel(screen, x, y, f_colour);
-//             x++;
-//         }
-//        y++;
-//     }
-
-// }
