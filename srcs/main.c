@@ -11,10 +11,9 @@ void	load_images(t_game *game)
 	game->textures->e_wall = mlx_load_png(game->map->ea_wall);
 	game->textures->w_wall = mlx_load_png(game->map->we_wall);
 	//and the rest of them
-	// if (!game->textures->n_wall || game->textures->s_wall
-	// 	|| game->textures->e_wall || game->textures->w_wall) //and the rest of them
-	// 	ft_error_graphics(game);
-	//put pixel tai sitten mlx_new_image
+	if (!game->textures->n_wall || !game->textures->s_wall
+		|| !game->textures->e_wall || !game->textures->w_wall) //and the rest of them
+		ft_error_graphics(game);
 }
 
 void	key_input(mlx_key_data_t keydata, void *param)
@@ -56,10 +55,10 @@ void	run_game(t_game *game)
 	game->minimap = arena_alloc(game->arena, sizeof(t_minimap));
 	if (!game->minimap)
 		ft_error(8, game);
-	game->minimap->tile_size = 50;
+	game->minimap->tile_size = 15;
 	load_images(game);
 	place_minimap(game);
-	mlx_key_hook(game->mlx, key_input, &game);
+	mlx_key_hook(game->mlx, key_input, game);
 	// mlx_loop_hook(game.mlx, &rayhook, &game);
 	mlx_loop(game->mlx);
 	// mlx_terminate(game->mlx);

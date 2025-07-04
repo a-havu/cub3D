@@ -15,8 +15,8 @@
 # define D 2
 # define ESC 53
 # define PXL 64 //tai kuinka iso se oliska
-# define MAX_H 2160 // full screen
-# define MAX_W 3840 // full screen
+# define MAX_H 1200 // full screen
+# define MAX_W 2000 // full screen
 # define CAPACITY 1250000 // 10 mb
 
 # define UP -1
@@ -109,6 +109,10 @@ typedef struct	s_arena
 
 typedef struct s_minimap
 {
+	int			tile_x;
+	int			tile_y;
+	int			new_tile_x;
+	int			new_tile_y;
 	int			tile_size;
 	mlx_image_t	*map;
 	mlx_image_t	*player;

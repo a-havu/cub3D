@@ -1,17 +1,16 @@
 #include "cub3d.h"
-#include <stdio.h>
 
 void	draw_player(t_game *game)
 {
-	int	radius;
-	int	px;
-	int	py;
-	int	y;
-	int	x;
+	int			radius;
+	int			px;
+	int			py;
+	int			y;
+	int			x;
 	
 	game->minimap->player = mlx_new_image(game->mlx, MAX_W / 2, MAX_H / 2);
-	// if (!game->minimap->player)
-	// 	ft_error_graphics(game);
+	if (!game->minimap->player)
+		ft_error_graphics(game);
 	px = (int)game->map->player_pos.x * game->minimap->tile_size;
 	py = (int)game->map->player_pos.y * game->minimap->tile_size;
 	radius = game->minimap->tile_size / 4;
@@ -27,7 +26,8 @@ void	draw_player(t_game *game)
 		}
 		y++;
 	}
-	mlx_image_to_window(game->mlx, game->minimap->player, 0, 0);
+	if (mlx_image_to_window(game->mlx, game->minimap->player, 0, 0) < 0)
+		ft_error_graphics(game);
 }
 
 void	place_minimap(t_game *game)
@@ -38,8 +38,11 @@ void	place_minimap(t_game *game)
 	int			t_y;
 	uint32_t	colour;
 
+
 	y = 0;
 	game->minimap->map = mlx_new_image(game->mlx, MAX_W / 2, MAX_H / 2);
+	if (!game->minimap->map)
+		ft_error_graphics(game);
 	while(game->final_map[y])
 	{
 		x = 0;
@@ -66,6 +69,7 @@ void	place_minimap(t_game *game)
 		}
 		y++;
 	}
-	mlx_image_to_window(game->mlx, game->minimap->map, 0, 0);
+	if (mlx_image_to_window(game->mlx, game->minimap->map, 0, 0) < 0)
+		ft_error_graphics(game);
 	draw_player(game);
 }
