@@ -28,7 +28,7 @@ static uint32_t get_pixel_colour(mlx_texture_t *wall, uint32_t x, uint32_t y)
     uint32_t    colour;
 
     pixel = wall->pixels + (y * wall->width + x) * 4;
-    colour = (pixel[3] << 24) | (pixel[0] << 16) | (pixel[1] << 8) | (pixel[2]);
+    colour = (pixel[0] << 24) | (pixel[1] << 16) | (pixel[2] << 8) | (pixel[3]);
     return (colour);
 }
 
@@ -47,9 +47,9 @@ static void    get_texture(t_game *game, mlx_texture_t *wall)
         game->wall_x = game->map->plr_pos.x + game->wall_dist * game->raydir.x;
     game->wall_x -= floor(game->wall_x); //floor rounds a float to the nearest integer that <= it
     game->tex.x = (int)(game->wall_x * game->tex_w);
-    if (game->side == 0 && game->raydir.x > 0) //EW
+    if (game->side == 0 && game->raydir.x < 0) //EW
         game->tex.x = game->tex_w - game->tex.x - 1;
-    if (game->side == 1 && game->raydir.x < 0) //NS
+    if (game->side == 1 && game->raydir.y > 0) //NS
         game->tex.x = game->tex_w - game->tex.x - 1;
     game->incr = 1.0 * game->tex_h / game->line_height;
     game->tex_pos = ((double)game->draw_start - (double)MAX_H / 2 + (double)game->line_height / 2) * game->incr;
@@ -95,12 +95,12 @@ void    draw(t_game *game, int x)
         get_texture(game, game->textures->w_wall);
         draw_wall(game, x, game->textures->w_wall);
     }
-    if (game->side == 1 && game->step.x < 0)
+    if (game->side == 1 && game->step.y < 0)
     {
         get_texture(game, game->textures->n_wall);
         draw_wall(game, x, game->textures->n_wall);
     }
-    if (game->side == 1 && game->step.x > 0)
+    if (game->side == 1 && game->step.y > 0)
     {
         get_texture(game, game->textures->s_wall);
         draw_wall(game, x, game->textures->s_wall);

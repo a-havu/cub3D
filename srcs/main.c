@@ -99,33 +99,80 @@ mlx_t	*initialise_mlx(mlx_t *mlx, t_arena *arena)
 	return (mlx);
 }
 
-void	rotate(t_game *game, double rot)
-{
-	double	old_dir_x;
-	double	old_plane_x;
+/** Rotates raycasting values according to player orientation
+ * @param game	the game struct
+ * @param rot	by how much we rotate player's view
+ */
+// void	rotate(t_game *game, double rot)
+// {
+// 	double	old_dir_x;
+// 	double	old_plane_x;
 
-	old_dir_x = game->dir.x;
-	old_plane_x = game->plane.x;
-	game->dir.x = game->dir.x * cos(rot) - game->dir.y * sin(rot);
-	game->dir.y = old_dir_x * sin(rot) - game->dir.y * cos(rot);
-	game->plane.x = game->plane.x * cos(rot) - game->plane.x * sin(rot);
-	game->plane.y = old_plane_x * cos(rot) - game->plane.y * sin(rot);
+// 	old_dir_x = game->dir.x;
+// 	old_plane_x = game->plane.x;
+// 	game->dir.x = game->dir.x * cos(rot) - game->dir.y * sin(rot);
+// 	game->dir.y = old_dir_x * sin(rot) - game->dir.y * cos(rot);
+// 	game->plane.x = game->plane.x * cos(rot) - game->plane.x * sin(rot);
+// 	game->plane.y = old_plane_x * cos(rot) - game->plane.y * sin(rot);
+// }
+
+void rotate(t_game *game, double rot)
+{
+    double odx = game->dir.x;
+    double ody = game->dir.y;
+    double opx = game->plane.x;
+    double opy = game->plane.y;
+
+    game->dir.x   = odx * cos(rot) - ody * sin(rot);
+    game->dir.y   = odx * sin(rot) + ody * cos(rot);
+    game->plane.x = opx * cos(rot) - opy * sin(rot);
+    game->plane.y = opx * sin(rot) + opy * cos(rot);
 }
 
-
+/** Sets raycasting values in game struct
+ * @param game the game struct
+ */
 void	init_game(t_game *game)
 {
 	game->dir.x = 1;
 	game->dir.y = 0;
-	game->plane.x = 0.66;
-	game->plane.y = 0;
+	game->plane.x = 0;
+	game->plane.y = 0.66;
 	if (game->map->player == 'S')
 		rotate(game, M_PI / 2);
 	else if (game->map->player == 'N')
-		rotate(game, M_PI / 1.5);
+		rotate(game, M_PI * 1.5);
 	else if (game->map->player == 'W')
 		rotate(game, M_PI);
 }
+
+// void	init_game(t_game *game)
+// {
+// 	if (game->map->player == 'N') {
+//     game->dir.x = 0;
+//     game->dir.y = -1;
+//     game->plane.x = 0.66;
+//     game->plane.y = 0;
+// 	}
+// 	else if (game->map->player == 'S') {
+//     game->dir.x = 0;
+//     game->dir.y = 1;
+//     game->plane.x = -0.66;
+//     game->plane.y = 0;
+// 	}
+// 	else if (game->map->player == 'E') {
+//     game->dir.x = 1;
+//     game->dir.y = 0;
+//     game->plane.x = 0;
+//     game->plane.y = 0.66;
+// 	}
+// 	else if (game->map->player == 'W') {
+//     game->dir.x = -1;
+//     game->dir.y = 0;
+//     game->plane.x = 0;
+//     game->plane.y = -0.66;
+// 	}
+// }
 
 void	run_game(t_game *game)
 {
