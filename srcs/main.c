@@ -99,18 +99,32 @@ mlx_t	*initialise_mlx(mlx_t *mlx, t_arena *arena)
 	return (mlx);
 }
 
+void	rotate(t_game *game, double rot)
+{
+	double	old_dir_x;
+	double	old_plane_x;
+
+	old_dir_x = game->dir.x;
+	old_plane_x = game->plane.x;
+	game->dir.x = game->dir.x * cos(rot) - game->dir.y * sin(rot);
+	game->dir.y = old_dir_x * sin(rot) - game->dir.y * cos(rot);
+	game->plane.x = game->plane.x * cos(rot) - game->plane.x * sin(rot);
+	game->plane.y = old_plane_x * cos(rot) - game->plane.y * sin(rot);
+}
+
+
 void	init_game(t_game *game)
 {
 	game->dir.x = 1;
 	game->dir.y = 0;
-	game->plane.x = 0;
 	game->plane.x = 0.66;
-	// if (game->map->player == 'S')
-	// 	rotate(game, M_PI / 2);
-	// else if (game->map->player == 'N')
-	// 	rotate(game, M_PI / 1.5);
-	// else if (game->map->player == 'W')
-	// 	rotate(game, M_PI);
+	game->plane.y = 0;
+	if (game->map->player == 'S')
+		rotate(game, M_PI / 2);
+	else if (game->map->player == 'N')
+		rotate(game, M_PI / 1.5);
+	else if (game->map->player == 'W')
+		rotate(game, M_PI);
 }
 
 void	run_game(t_game *game)
@@ -119,6 +133,19 @@ void	run_game(t_game *game)
 
 	game->textures = &textures;
 	game->mlx = initialise_mlx(game->mlx, game->arena);
+}
+
+void	key_input(mlx_key_data_t keydata, void *param)
+{
+	t_game	*game;
+
+	game = param;
+	if (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT)
+	{
+		if (keydata.key == MLX_KEY_ESCAPE)
+			mlx_close_window(game->mlx);
+	}
+	rayhook(game);
 }
 
 int main(int argc, char **argv)
@@ -140,8 +167,9 @@ int main(int argc, char **argv)
 	init_game(&game);//needs to happen after map parsing, player SNWE set
 	//game.mlx = initialise_mlx(game.mlx, game.arena);
 	initialise_images(&game);
-	//mlx_key_hook(game.mlx, &key_input, &game);
-	mlx_loop_hook(game.mlx, &rayhook, &game);
+	rayhook(&game);
+	mlx_key_hook(game.mlx, &key_input, &game);
+	//mlx_loop_hook(game.mlx, &rayhook, &game);
 	//mlx_loop_hook(game.mlx, &keyhook, &game);
 	mlx_loop(game.mlx);
 	//delete_textures(&game);

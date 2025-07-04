@@ -47,17 +47,24 @@ Higher values create higher boxes.
  */
 static void calc_wall_h(t_game *game)
 {
-    if (game->side == 0) //calc perpendicular distance TODO: instead of 0, EW or NS
+    //printf("side dist: %f delta: %f\n", game->side_dist.x, game->delta.x);
+	if (game->side == 0) //calc perpendicular distance TODO: instead of 0, EW or NS
         game->wall_dist = (game->side_dist.x - game->delta.x);
     else
+	{
         game->wall_dist = (game->side_dist.y - game->delta.y);
+	}
+	//printf("wall dist: %f\n", game->wall_dist);
     game->line_height = (int)(MAX_H / game->wall_dist); // calc height
-    game->draw_start = MAX_H / 2 - game->line_height / 2;
+    game->draw_start = -game->line_height / 2 + MAX_H / 2;
     if (game->draw_start < 0)
         game->draw_start = 0;
     game->draw_end = game->line_height / 2 + MAX_H / 2; //shoud be height of screen
     if (game->draw_end >= MAX_H)
+	{
         game->draw_end = MAX_H - 1;
+	}
+	//printf("wall_dist: %f | line_height: %d\n", game->wall_dist, game->line_height);
 }
 
 /** Performs the digital differential analysis to find where wall is hit.
@@ -66,13 +73,15 @@ static void calc_wall_h(t_game *game)
 
 static void perform_dda(t_game *game)
 {
-    while (game->hit == false)
+    //int	steps = 0;
+	game->hit = false;
+	while (game->hit == false)
     {
         if (game->side_dist.x < game->side_dist.y)
         {
             game->side_dist.x += game->delta.x; // increments by delta distance
             game->sqr.x += game->step.x; //increments by one square
-            game->side = 0;//EW
+            game->side = 0;//EW Does it need to be E or W?
         }
         else
         {
@@ -80,12 +89,13 @@ static void perform_dda(t_game *game)
             game->sqr.y += game->step.y;
             game->side = 1;//NS
         }
-        if (game->map->array[game->sqr.y][game->sqr.x] == '1') //||door ||collectible
+        if (game->final_map[game->sqr.y][game->sqr.x] == '1') //||door ||collectible
             game->hit = true;
     }
+	//printf("DDA steps: %d\n", steps);
 }
 
-/** Calculates the distance the ray has to travel to the relevant wall edge.
+/** Calculates the distance the ray has to travel to the relevant wall edge and direction of step.
  * @param game the game struct
  */
 static void calc_side_dist(t_game *game)
@@ -133,24 +143,54 @@ static void calc_ray_n_delta(t_game *game, int x)
 		game->delta.y = fabs(1 / game->raydir.y);
 }
 
+/** Draws the ceiling and floor according to the given colours.
+ * @param screen the game window image
+ * @param game the game struct
+ */
+void    draw_cf(mlx_image_t *screen, t_game *game)
+{
+    int y;
+    int x;
+    uint32_t    c_colour;
+    uint32_t    f_colour;
+
+    y = 0;
+    f_colour = get_colour(game->floor[0], game->floor[1], game->floor[2]);
+    c_colour = get_colour(game->ceiling[0], game->ceiling[1], game->ceiling[2]);
+    while (y < MAX_H)
+    {
+        x = 0;
+        while (x < MAX_W)
+        {
+            if (y < MAX_H / 2)
+                mlx_put_pixel(screen, x, y, c_colour);
+            else
+                mlx_put_pixel(screen, x, y, f_colour);
+            x++;
+        }
+       y++;
+    }
+
+}
+
 /** The loop hook for raycasting
  * @param param the game struct
  */
-void	rayhook(void *param)
+void	rayhook(t_game *game)//void *param)
 {
-	t_game			*game;
+	//t_game			*game;
 	unsigned int	x;
 
-	game = param;
+	//game = param;
 	x = 0;
-	//ft_memset(game->images.screen->pixels, 0, game->images.screen->width * game->images.screen->height * sizeof(int));
+	draw_cf(game->images.screen, game);
 	while (x < MAX_W) // screen width
 	{
 		calc_ray_n_delta(game, x);
         calc_side_dist(game);
         perform_dda(game);
         calc_wall_h(game);
-        check_side(game, x);
+        draw(game, x);
 		x++;
 	}
 }

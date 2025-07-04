@@ -14,7 +14,7 @@ endif
 SOURCES			:=	srcs/main.c \
 					srcs/graphics.c \
 					srcs/raycasting.c \
-					srcs/cast_walls.c \
+					srcs/draw.c \
 					srcs/check_map.c \
 					srcs/extract_game_map.c \
 					srcs/ft_error.c \

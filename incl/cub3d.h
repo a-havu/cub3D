@@ -135,6 +135,10 @@ typedef struct	s_game
 	double			tex_pos;
 	char			**map_cpy;
 	char			**final_map;
+	int				**e;
+	int				**w;
+	int				**n;
+	int				**s;
 	struct s_arena	*arena;
 	//size_t	collected //number of insects found
 }				t_game;
@@ -174,8 +178,8 @@ size_t	round_to_eight(size_t num);
 void	keyhook(mlx_key_data_t keydata, void *param);
 
 // graphics
-int 	get_colour(int r, int g, int b);
-void	rayhook(void *param);
-void    check_side(t_game *game, int x);
+uint32_t 	get_colour(int r, int g, int b);
+void	rayhook(t_game *game);//oid *param);
+void    draw(t_game *game, int x);
 
 #endif
