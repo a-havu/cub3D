@@ -16,8 +16,18 @@ void	ft_error(int num, t_game *game)
 		ft_putstr_fd("\033[91mError\nYour map's not valid💅\n\033[0m", 2);
 	else if (num == 7)
 		ft_putstr_fd("\033[91mError\nInvalid identifiers🧭\n\033[0m", 2);
+	else if (num == 8)
+		ft_putstr_fd("\033[91mError\nMLX initialisation failed\n\033[0m", 2);
 	else if (num == 666)
 		ft_putstr_fd("\033[91mhoplaa\n\033[0m", 2);//for error checking
+	clean_arena(game->arena);
+	exit(EXIT_FAILURE);
+}
+
+void	ft_error_graphics(t_game *game)
+{
+	ft_putstr_fd("\033[91mError\nGraphics failed🔮😤🥺\n\033[0m", 2);
+	//separate function to clean the images out
 	clean_arena(game->arena);
 	exit(EXIT_FAILURE);
 }

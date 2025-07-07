@@ -194,3 +194,4 @@ void	rayhook(t_game *game)//void *param)
 		x++;
 	}
 }
+
