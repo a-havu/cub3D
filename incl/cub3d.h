@@ -38,7 +38,6 @@ typedef struct s_spot
 	int	y;
 }				t_spot;
 
-
 typedef struct	s_map
 {
 	char	player;
@@ -126,23 +125,37 @@ typedef struct    s_game
     t_map				*map;
 	char				**map_cpy;
 	char				**final_map;
-    t_images			*images;
+    t_images			images;
+    mlx_image_t			*minimap_base;
     t_textures			*textures;
     t_point				dir;
     t_point				raydir;
     t_point				plane;
     t_point				side_dist;
     t_point				delta;
+    t_spot				sqr;
+    t_spot				step;
+    t_spot				tex;
+    int					ceiling[3];
+    int					floor[3];
     int					side;
     int					line_height;
     int					draw_start;
     int					draw_end;
     int					tex_num;
+    int					tex_w;
+    int					tex_h;
     bool				hit;
     double				wall_dist;
     double				camera_x;
     double				wall_x;
-	struct s_arena		*arena;
+    double				incr;
+    double				tex_pos;
+    int					**e;
+    int					**w;
+    int					**n;
+    int					**s;
+    struct s_arena		*arena;
 	struct s_minimap	*minimap;
     //size_t    collected //number of insects found
 }                t_game;
@@ -165,11 +178,10 @@ bool	is_identifier(char *element);
 // initialisation
 t_arena *create_arena(size_t capacity);
 mlx_t	*initialise_mlx(t_game *game);
-void	initialise_images(t_game *game, t_images *images);
+void	initialise_images(t_game *game);
 void	place_minimap(t_game *game);
 
 // utilities
-void	img_error(t_game *game, char signal);
 void	delete_textures(t_game *game);
 void    *arena_alloc(t_arena *arena, size_t size);
 char	*arena_join(t_arena *arena, char const *s1, char const *s2);
@@ -183,5 +195,13 @@ size_t	round_to_eight(size_t num);
 void	draw_player(t_game *game);
 void	key_input(mlx_key_data_t keydata, void *param);
 void	move_player(t_game *game, char axis, int dir);
+uint32_t     get_colour(int r, int g, int b);
+void    rayhook(t_game *game);//oid *param);
+void    draw(t_game *game, int x);
+
+// graphics
+uint32_t     get_colour(int r, int g, int b);
+void    rayhook(t_game *game);//oid *param);
+void    draw(t_game *game, int x);
 
 #endif

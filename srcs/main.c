@@ -45,6 +45,7 @@ void	key_input(mlx_key_data_t keydata, void *param)
 	// 	&& (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
 	// //	move POV to right
 	// 'M' vois togglaa minimapin nakyviin
+	rayhook(game);
 }
 
 void	run_game(t_game *game)
@@ -58,6 +59,7 @@ void	run_game(t_game *game)
 	game->minimap->tile_size = 50;
 	load_images(game);
 	place_minimap(game);
+	rayhook(game);
 	mlx_key_hook(game->mlx, key_input, game);
 	// mlx_loop_hook(game.mlx, &rayhook, &game);
 	mlx_loop(game->mlx);
