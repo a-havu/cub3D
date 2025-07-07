@@ -18,6 +18,7 @@ SOURCES			:=	srcs/main.c \
 					srcs/check_map.c \
 					srcs/extract_game_map.c \
 					srcs/ft_error.c \
+					srcs/initialise.c \
 					srcs/arena/arena.c \
 					srcs/arena/arena_next_line.c \
 					srcs/arena/arena_setsplit.c \
@@ -25,6 +26,7 @@ SOURCES			:=	srcs/main.c \
 					srcs/arena/arena_utils.c \
 					srcs/minimap/minimap.c \
 					srcs/move_player.c \
+					srcs/movement.c \
 					srcs/utils/flood_fill.c \
 					srcs/utils/parsing_utils.c \
 					srcs/utils/utils.c \

@@ -203,5 +203,6 @@ void    draw(t_game *game, int x);
 uint32_t     get_colour(int r, int g, int b);
 void    rayhook(t_game *game);//oid *param);
 void    draw(t_game *game, int x);
+void    update_raycast(t_game *game, char axis, int dir);
 
 #endif

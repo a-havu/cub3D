@@ -14,20 +14,20 @@ void	initialise_images(t_game *game)
     game->textures = arena_alloc(game->arena, sizeof(t_textures));
     game->textures->n_wall = mlx_load_png(game->map->no_wall);
     if (!game->textures->n_wall)
-        ft_error(8, game);
+        ft_error_graphics(game);
     game->textures->s_wall = mlx_load_png(game->map->so_wall);
     if (!game->textures->s_wall)
-        ft_error(8, game);
+        ft_error_graphics(game);
     game->textures->e_wall = mlx_load_png(game->map->ea_wall);
     if (!game->textures->e_wall)
-        ft_error(8, game);
+        ft_error_graphics(game);
     game->textures->w_wall = mlx_load_png(game->map->we_wall);
     if (!game->textures->w_wall)
-        ft_error(8, game);
+        ft_error_graphics(game);
     //game->e = convert_texture_to_color_array(xpm_t *image)
     game->images.screen = mlx_new_image(game->mlx, MAX_W, MAX_H);//
     if (!game->images.screen)    
-        ft_error(8, game);
+        ft_error_graphics(game);
     if (mlx_image_to_window(game->mlx, game->images.screen, 0, 0) == -1)
-        ft_error(8, game);
+        ft_error_graphics(game);
 }
