@@ -75,7 +75,7 @@ char	*arena_next_line(int fd, t_arena *arena)
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	next_line = arena_alloc(arena, sizeof(char *));
+	next_line = arena_alloc(arena, sizeof(char *)); //
 	if (!next_line)
 		return (NULL);
 	if (stash[0])

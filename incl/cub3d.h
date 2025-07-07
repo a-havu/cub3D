@@ -7,6 +7,7 @@
 # include <math.h>
 # include <fcntl.h>
 # include <stdbool.h>
+# include <stdio.h> //REMOVE
 
 # define W 13
 # define A 0
@@ -24,6 +25,13 @@ typedef struct	s_point
 	double	y;
 }				t_point;
 
+typedef struct s_spot
+{
+	int	x;
+	int	y;
+}				t_spot;
+
+
 typedef struct	s_map
 {
 	char	player;
@@ -32,7 +40,7 @@ typedef struct	s_map
 	int		height;
 	int		char_count;
 	size_t	width;
-	t_point	player_pos;
+	t_point	plr_pos;
 	size_t	player_count;
 	size_t	no;
 	size_t	so;
@@ -74,6 +82,7 @@ typedef struct	s_images
 	mlx_image_t *e_wall;
 	mlx_image_t *s_wall;
 	mlx_image_t *w_wall;
+	mlx_image_t *screen;
 	mlx_image_t *miniwall;
 	mlx_image_t *empty;
 	mlx_image_t *offedge;
@@ -98,11 +107,38 @@ typedef struct	s_game
 {
 	mlx_t			*mlx;
 	t_map			*map;
-	char			**map_cpy;
-	char			**final_map;
-	t_images		*images;
+	t_images		images;
 	mlx_image_t		*minimap_base;
 	t_textures		*textures;
+	t_point			dir;
+	t_point			raydir;
+	t_point			plane;
+	t_point			side_dist;
+	t_point			delta;
+	t_spot			sqr;
+	t_spot			step;
+	t_spot			tex;
+	int				ceiling[3];
+	int				floor[3];
+	int				side;
+	int				line_height;
+	int				draw_start;
+	int				draw_end;
+	int				tex_num;
+	int				tex_w;
+	int				tex_h;
+	bool			hit;
+	double			wall_dist;
+	double			camera_x;
+	double			wall_x;
+	double			incr;
+	double			tex_pos;
+	char			**map_cpy;
+	char			**final_map;
+	int				**e;
+	int				**w;
+	int				**n;
+	int				**s;
 	struct s_arena	*arena;
 	//size_t	collected //number of insects found
 }				t_game;
@@ -115,17 +151,17 @@ void	count_symbols(t_game *game);
 void	execute_flood_fill(t_game *game);
 void	extract_game_map(char *arg, t_game *game, t_arena *arena);
 void	find_identifiers(char **elements, t_game *game);
-void	*free_2d_arr(char **arr);
+void	*free_2d_arr(char **arr); // onko tata enaa?
 void	ft_error(int num, t_game *game);
 int		ft_len(const char *s);
 void	get_map_array(t_game *game, int fd, t_arena *arena);
 int		get_rows(char *arg, t_game *game);
-mlx_t	*initialise_mlx(mlx_t *mlx, t_map *map);
 bool	is_identifier(char *element);
 
 // initialisation
 t_arena *create_arena(size_t capacity);
-mlx_t	*initialise_mlx(mlx_t *mlx, t_map *map);
+mlx_t	*initialise_mlx(mlx_t *mlx, t_arena *arena);
+void	initialise_images(t_game *game);
 
 // utilities
 void	img_error(t_game *game, char signal);
@@ -139,6 +175,11 @@ void    clean_arena(t_arena *arena);
 size_t	round_to_eight(size_t num);
 
 // movement
-void	key_input(mlx_key_data_t keydata, void *param);
+void	keyhook(mlx_key_data_t keydata, void *param);
+
+// graphics
+uint32_t 	get_colour(int r, int g, int b);
+void	rayhook(t_game *game);//oid *param);
+void    draw(t_game *game, int x);
 
 #endif

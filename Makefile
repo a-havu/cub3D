@@ -11,10 +11,13 @@ ifeq ($(shell uname), Darwin)
 	-framework Cocoa -framework OpenGL -framework IOKit
 endif
 
-SOURCES			:=	srcs/check_map.c \
+SOURCES			:=	srcs/main.c \
+					srcs/graphics.c \
+					srcs/raycasting.c \
+					srcs/draw.c \
+					srcs/check_map.c \
 					srcs/extract_game_map.c \
 					srcs/ft_error.c \
-					srcs/main.c \
 					srcs/arena/arena.c \
 					srcs/arena/arena_next_line.c \
 					srcs/arena/arena_setsplit.c \
