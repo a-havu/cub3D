@@ -1,86 +1,54 @@
 #include "cub3d.h"
 #include <stdio.h>
 
-// bool	fits_monitor(mlx_t *mlx)
-// {
-// 	int32_t	width;
-// 	int32_t	height;
-
-// 	mlx_get_monitor_size(0, &width, &height);
-// 	if (width < MAX_W || height < MAX_H)
-// 	{
-// 		ft_printf("error\n");
-// 		return (false);
-// 	}
-// 	return (true);
-// }
-
-mlx_t	*initialise_mlx(mlx_t *mlx, t_arena *arena)
+void	key_input(mlx_key_data_t keydata, void *param)
 {
-	// if (map->width * PXL > MAX_W || map->height * PXL > MAX_H)
-	// 	exit_process(map, "Map is too big for screen\n", 1);
-	mlx = mlx_init(MAX_W, MAX_H, "cub3D", true);
-	if (!mlx)
+	t_game *game;
+
+	game = param;
+	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
 	{
-		clean_arena(arena);
-		exit(EXIT_FAILURE);
+		//clean_arena(game->arena);//taa crashaa
+		exit(EXIT_SUCCESS);
 	}
-	return (mlx);
-}
-
-/** Rotates raycasting values according to player orientation
- * @param game	the game struct
- * @param rot	by how much we rotate player's view
- */
-void rotate(t_game *game, double rot)
-{
-    double odx = game->dir.x;
-    double ody = game->dir.y;
-    double opx = game->plane.x;
-    double opy = game->plane.y;
-
-    game->dir.x   = odx * cos(rot) - ody * sin(rot);
-    game->dir.y   = odx * sin(rot) + ody * cos(rot);
-    game->plane.x = opx * cos(rot) - opy * sin(rot);
-    game->plane.y = opx * sin(rot) + opy * cos(rot);
-}
-
-/** Sets raycasting values in game struct
- * @param game the game struct
- */
-void	init_game(t_game *game)
-{
-	game->dir.x = 1;
-	game->dir.y = 0;
-	game->plane.x = 0;
-	game->plane.y = 0.66;
-	if (game->map->player == 'S')
-		rotate(game, M_PI / 2);
-	else if (game->map->player == 'N')
-		rotate(game, M_PI * 1.5);
-	else if (game->map->player == 'W')
-		rotate(game, M_PI);
+	else if (keydata.key == MLX_KEY_W
+		&& (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
+		move_player(game, 'y', UP);
+	else if (keydata.key == MLX_KEY_A
+		&& (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
+		move_player(game, 'x', LEFT);
+	else if (keydata.key == MLX_KEY_S
+		&& (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
+		move_player(game, 'y', DOWN);
+	else if (keydata.key == MLX_KEY_D
+		&& (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
+		move_player(game, 'x', RIGHT);
+	// else if (keydata.key == MLX_KEY_LEFT
+	// 	&& (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
+	// 	//move POV to left
+	// else if (keydata.key == MLX_KEY_RIGHT 
+	// 	&& (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
+	// //	move POV to right
+	// 'M' vois togglaa minimapin nakyviin
+	rayhook(game);
 }
 
 void	run_game(t_game *game)
 {
-	t_textures	textures;
-
-	game->textures = &textures;
-	game->mlx = initialise_mlx(game->mlx, game->arena);
-}
-
-void	key_input(mlx_key_data_t keydata, void *param)
-{
-	t_game	*game;
-
-	game = param;
-	if (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT)
-	{
-		if (keydata.key == MLX_KEY_ESCAPE)
-			mlx_close_window(game->mlx);
-	}
+	game->mlx = mlx_init(MAX_W, MAX_H, "SWEN THE BUGBOI", true);
+	if (!game->mlx)
+		ft_error(8, game);
+	game->minimap = arena_alloc(game->arena, sizeof(t_minimap));
+	if (!game->minimap)
+		ft_error(8, game);
+	game->minimap->tile_size = 50;
+	initialise_images(game);
+	place_minimap(game);
 	rayhook(game);
+	mlx_key_hook(game->mlx, key_input, game);
+	// mlx_loop_hook(game.mlx, &rayhook, &game);
+	mlx_loop(game->mlx);
+	// mlx_terminate(game->mlx);
 }
 
 int main(int argc, char **argv)
@@ -92,20 +60,11 @@ int main(int argc, char **argv)
 	arena = create_arena(CAPACITY);
 	ft_memset(&game, 0, sizeof(t_game));
 	ft_memset(&map, 0, sizeof(t_map));
-	game.map = &map; // init game values in separate function?
+	game.map = &map; // create a set game info function for next 5 lines
 	game.arena = arena;
 	check_args(argc, argv[1], &game);
 	check_map(argv[1], &game, arena);
 	run_game(&game);
-	init_game(&game);//needs to happen after map parsing, player SNWE set
-	initialise_images(&game);
-	rayhook(&game);
-	mlx_key_hook(game.mlx, &key_input, &game);
-	//mlx_loop_hook(game.mlx, &rayhook, &game);
-	//mlx_loop_hook(game.mlx, &keyhook, &game);
-	mlx_loop(game.mlx);
-	//delete_textures(&game);
-	mlx_terminate(game.mlx);
-	clean_arena(arena);
-	return (0);
+	// clean_arena(arena);
+	// return (0); exit happens in run_game?
 }

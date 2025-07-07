@@ -54,9 +54,11 @@ void    clean_arena(t_arena *arena)
     {
         current->capacity = 0;
         current->size = 0;
-        free(current->data);
+		if (current->data)
+    	    free(current->data);
         temp = current->next;
-        free(current);
+		if (current)
+    	    free(current);
         current = temp;
     }
 }

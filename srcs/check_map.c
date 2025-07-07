@@ -105,16 +105,4 @@ void	check_map(char *arg, t_game *game, t_arena *arena)
 	game->map_cpy = copy_map(game, arena);
 	execute_flood_fill(game);
 	extract_game_map(arg, game, arena);
-	// int i = 0;
-	// while (game->final_map[i])
-	// {
-	// 	ft_printf("final map: %s", game->final_map[i]);
-	// 	i++;
-	// }
-	// ft_printf("path to NO: %s\n", game->map->no_wall);
-	// ft_printf("path to SO: %s\n", game->map->so_wall);
-	// ft_printf("path to WE: %s\n", game->map->we_wall);
-	// ft_printf("path to EA: %s\n", game->map->ea_wall);
-	// ft_printf("F value: %s\n", game->map->f_value);
-	// ft_printf("C value: %s\n", game->map->c_value);
 }

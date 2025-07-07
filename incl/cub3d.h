@@ -15,9 +15,16 @@
 # define D 2
 # define ESC 53
 # define PXL 64 //tai kuinka iso se oliska
+//# define MAX_H 1200 // full screen ainon macilla
+//# define MAX_W 2000 // full screen ainon macilla
 # define MAX_H 2160 // full screen
 # define MAX_W 3840 // full screen
 # define CAPACITY 1250000 // 10 mb
+
+# define UP -1
+# define LEFT -1
+# define DOWN 1
+# define RIGHT 1
 
 typedef struct	s_point
 {
@@ -30,7 +37,6 @@ typedef struct s_spot
 	int	x;
 	int	y;
 }				t_spot;
-
 
 typedef struct	s_map
 {
@@ -102,46 +108,57 @@ typedef struct	s_arena
     struct s_arena	*next;
 }				t_arena;
 
-
-typedef struct	s_game
+typedef struct s_minimap
 {
-	mlx_t			*mlx;
-	t_map			*map;
-	t_images		images;
-	mlx_image_t		*minimap_base;
-	t_textures		*textures;
-	t_point			dir;
-	t_point			raydir;
-	t_point			plane;
-	t_point			side_dist;
-	t_point			delta;
-	t_spot			sqr;
-	t_spot			step;
-	t_spot			tex;
-	int				ceiling[3];
-	int				floor[3];
-	int				side;
-	int				line_height;
-	int				draw_start;
-	int				draw_end;
-	int				tex_num;
-	int				tex_w;
-	int				tex_h;
-	bool			hit;
-	double			wall_dist;
-	double			camera_x;
-	double			wall_x;
-	double			incr;
-	double			tex_pos;
-	char			**map_cpy;
-	char			**final_map;
-	int				**e;
-	int				**w;
-	int				**n;
-	int				**s;
-	struct s_arena	*arena;
-	//size_t	collected //number of insects found
-}				t_game;
+	int			tile_x;
+	int			tile_y;
+	int			new_tile_x;
+	int			new_tile_y;
+	int			tile_size;
+	mlx_image_t	*map;
+	mlx_image_t	*player;
+}				t_minimap;
+
+typedef struct    s_game
+{
+    mlx_t				*mlx;
+    t_map				*map;
+	char				**map_cpy;
+	char				**final_map;
+    t_images			images;
+    mlx_image_t			*minimap_base;
+    t_textures			*textures;
+    t_point				dir;
+    t_point				raydir;
+    t_point				plane;
+    t_point				side_dist;
+    t_point				delta;
+    t_spot				sqr;
+    t_spot				step;
+    t_spot				tex;
+    int					ceiling[3];
+    int					floor[3];
+    int					side;
+    int					line_height;
+    int					draw_start;
+    int					draw_end;
+    int					tex_num;
+    int					tex_w;
+    int					tex_h;
+    bool				hit;
+    double				wall_dist;
+    double				camera_x;
+    double				wall_x;
+    double				incr;
+    double				tex_pos;
+    int					**e;
+    int					**w;
+    int					**n;
+    int					**s;
+    struct s_arena		*arena;
+	struct s_minimap	*minimap;
+    //size_t    collected //number of insects found
+}                t_game;
 
 //parsing
 void	check_args(int argc, char *arg, t_game *game);
@@ -152,6 +169,7 @@ void	execute_flood_fill(t_game *game);
 void	extract_game_map(char *arg, t_game *game, t_arena *arena);
 void	find_identifiers(char **elements, t_game *game);
 void	ft_error(int num, t_game *game);
+void	ft_error_graphics(t_game *game);
 int		ft_len(const char *s);
 void	get_map_array(t_game *game, int fd, t_arena *arena);
 int		get_rows(char *arg, t_game *game);
@@ -159,8 +177,9 @@ bool	is_identifier(char *element);
 
 // initialisation
 t_arena *create_arena(size_t capacity);
-mlx_t	*initialise_mlx(mlx_t *mlx, t_arena *arena);
+mlx_t	*initialise_mlx(t_game *game);
 void	initialise_images(t_game *game);
+void	place_minimap(t_game *game);
 
 // utilities
 void	delete_textures(t_game *game);
@@ -173,11 +192,16 @@ void    clean_arena(t_arena *arena);
 size_t	round_to_eight(size_t num);
 
 // movement
-void	keyhook(mlx_key_data_t keydata, void *param);
+void	draw_player(t_game *game);
+void	key_input(mlx_key_data_t keydata, void *param);
+void	move_player(t_game *game, char axis, int dir);
+uint32_t     get_colour(int r, int g, int b);
+void    rayhook(t_game *game);//oid *param);
+void    draw(t_game *game, int x);
 
 // graphics
-uint32_t 	get_colour(int r, int g, int b);
-void	rayhook(t_game *game);//oid *param);
+uint32_t     get_colour(int r, int g, int b);
+void    rayhook(t_game *game);//oid *param);
 void    draw(t_game *game, int x);
 
 #endif
