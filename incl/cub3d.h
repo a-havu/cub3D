@@ -20,6 +20,7 @@
 # define MAX_H 2160 // full screen
 # define MAX_W 3840 // full screen
 # define CAPACITY 1250000 // 10 mb
+# define TILE_SIZE 30
 
 # define UP -1
 # define LEFT -1
@@ -164,7 +165,7 @@ typedef struct    s_game
 void	check_args(int argc, char *arg, t_game *game);
 void	check_map(char *arg, t_game *game, t_arena *arena);
 char	**copy_map(t_game *game, t_arena *arena);
-void	count_symbols(t_game *game);
+void	count_symbols(t_game *game, int y, int x);
 void	execute_flood_fill(t_game *game);
 void	extract_game_map(char *arg, t_game *game, t_arena *arena);
 void	find_identifiers(char **elements, t_game *game);

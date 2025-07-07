@@ -3,16 +3,16 @@
 void	draw_player(t_game *game)
 {
 	int			radius;
-	int			px;
-	int			py;
+	double		px;
+	double		py;
 	int			y;
 	int			x;
 	
 	game->minimap->player = mlx_new_image(game->mlx, MAX_W / 2, MAX_H / 2);
 	if (!game->minimap->player)
 		ft_error_graphics(game);
-	px = (int)game->map->plr_pos.x * game->minimap->tile_size;
-	py = (int)game->map->plr_pos.y * game->minimap->tile_size;
+	px = game->map->plr_pos.x * game->minimap->tile_size;
+	py = game->map->plr_pos.y * game->minimap->tile_size;
 	radius = game->minimap->tile_size / 4;
 	y = -radius;
 	while(y <= radius)
@@ -37,9 +37,17 @@ void	place_minimap(t_game *game)
 	int			t_x;
 	int			t_y;
 	uint32_t	colour;
-
-
+	float scale_factor;
+	
 	y = 0;
+	game->minimap->tile_size = TILE_SIZE;
+	if (game->map->height > 20)
+	{
+		ft_printf("map height: %d\n", game->map->height);
+		scale_factor = (float)20 / (float)(game->map->height);
+		game->minimap->tile_size = game->minimap->tile_size * scale_factor;
+		ft_printf("tile size: %d\n", game->minimap->tile_size);
+	}
 	game->minimap->map = mlx_new_image(game->mlx, MAX_W / 2, MAX_H / 2);
 	if (!game->minimap->map)
 		ft_error_graphics(game);
@@ -48,8 +56,8 @@ void	place_minimap(t_game *game)
 		x = 0;
 		while(game->final_map[y][x])
 		{
-			if (game->final_map[y][x] == '0')
-				colour = 0xFFFFFFFF;
+			if (game->final_map[y][x] == '0' || game->final_map[y][x] == 'N')
+				colour = 0x894e97;
 			else if (game->final_map[y][x] == '1')
 				colour = 0x000000FF;
 			t_y = 0;
