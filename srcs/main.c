@@ -55,7 +55,7 @@ void	run_game(t_game *game)
 	game->minimap = arena_alloc(game->arena, sizeof(t_minimap));
 	if (!game->minimap)
 		ft_error(8, game);
-	game->minimap->tile_size = 15;
+	game->minimap->tile_size = 50;
 	load_images(game);
 	place_minimap(game);
 	mlx_key_hook(game->mlx, key_input, game);

@@ -15,8 +15,10 @@
 # define D 2
 # define ESC 53
 # define PXL 64 //tai kuinka iso se oliska
-# define MAX_H 1200 // full screen
-# define MAX_W 2000 // full screen
+//# define MAX_H 1200 // full screen ainon macilla
+//# define MAX_W 2000 // full screen ainon macilla
+# define MAX_H 2160 // full screen
+# define MAX_W 3840 // full screen
 # define CAPACITY 1250000 // 10 mb
 
 # define UP -1
