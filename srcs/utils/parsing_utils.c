@@ -126,8 +126,8 @@ void	count_symbols(t_game *game)
 					{
 						game->map->player_count++;
 						game->map->player = game->final_map[y][x];
-						game->map->player_pos.y = y + 0.5;
-						game->map->player_pos.x = x + 0.5;
+						game->map->plr_pos.y = y + 0.5;
+						game->map->plr_pos.x = x + 0.5;
 					}
 			else if (game->final_map[y][x] != '0'
 				&& game->final_map[y][x] != '1'
