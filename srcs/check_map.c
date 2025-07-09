@@ -5,21 +5,22 @@ static void	convert_cub_to_one_d_array(t_game *game, int fd, t_arena *arena)
 	char	*line;
 
 	line = NULL;
-	//game->map->one_d_array = NULL;
 	game->map->one_d_array = arena_alloc(arena, sizeof(char *));
 	if (!game->map->one_d_array)
 		ft_error(1, game);
 	while (1)
 	{
-		line = arena_next_line(fd, arena); //tässä kohtaa ei tuu NULLii
+		line = arena_next_line(fd, arena);
 		if (!line)
 			break ;
-		game->map->one_d_array = arena_join(arena, game->map->one_d_array, line);
-		if(!game->map->one_d_array)
+		game->map->one_d_array = arena_join(arena,
+				game->map->one_d_array, line);
+		if (!game->map->one_d_array)
 			ft_error(5, game);
 	}
 	close(fd);
 }
+
 /** A simplified atoi for numbers between 0 and 255
  * @param game	the game struct
  * @param str	the string to convert to integer
@@ -28,7 +29,7 @@ static void	convert_cub_to_one_d_array(t_game *game, int fd, t_arena *arena)
 int	cub_atoi(t_game *game, char *str)
 {
 	int	res;
-	
+
 	res = 0;
 	while (*str >= 48 && *str <= 57)
 	{
@@ -94,13 +95,13 @@ void	check_map(char *arg, t_game *game, t_arena *arena)
 
 	fd = open(arg, O_RDONLY);
 	if (fd == -1)
-		ft_error(8, game);
+		ft_error(9, game);
 	game->map->height = get_rows(arg, game);
 	convert_cub_to_one_d_array(game, fd, arena);
 	check_cub_elements(game, arena);
 	fd = open(arg, O_RDONLY);
 	if (fd == -1)
-		ft_error(8, game);
+		ft_error(9, game);
 	get_map_array(game, fd, arena);
 	game->map_cpy = copy_map(game, arena);
 	execute_flood_fill(game);

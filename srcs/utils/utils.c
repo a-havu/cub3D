@@ -10,7 +10,7 @@ int	get_rows(char *arg, t_game *game)
 	line = NULL;
 	fd = open(arg, O_RDONLY);
 	if (fd == -1)
-		ft_error(8, game);
+		ft_error(9, game);
 	while (1)
 	{
 		line = arena_next_line(fd, game->arena);
@@ -31,8 +31,7 @@ int	ft_len(const char *s)
 	if (s)
 	{
 		while (s[i])
-		i++;
+			i++;
 	}
 	return (i);
 }
-

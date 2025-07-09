@@ -30,7 +30,8 @@ static char	*join(char *next_line, char stash[BUFFER_SIZE + 1], t_arena *arena)
 	return (tmp);
 }
 
-static char	*fill_line(int fd, char *next_line, char stash[BUFFER_SIZE + 1], t_arena *arena)
+static char	*fill_line(int fd, char *next_line,
+	char stash[BUFFER_SIZE + 1], t_arena *arena)
 {
 	int			bytes_read;
 
@@ -60,7 +61,7 @@ static char	*clean_next_line(char *next_line)
 	while (next_line[i] && next_line[i] != '\n')
 		i++;
 	if (next_line[i] == '\n')
-	{	
+	{
 		i++;
 		while (next_line[i])
 			next_line[i++] = '\0';
@@ -75,7 +76,7 @@ char	*arena_next_line(int fd, t_arena *arena)
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	next_line = arena_alloc(arena, sizeof(char *)); //
+	next_line = arena_alloc(arena, sizeof(char *));
 	if (!next_line)
 		return (NULL);
 	if (stash[0])

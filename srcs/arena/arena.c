@@ -73,10 +73,10 @@ void	print_arena_details(t_arena *arena)
 	i = 0;
 	while (current)
 	{
-		ft_printf("Arena Node: %d\n", i + 1);//
-		ft_printf("Arena Capacity: %zu\n", arena->capacity);//
-		ft_printf("Arena Size: %zu\n", arena->size);//
-		ft_printf("Arena data pointer: %p\n", arena->data);//
+		ft_printf("Arena Node: %d\n", i + 1);
+		ft_printf("Arena Capacity: %zu\n", arena->capacity);
+		ft_printf("Arena Size: %zu\n", arena->size);
+		ft_printf("Arena data pointer: %p\n", arena->data);
 		++i;
 		current = current->next;
 	}
