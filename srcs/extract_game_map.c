@@ -6,7 +6,8 @@ void	get_map_array(t_game *game, int fd, t_arena *arena)
 	int		i;
 
 	i = 0;
-	game->map->array = arena_alloc(arena, (game->map->height + 1 + sizeof(char *)));
+	game->map->array = arena_alloc(arena,
+			(game->map->height + 1 + sizeof(char *)));
 	if (!game->map->array)
 		ft_error(1, game);
 	while (1)
@@ -25,28 +26,16 @@ void	get_map_array(t_game *game, int fd, t_arena *arena)
 	close(fd);
 }
 
-//: Swen & Bug in same room
-
-char	**copy_map(t_game *game, t_arena *arena)
+static char	**copy_loop(t_game *game, char **copy, int y)
 {
-	int		y;
-	int		i;
-	char	**copy;
+	int	i;
 
 	i = 0;
-	y = game->map->last_id + 1;
-	while(game->map->array[y][0] == '\n' || is_identifier(game->map->array[y]))
-		y++;
-	copy = arena_alloc(arena, (game->map->char_count * sizeof(char)) + sizeof(char *));
-	if (!copy)
-		ft_error(1, game);
-	while(game->map->array[y][0] == '\n')
-		y++;
 	while (game->map->array[y])
 	{
 		if (game->map->array[y][0] != '\n')
 		{
-			copy[i] = arena_strdup(arena, game->map->array[y]);
+			copy[i] = arena_strdup(game->arena, game->map->array[y]);
 			if (!copy[i])
 				ft_error(5, game);
 			y++;
@@ -57,7 +46,25 @@ char	**copy_map(t_game *game, t_arena *arena)
 	}
 	copy[i] = NULL;
 	game->map->height = i;
-	return(copy);
+	return (copy);
+}
+
+char	**copy_map(t_game *game, t_arena *arena)
+{
+	int		y;
+	char	**copy;
+
+	y = game->map->last_id + 1;
+	while (game->map->array[y][0] == '\n' || is_identifier(game->map->array[y]))
+		y++;
+	copy = arena_alloc(arena,
+			(game->map->char_count * sizeof(char)) + sizeof(char *));
+	if (!copy)
+		ft_error(1, game);
+	while (game->map->array[y][0] == '\n')
+		y++;
+	copy = copy_loop(game, copy, y);
+	return (copy);
 }
 
 void	extract_game_map(char *arg, t_game *game, t_arena *arena)
@@ -69,5 +76,5 @@ void	extract_game_map(char *arg, t_game *game, t_arena *arena)
 	get_map_array(game, fd, arena);
 	close(fd);
 	game->final_map = copy_map(game, arena);
-	count_symbols(game);
+	count_symbols(game, 0, 0);
 }

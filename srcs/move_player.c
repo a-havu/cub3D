@@ -2,7 +2,7 @@
 
 void	move_player(t_game *game, char axis, int dir)
 {
-	double	speed = 10;
+	double	speed = 5;
 	// int		x;
 	// int		y;
 

@@ -31,3 +31,15 @@ void	initialise_images(t_game *game)
     if (mlx_image_to_window(game->mlx, game->images.screen, 0, 0) == -1)
         ft_error_graphics(game);
 }
+
+void	delete_textures(t_textures *textures)
+{
+	if (textures->n_wall)
+		mlx_delete_texture(textures->n_wall);
+	if (textures->s_wall)
+	 	mlx_delete_texture(textures->s_wall);
+	if (textures->e_wall)
+		mlx_delete_texture(textures->e_wall);
+	if (textures->w_wall)
+	 	mlx_delete_texture(textures->w_wall);
+}

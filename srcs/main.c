@@ -1,29 +1,21 @@
 #include "cub3d.h"
 #include <stdio.h>
 
-void	key_input(mlx_key_data_t keydata, void *param)
+/** Sets raycasting values in game struct
+ * @param game the game struct
+ */
+static void    init_game_struct(t_game *game)
 {
-	t_game *game;
-
-	game = param;
-	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
-	{
-		//clean_arena(game->arena);//taa crashaa
-		exit(EXIT_SUCCESS);
-	}
-	else if (keydata.key == MLX_KEY_W
-		&& (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
-		move_player(game, 'y', UP);
-	else if (keydata.key == MLX_KEY_A
-		&& (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
-		move_player(game, 'x', LEFT);
-	else if (keydata.key == MLX_KEY_S
-		&& (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
-		move_player(game, 'y', DOWN);
-	else if (keydata.key == MLX_KEY_D
-		&& (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
-		move_player(game, 'x', RIGHT);
-	// 'M' vois togglaa minimapin nakyviin
+	game->dir.x = 1;
+	game->dir.y = 0;
+	game->plane.x = 0;
+	game->plane.y = 0.66;
+	if (game->map->player == 'S')
+		rotate(game, M_PI / 2);
+	else if (game->map->player == 'N')
+		rotate(game, M_PI * 1.5);
+	else if (game->map->player == 'W')
+		rotate(game, M_PI);
 }
 
 void	run_game(t_game *game)
@@ -34,11 +26,10 @@ void	run_game(t_game *game)
 	game->mlx = initialise_mlx(game);
 	game->minimap = arena_alloc(game->arena, sizeof(t_minimap));
 	if (!game->minimap)
-		ft_error(8, game);
-	game->minimap->tile_size = 50;
+		ft_error(5, game);
 	initialise_images(game);
 	place_minimap(game);
-	mlx_key_hook(game->mlx, key_input, game);
+	//mlx_key_hook(game->mlx, key_input, game);
 	mlx_loop_hook(game->mlx, update_view, game);
 	mlx_loop(game->mlx);
 }
@@ -56,11 +47,11 @@ int main(int argc, char **argv)
 	game.arena = arena;
 	check_args(argc, argv[1], &game);
 	check_map(argv[1], &game, arena);
-	init_struct(&game);
+	init_game_struct(&game);
 	run_game(&game);
-	//delete_textures(&game);
-	mlx_terminate(game.mlx);//
-	clean_arena(arena);//
-	return (0);
+  mlx_terminate(game.mlx);
+	delete_textures(game.textures);
+  clean_arena(arena);
+  return (0);//luultavasti redundant rivit run_gamen jalkeen?
 }
 

@@ -21,6 +21,7 @@
 # define MAX_W 3840 // full screen
 # define CAPACITY 1250000 // 10 mb
 # define ROT 0.05 // rotation
+# define TILE_SIZE 30
 
 # define UP -1
 # define LEFT -1
@@ -165,7 +166,7 @@ typedef struct s_game
 void	check_args(int argc, char *arg, t_game *game);
 void	check_map(char *arg, t_game *game, t_arena *arena);
 char	**copy_map(t_game *game, t_arena *arena);
-void	count_symbols(t_game *game);
+void	count_symbols(t_game *game, int y, int x);
 void	execute_flood_fill(t_game *game);
 void	extract_game_map(char *arg, t_game *game, t_arena *arena);
 void	find_identifiers(char **elements, t_game *game);
@@ -184,7 +185,7 @@ void	place_minimap(t_game *game);
 void	init_struct(t_game *game);
 
 // utilities
-void	delete_textures(t_game *game);
+void	delete_textures(t_textures *textures);
 void    *arena_alloc(t_arena *arena, size_t size);
 char	*arena_join(t_arena *arena, char const *s1, char const *s2);
 char	*arena_next_line(int fd, t_arena *arena);

@@ -27,6 +27,7 @@ SOURCES			:=	srcs/main.c \
 					srcs/minimap/minimap.c \
 					srcs/move_player.c \
 					srcs/movement.c \
+					srcs/utils/find_identifiers.c \
 					srcs/utils/flood_fill.c \
 					srcs/utils/parsing_utils.c \
 					srcs/utils/utils.c \
