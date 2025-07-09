@@ -23,32 +23,24 @@ void	key_input(mlx_key_data_t keydata, void *param)
 	else if (keydata.key == MLX_KEY_D
 		&& (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
 		move_player(game, 'x', RIGHT);
-	// else if (keydata.key == MLX_KEY_LEFT
-	// 	&& (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
-	// 	//move POV to left
-	// else if (keydata.key == MLX_KEY_RIGHT 
-	// 	&& (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
-	// //	move POV to right
 	// 'M' vois togglaa minimapin nakyviin
-	rayhook(game);
 }
 
 void	run_game(t_game *game)
 {
-	game->mlx = mlx_init(MAX_W, MAX_H, "SWEN THE BUGBOI", true);
-	if (!game->mlx)
-		ft_error(8, game);
+	t_textures    textures;
+
+	game->textures = &textures;
+	game->mlx = initialise_mlx(game);
 	game->minimap = arena_alloc(game->arena, sizeof(t_minimap));
 	if (!game->minimap)
 		ft_error(8, game);
 	game->minimap->tile_size = 50;
 	initialise_images(game);
 	place_minimap(game);
-	rayhook(game);
 	mlx_key_hook(game->mlx, key_input, game);
-	// mlx_loop_hook(game.mlx, &rayhook, &game);
+	mlx_loop_hook(game->mlx, update_view, game);
 	mlx_loop(game->mlx);
-	// mlx_terminate(game->mlx);
 }
 
 int main(int argc, char **argv)
@@ -60,11 +52,15 @@ int main(int argc, char **argv)
 	arena = create_arena(CAPACITY);
 	ft_memset(&game, 0, sizeof(t_game));
 	ft_memset(&map, 0, sizeof(t_map));
-	game.map = &map; // create a set game info function for next 5 lines
+	game.map = &map;
 	game.arena = arena;
 	check_args(argc, argv[1], &game);
 	check_map(argv[1], &game, arena);
+	init_struct(&game);
 	run_game(&game);
-	// clean_arena(arena);
-	// return (0); exit happens in run_game?
+	//delete_textures(&game);
+	mlx_terminate(game.mlx);//
+	clean_arena(arena);//
+	return (0);
 }
+

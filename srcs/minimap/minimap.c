@@ -3,16 +3,16 @@
 void	draw_player(t_game *game)
 {
 	int			radius;
-	int			px;
-	int			py;
+	double		px;
+	double		py;
 	int			y;
 	int			x;
 	
 	game->minimap->player = mlx_new_image(game->mlx, MAX_W / 2, MAX_H / 2);
 	if (!game->minimap->player)
 		ft_error_graphics(game);
-	px = (int)game->map->plr_pos.x * game->minimap->tile_size;
-	py = (int)game->map->plr_pos.y * game->minimap->tile_size;
+	px = game->map->plr_pos.x * game->minimap->tile_size;
+	py = game->map->plr_pos.y * game->minimap->tile_size;
 	radius = game->minimap->tile_size / 4;
 	y = -radius;
 	while(y <= radius)

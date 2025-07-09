@@ -20,13 +20,14 @@
 # define MAX_H 2160 // full screen
 # define MAX_W 3840 // full screen
 # define CAPACITY 1250000 // 10 mb
+# define ROT 0.05 // rotation
 
 # define UP -1
 # define LEFT -1
 # define DOWN 1
 # define RIGHT 1
 
-typedef struct	s_point
+typedef struct s_point
 {
 	double	x;
 	double	y;
@@ -38,7 +39,7 @@ typedef struct s_spot
 	int	y;
 }				t_spot;
 
-typedef struct	s_map
+typedef struct s_map
 {
 	char	player;
 	char	**array;
@@ -66,45 +67,45 @@ typedef struct	s_map
 	//player facing direction (N, S, W or E)?
 }				t_map;
 
-typedef struct	s_textures
+typedef struct s_textures
 {
 	mlx_texture_t	*n_wall;
-	mlx_texture_t   *e_wall;
-	mlx_texture_t   *s_wall;
-	mlx_texture_t   *w_wall;
+	mlx_texture_t	*e_wall;
+	mlx_texture_t	*s_wall;
+	mlx_texture_t	*w_wall;
 	mlx_texture_t	*sky;
-	mlx_texture_t   *ground;
-	mlx_texture_t   *door;
-	mlx_texture_t   *camera;
-	mlx_texture_t   *insect1;
-	mlx_texture_t   *insect2;
-	mlx_texture_t   *insect3;
-	mlx_texture_t   *insect4;
+	mlx_texture_t	*ground;
+	mlx_texture_t	*door;
+	mlx_texture_t	*camera;
+	mlx_texture_t	*insect1;
+	mlx_texture_t	*insect2;
+	mlx_texture_t	*insect3;
+	mlx_texture_t	*insect4;
 }				t_textures;
 
-typedef struct	s_images
+typedef struct s_images
 {
 	mlx_image_t	*n_wall;
-	mlx_image_t *e_wall;
-	mlx_image_t *s_wall;
-	mlx_image_t *w_wall;
-	mlx_image_t *screen;
-	mlx_image_t *miniwall;
-	mlx_image_t *empty;
-	mlx_image_t *offedge;
-	mlx_image_t *door;
-	mlx_image_t *camera;
-	mlx_image_t *insect1;
-	mlx_image_t *insect2;
-	mlx_image_t *insect3;
-	mlx_image_t *insect4;
+	mlx_image_t	*e_wall;
+	mlx_image_t	*s_wall;
+	mlx_image_t	*w_wall;
+	mlx_image_t	*screen;
+	mlx_image_t	*miniwall;
+	mlx_image_t	*empty;
+	mlx_image_t	*offedge;
+	mlx_image_t	*door;
+	mlx_image_t	*camera;
+	mlx_image_t	*insect1;
+	mlx_image_t	*insect2;
+	mlx_image_t	*insect3;
+	mlx_image_t	*insect4;
 }				t_images;
 
-typedef struct	s_arena
+typedef struct s_arena
 {
 	size_t			capacity;
-    size_t			size;
-    uint8_t			*data;
+	size_t			size;
+	uint8_t			*data;
     struct s_arena	*next;
 }				t_arena;
 
@@ -119,9 +120,9 @@ typedef struct s_minimap
 	mlx_image_t	*player;
 }				t_minimap;
 
-typedef struct    s_game
+typedef struct s_game
 {
-    mlx_t				*mlx;
+	mlx_t				*mlx;
     t_map				*map;
 	char				**map_cpy;
 	char				**final_map;
@@ -180,6 +181,7 @@ t_arena *create_arena(size_t capacity);
 mlx_t	*initialise_mlx(t_game *game);
 void	initialise_images(t_game *game);
 void	place_minimap(t_game *game);
+void	init_struct(t_game *game);
 
 // utilities
 void	delete_textures(t_game *game);
@@ -198,10 +200,14 @@ void	move_player(t_game *game, char axis, int dir);
 uint32_t     get_colour(int r, int g, int b);
 void    rayhook(t_game *game);//oid *param);
 void    draw(t_game *game, int x);
+void	update_view(void *param);
 
 // graphics
 uint32_t     get_colour(int r, int g, int b);
-void    rayhook(t_game *game);//oid *param);
+void    raycasting(t_game *game);//oid *param);
 void    draw(t_game *game, int x);
+void    draw_cf(mlx_image_t *screen, t_game *game);
+void    update_raycast(t_game *game, char axis, int dir);
+void	rotate(t_game *game, double rot);
 
 #endif

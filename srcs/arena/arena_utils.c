@@ -48,11 +48,10 @@ char	*arena_strdup(t_arena *arena, const char *s)
 
 size_t	round_to_eight(size_t num)
 {
-	size_t result;
+	size_t	result;
 
 	if ((num & 7) == 0)
 		return (num);
 	result = (num + 7) & ~7;
 	return (result);
 }
-
