@@ -49,9 +49,9 @@ int main(int argc, char **argv)
 	check_map(argv[1], &game, arena);
 	init_game_struct(&game);
 	run_game(&game);
-    mlx_terminate(game.mlx);
+  mlx_terminate(game.mlx);
 	delete_textures(game.textures);
-    clean_arena(arena);
-    return (0);//luultavasti redundant rivit run_gamen jalkeen?
+  clean_arena(arena);
+  return (0);//luultavasti redundant rivit run_gamen jalkeen?
 }
 
