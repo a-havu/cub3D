@@ -20,7 +20,7 @@
 # define MAX_H 2160 // full screen
 # define MAX_W 3840 // full screen
 # define CAPACITY 1250000 // 10 mb
-# define ROT 0.05 // rotation
+# define ROT 0.02 // rotation
 
 # define UP -1
 # define LEFT -1
@@ -207,7 +207,7 @@ uint32_t     get_colour(int r, int g, int b);
 void    raycasting(t_game *game);//oid *param);
 void    draw(t_game *game, int x);
 void    draw_cf(mlx_image_t *screen, t_game *game);
-void    update_raycast(t_game *game, char axis, int dir);
+void    update_raycast(t_game *game, int dir);
 void	rotate(t_game *game, double rot);
 
 #endif

@@ -1,6 +1,27 @@
 #include "cub3d.h"
 #include <stdio.h>
 
+/** Rotates raycasting values according to player orientation
+ * @param game	the game struct
+ * @param rot	by how much we rotate player's view
+ */
+void rotate(t_game *game, double rot)
+{
+    double olddir_x;
+    double olddir_y;
+    double oldpl_x;
+    double oldpl_y;
+
+    olddir_x = game->dir.x;
+    olddir_y = game->dir.y;
+    oldpl_x = game->plane.x;
+    oldpl_y = game->plane.y;
+	game->dir.x   = olddir_x * cos(rot) - olddir_y * sin(rot);
+    game->dir.y   = olddir_x * sin(rot) + olddir_y * cos(rot);
+    game->plane.x = oldpl_x * cos(rot) - oldpl_y * sin(rot);
+    game->plane.y = oldpl_x * sin(rot) + oldpl_y * cos(rot);
+}
+
 void	key_input(mlx_key_data_t keydata, void *param)
 {
 	t_game *game;
