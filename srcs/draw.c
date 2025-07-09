@@ -105,3 +105,33 @@ void    draw(t_game *game, int x)
         draw_wall(game, x, game->textures->s_wall);
     }
 }
+
+/** Draws the ceiling and floor according to the given colours.
+ * @param screen the game window image
+ * @param game the game struct
+ */
+void    draw_cf(mlx_image_t *screen, t_game *game)
+{
+    int y;
+    int x;
+    uint32_t    c_colour;
+    uint32_t    f_colour;
+
+    y = 0;
+    f_colour = get_colour(game->floor[0], game->floor[1], game->floor[2]);
+    c_colour = get_colour(game->ceiling[0], game->ceiling[1], game->ceiling[2]);
+    while (y < MAX_H)
+    {
+        x = 0;
+        while (x < MAX_W)
+        {
+            if (y < MAX_H / 2)
+                mlx_put_pixel(screen, x, y, c_colour);
+            else
+                mlx_put_pixel(screen, x, y, f_colour);
+            x++;
+        }
+       y++;
+    }
+
+}
