@@ -6,7 +6,7 @@
 /*   By: ahavu <ahavu@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 09:23:50 by ahavu             #+#    #+#             */
-/*   Updated: 2025/06/24 10:00:52 by ahavu            ###   ########.fr       */
+/*   Updated: 2025/07/09 10:14:04 by ahavu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static char	*clean_next_line(char *next_line)
 	while (next_line[i] && next_line[i] != '\n')
 		i++;
 	if (next_line[i] == '\n')
-	{	
+	{
 		i++;
 		while (next_line[i])
 			next_line[i++] = '\0';

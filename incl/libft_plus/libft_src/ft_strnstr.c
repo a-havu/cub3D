@@ -6,7 +6,7 @@
 /*   By: ahavu <ahavu@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 16:01:15 by ahavu             #+#    #+#             */
-/*   Updated: 2025/01/09 16:39:23 by ahavu            ###   ########.fr       */
+/*   Updated: 2025/07/09 10:14:43 by ahavu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ char	*ft_strnstr(const char *big, const char *little, size_t len)
 	while (i < len && big[i])
 	{
 		l_i = 0;
-		while (((i + l_i) < len && big[i + l_i]) && (little[l_i]) \
-		&& (big[i + l_i] == little[l_i]))
+		while (((i + l_i) < len && big[i + l_i]) && (little[l_i])
+			&& (big[i + l_i] == little[l_i]))
 		{
 			l_i++;
 			if (l_i == li_len)
