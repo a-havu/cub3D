@@ -11,8 +11,8 @@ void    update_raycast(t_game *game, char axis, int dir)
     {
         if (dir == LEFT)
         {
-            plr_x = (int)(game->map->plr_pos.x + game->dir.y * (speed));
-            plr_y = (int)(game->map->plr_pos.y - game->dir.x * (speed));
+            plr_x = (int)(game->map->plr_pos.x + game->dir.y * (speed + 0.01));
+            plr_y = (int)(game->map->plr_pos.y - game->dir.x * (speed + 0.01));
             if (game->final_map[(int)game->map->plr_pos.y][plr_x] == '0')
                 game->map->plr_pos.x += game->dir.y * speed;
             if (game->final_map[plr_y][(int)game->map->plr_pos.x] == '0')
@@ -20,8 +20,8 @@ void    update_raycast(t_game *game, char axis, int dir)
         }
         else if (dir == RIGHT)
         {
-            plr_x = (int)(game->map->plr_pos.x - game->dir.y * (speed));
-            plr_y = (int)(game->map->plr_pos.y + game->dir.x * (speed));
+            plr_x = (int)(game->map->plr_pos.x - game->dir.y * (speed + 0.01));
+            plr_y = (int)(game->map->plr_pos.y + game->dir.x * (speed + 0.01));
             if (game->final_map[(int)game->map->plr_pos.y][plr_x] == '0')
                 game->map->plr_pos.x -= game->dir.y * speed;
             if (game->final_map[plr_y][(int)game->map->plr_pos.x] == '0')
@@ -32,8 +32,8 @@ void    update_raycast(t_game *game, char axis, int dir)
     {
         if (dir == UP)
         {
-            plr_x = (int)(game->map->plr_pos.x + game->dir.x * (speed));
-            plr_y = (int)(game->map->plr_pos.y + game->dir.y * (speed));
+            plr_x = (int)(game->map->plr_pos.x + game->dir.x * (speed + 0.01));
+            plr_y = (int)(game->map->plr_pos.y + game->dir.y * (speed + 0.01));
             if (game->final_map[(int)game->map->plr_pos.y][plr_x] == '0')
                 game->map->plr_pos.x += game->dir.x * speed;
             if (game->final_map[plr_y][(int)game->map->plr_pos.x] == '0')
@@ -41,8 +41,8 @@ void    update_raycast(t_game *game, char axis, int dir)
         }
         else if (dir == DOWN)
         {
-            plr_x = (int)(game->map->plr_pos.x - game->dir.x * (speed));
-            plr_y = (int)(game->map->plr_pos.y - game->dir.y * (speed));
+            plr_x = (int)(game->map->plr_pos.x - game->dir.x * (speed + 0.01));
+            plr_y = (int)(game->map->plr_pos.y - game->dir.y * (speed + 0.01));
             if (game->final_map[(int)game->map->plr_pos.y][plr_x] == '0')
                 game->map->plr_pos.x -= game->dir.x * speed;
             if (game->final_map[plr_y][(int)game->map->plr_pos.x] == '0')
@@ -99,11 +99,15 @@ void update_view(void *param)
         update_raycast(game, 'x', RIGHT);
 		draw_player(game);
 	}
-    else if (mlx_is_key_down(game->mlx, MLX_KEY_LEFT))//tahan sitte se FOV
+    if (mlx_is_key_down(game->mlx, MLX_KEY_LEFT))//tahan sitte se minimap FOV
+	{
         rotate(game, -0.02);
-    else if (mlx_is_key_down(game->mlx, MLX_KEY_RIGHT))
+	}
+    if (mlx_is_key_down(game->mlx, MLX_KEY_RIGHT))
+	{
         rotate(game, 0.02);
-	else if (mlx_is_key_down(game->mlx, MLX_KEY_ESCAPE))
+	}
+	if (mlx_is_key_down(game->mlx, MLX_KEY_ESCAPE))
 	{
 		mlx_terminate(game->mlx);
 		delete_textures(game->textures);

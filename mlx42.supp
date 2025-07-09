@@ -22,7 +22,14 @@
     ...
     fun:glfwInit
 }
-{
+{{
+    llvm cmdline options
+    Memcheck:Leak
+    fun:calloc
+    ...
+    fun:LLVMParseCommandLineOptions
+}
+
     leak XrmGetStringDatabase
     Memcheck:Leak
     ...
@@ -45,10 +52,4 @@
     Memcheck:Leak
     ...
     fun:_Znwm
-}
-{
-    leak __tls_get_addr
-    Memcheck:Leak
-    ...
-    fun:__tls_get_addr
 }
