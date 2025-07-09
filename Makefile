@@ -35,7 +35,7 @@ OBJECTS			:= $(SOURCES:.c=.o)
 HEADERS			:= -I ./incl -I $(MLX_DIR)/include
 
 CC 				:= cc
-CFLAGS	:= -Wall -Wextra -Werror -I./incl
+CFLAGS	:= -O2 -Wall -Wextra -Werror -I./incl
 DEBUG_FLAGS		:= -g #-fsanitize=address -fsanitize=undefined
 
 all: $(NAME)

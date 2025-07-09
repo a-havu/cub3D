@@ -2,11 +2,94 @@
 
 void    update_raycast(t_game *game, char axis, int dir)
 {
-    double  speed;;
+    double  speed;
+    int     plr_x;
+    int     plr_y;
 
-    speed = 0.3;
+    speed = 0.1;
     if (axis == 'x')
-        game->map->plr_pos.x += dir * speed;
+    {
+        if (dir == LEFT)
+        {
+            plr_x = (int)(game->map->plr_pos.x + game->dir.y * (speed));
+            plr_y = (int)(game->map->plr_pos.y - game->dir.x * (speed));
+            if (game->final_map[(int)game->map->plr_pos.y][plr_x] == '0')
+                game->map->plr_pos.x += game->dir.y * speed;
+            if (game->final_map[plr_y][(int)game->map->plr_pos.x] == '0')
+                game->map->plr_pos.y -= game->dir.x * speed;
+        }
+        else if (dir == RIGHT)
+        {
+            plr_x = (int)(game->map->plr_pos.x - game->dir.y * (speed));
+            plr_y = (int)(game->map->plr_pos.y + game->dir.x * (speed));
+            if (game->final_map[(int)game->map->plr_pos.y][plr_x] == '0')
+                game->map->plr_pos.x -= game->dir.y * speed;
+            if (game->final_map[plr_y][(int)game->map->plr_pos.x] == '0')
+                game->map->plr_pos.y += game->dir.x * speed; 
+        }
+    }
     else if (axis == 'y')
-        game->map->plr_pos.y += dir * speed;
+    {
+        if (dir == UP)
+        {
+            plr_x = (int)(game->map->plr_pos.x + game->dir.x * (speed));
+            plr_y = (int)(game->map->plr_pos.y + game->dir.y * (speed));
+            if (game->final_map[(int)game->map->plr_pos.y][plr_x] == '0')
+                game->map->plr_pos.x += game->dir.x * speed;
+            if (game->final_map[plr_y][(int)game->map->plr_pos.x] == '0')
+                game->map->plr_pos.y += game->dir.y * speed;
+        }
+        else if (dir == DOWN)
+        {
+            plr_x = (int)(game->map->plr_pos.x - game->dir.x * (speed));
+            plr_y = (int)(game->map->plr_pos.y - game->dir.y * (speed));
+            if (game->final_map[(int)game->map->plr_pos.y][plr_x] == '0')
+                game->map->plr_pos.x -= game->dir.x * speed;
+            if (game->final_map[plr_y][(int)game->map->plr_pos.x] == '0')
+                game->map->plr_pos.y -= game->dir.y * speed;           
+        }
+    }
+}
+
+/** Rotates raycasting values according to player orientation
+ * @param game	the game struct
+ * @param rot	by how much we rotate player's view
+ */
+void rotate(t_game *game, double rot)
+{
+    double olddir_x;
+    double olddir_y;
+    double oldpl_x;
+    double oldpl_y;
+
+    olddir_x = game->dir.x;
+    olddir_y = game->dir.y;
+    oldpl_x = game->plane.x;
+    oldpl_y = game->plane.y;
+	game->dir.x   = olddir_x * cos(rot) - olddir_y * sin(rot);
+    game->dir.y   = olddir_x * sin(rot) + olddir_y * cos(rot);
+    game->plane.x = oldpl_x * cos(rot) - oldpl_y * sin(rot);
+    game->plane.y = oldpl_x * sin(rot) + oldpl_y * cos(rot);
+}
+
+/** Updates the game view based on key input
+ * @param param the game struct
+ */
+void update_view(void *param)
+{
+    t_game *game = param;
+
+    if (mlx_is_key_down(game->mlx, MLX_KEY_W))
+        update_raycast(game, 'y', UP);
+    if (mlx_is_key_down(game->mlx, MLX_KEY_S))
+        update_raycast(game, 'y', DOWN);
+    if (mlx_is_key_down(game->mlx, MLX_KEY_A))
+        update_raycast(game, 'x', LEFT);
+    if (mlx_is_key_down(game->mlx, MLX_KEY_D))
+        update_raycast(game, 'x', RIGHT);
+    if (mlx_is_key_down(game->mlx, MLX_KEY_LEFT))
+        rotate(game, -0.02);
+    if (mlx_is_key_down(game->mlx, MLX_KEY_RIGHT))
+        rotate(game, 0.02);
+    raycasting(game);
 }
