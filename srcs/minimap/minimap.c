@@ -8,6 +8,8 @@ void	draw_player(t_game *game)
 	int			y;
 	int			x;
 	
+	if (game->minimap->player)
+		mlx_delete_image(game->mlx, game->minimap->player);
 	game->minimap->player = mlx_new_image(game->mlx, MAX_W / 2, MAX_H / 2);
 	if (!game->minimap->player)
 		ft_error_graphics(game);

@@ -39,6 +39,7 @@ static void	set_player_info(t_game *game, int y, int x)
 	game->map->player = game->final_map[y][x];
 	game->map->plr_pos.y = y + 0.5;
 	game->map->plr_pos.x = x + 0.5;
+	game->final_map[y][x] = '0';
 }
 
 void	count_symbols(t_game *game, int y, int x)

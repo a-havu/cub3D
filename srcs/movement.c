@@ -80,16 +80,35 @@ void update_view(void *param)
     t_game *game = param;
 
     if (mlx_is_key_down(game->mlx, MLX_KEY_W))
+	{
         update_raycast(game, 'y', UP);
-    if (mlx_is_key_down(game->mlx, MLX_KEY_S))
+		draw_player(game);
+	}
+	else if (mlx_is_key_down(game->mlx, MLX_KEY_S))
+	{
         update_raycast(game, 'y', DOWN);
-    if (mlx_is_key_down(game->mlx, MLX_KEY_A))
+		draw_player(game);
+	}
+    else if (mlx_is_key_down(game->mlx, MLX_KEY_A))
+	{
         update_raycast(game, 'x', LEFT);
-    if (mlx_is_key_down(game->mlx, MLX_KEY_D))
+		draw_player(game);
+	}
+    else if (mlx_is_key_down(game->mlx, MLX_KEY_D))
+	{
         update_raycast(game, 'x', RIGHT);
-    if (mlx_is_key_down(game->mlx, MLX_KEY_LEFT))
+		draw_player(game);
+	}
+    else if (mlx_is_key_down(game->mlx, MLX_KEY_LEFT))//tahan sitte se FOV
         rotate(game, -0.02);
-    if (mlx_is_key_down(game->mlx, MLX_KEY_RIGHT))
+    else if (mlx_is_key_down(game->mlx, MLX_KEY_RIGHT))
         rotate(game, 0.02);
+	else if (mlx_is_key_down(game->mlx, MLX_KEY_ESCAPE))
+	{
+		mlx_terminate(game->mlx);
+		delete_textures(game->textures);
+		clean_arena(game->arena);
+		exit(EXIT_SUCCESS);
+	}
     raycasting(game);
 }
