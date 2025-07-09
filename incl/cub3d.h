@@ -7,7 +7,6 @@
 # include <math.h>
 # include <fcntl.h>
 # include <stdbool.h>
-# include <stdio.h> //REMOVE
 
 # define W 13
 # define A 0
@@ -205,10 +204,10 @@ void	update_view(void *param);
 
 // graphics
 uint32_t     get_colour(int r, int g, int b);
-void    raycasting(t_game *game);//oid *param);
+void    raycasting(t_game *game);
 void    draw(t_game *game, int x);
 void    draw_cf(mlx_image_t *screen, t_game *game);
-void    update_raycast(t_game *game, int dir);
+void    update_raycast(t_game *game, char axis, int dir);
 void	rotate(t_game *game, double rot);
 
 #endif

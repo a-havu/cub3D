@@ -9,7 +9,7 @@ void	ft_error(int num, t_game *game)
 	else if (num == 3)
 		ft_putstr_fd("\033[91mError\nCan't play with no players😔\n\033[0m", 2);
 	else if (num == 4)
-		ft_putstr_fd("\033[91mError\nUnknown character found!!!👽\n\033[0m", 2);
+		ft_putstr_fd("\033[91mError\nUnknown character found!!!👽\n\033[0m", 2); //segfault
 	else if (num == 5)
 		ft_putstr_fd("\033[91mError\nMemory allocation failure💀💀\n\033[0m", 2);
 	else if (num == 6)
@@ -20,8 +20,6 @@ void	ft_error(int num, t_game *game)
 		ft_putstr_fd("\033[91mError\nMLX initialisation failed\n\033[0m", 2);
 	else if (num == 9)
 		ft_putstr_fd("\033[91mError\nfailed to open map file 🥺🥺\n\033[0m", 2);
-	else if (num == 666)
-		ft_putstr_fd("\033[91mhoplaa\n\033[0m", 2);//for error checking
 	clean_arena(game->arena);
 	delete_textures(game->textures);
 	mlx_terminate(game->mlx);

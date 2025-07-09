@@ -40,7 +40,7 @@ static void	perform_dda(t_game *game)
 			game->sqr.y += game->step.y;
 			game->side = 1;
 		}
-		if (game->final_map[game->sqr.y][game->sqr.x] == '1') //door/collectible
+		if (game->final_map[game->sqr.y][game->sqr.x] == '1')
 			game->hit = true;
 	}
 }

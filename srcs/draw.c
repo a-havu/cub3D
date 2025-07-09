@@ -1,21 +1,5 @@
 #include "cub3d.h"
 
-/* 
-tex_num: the value oh the current map square - 1
-
-wall_x: represents the exact value where the wall was hit, tells which x-coordinate
-of the texture to use. Can be y-coordinate of the wall, if side is 1, but always x of tex.
-
-tex.x/y: coordinates of the texture. tex.y is calculated increased by step size
-
-tex_w/h: width and height of texture
-
-incr: the step with which tex.y is calculated (increment)
-*/
-
-/* moving the pixel pointer forward, calculating how many pixels to skip (x, y, width)
-and multiplying by size of unsigned int to turn pixel number into bytes to skip */
-
 /** Gets colour of the pixel
  * @param wall  the wall that was hit
  * @param x     the x-coordinate we are at
