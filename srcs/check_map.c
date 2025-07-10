@@ -7,7 +7,7 @@ static void	convert_cub_to_one_d_array(t_game *game, int fd, t_arena *arena)
 	line = NULL;
 	game->map->one_d_array = arena_alloc(arena, sizeof(char *));
 	if (!game->map->one_d_array)
-		ft_error(1, game);
+		ft_error(5, game);
 	while (1)
 	{
 		line = arena_next_line(fd, arena);
@@ -62,6 +62,8 @@ void	set_cf_colours(t_game *game, char *id, int info)
 		i++;
 	}
 	colours = arena_setsplit(game->arena, id, ",");
+	if (!colours)
+		ft_error(5, game);
 	i = 0;
 	while (colours[i])
 	{
@@ -75,8 +77,10 @@ void	set_cf_colours(t_game *game, char *id, int info)
 	}
 }
 
-/* splitting the created 1D array to extract the elements (texture paths & colour codes)*/
-
+/** Extracts map elements from map file
+ * @param game	the game struct
+ * @param arena	the memory arena
+ */
 static void	check_cub_elements(t_game *game, t_arena *arena)
 {
 	char	**elements;

@@ -9,7 +9,7 @@ void	ft_error(int num, t_game *game)
 	else if (num == 3)
 		ft_putstr_fd("\033[91mError\nCan't play with no players😔\n\033[0m", 2);
 	else if (num == 4)
-		ft_putstr_fd("\033[91mError\nUnknown character found!!!👽\n\033[0m", 2); //segfault
+		ft_putstr_fd("\033[91mError\nUnknown character found!!!👽\n\033[0m", 2);
 	else if (num == 5)
 		ft_putstr_fd("\033[91mError\nMemory allocation failure💀💀\n\033[0m", 2);
 	else if (num == 6)
@@ -22,7 +22,8 @@ void	ft_error(int num, t_game *game)
 		ft_putstr_fd("\033[91mError\nfailed to open map file 🥺🥺\n\033[0m", 2);
 	clean_arena(game->arena);
 	delete_textures(game->textures);
-	mlx_terminate(game->mlx);
+	if (game->mlx)
+		mlx_terminate(game->mlx);
 	exit(EXIT_FAILURE);
 }
 
@@ -30,7 +31,8 @@ void	ft_error_graphics(t_game *game)
 {
 	ft_putstr_fd("\033[91mError\nGraphics failed🔮😤🥺\n\033[0m", 2);
 	delete_textures(game->textures);
-	mlx_terminate(game->mlx);
+	if (game->mlx)
+		mlx_terminate(game->mlx);
 	clean_arena(game->arena);
 	exit(EXIT_FAILURE);
 }

@@ -36,6 +36,8 @@ char	**do_da_malloc(char **arr, char *str, char *sep, t_arena *arena)
 			size++;
 		}
 		arr[j] = arena_alloc(arena, size + 1);
+		if (!arr[j])
+			return (NULL);
 		j++;
 	}
 	return (arr);
@@ -96,7 +98,11 @@ char	**arena_setsplit(t_arena *arena, char *str, char *charset)
 
 	count = count_strs(str, charset);
 	dest = arena_alloc (arena, (count + 1) * sizeof(char *));
+	if (!dest)
+		return (NULL);
 	do_da_malloc(dest, str, charset, arena);
+	if (!dest)
+		return (NULL);
 	strs_to_arr(dest, str, charset);
 	return (dest);
 }

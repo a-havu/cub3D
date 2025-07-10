@@ -15,7 +15,9 @@ uint32_t	get_colour(int r, int g, int b)
 */
 void	initialise_images(t_game *game)
 {
-	game->textures = arena_alloc(game->arena, sizeof(t_textures)); //NULL 'EM
+	game->textures = arena_alloc(game->arena, sizeof(t_textures));
+	if (!game->textures)
+		ft_error(5, game);
 	game->textures->n_wall = mlx_load_png(game->map->no_wall);
 	if (!game->textures->n_wall)
 		ft_error_graphics(game);
@@ -40,7 +42,9 @@ void	initialise_images(t_game *game)
 */
 void	delete_textures(t_textures *textures)
 {
-	if (textures->n_wall) //segfaults if texture doesn't exist
+	if (!textures)
+		return ;
+	if (textures->n_wall)
 		mlx_delete_texture(textures->n_wall);
 	if (textures->s_wall)
 		mlx_delete_texture(textures->s_wall);
@@ -48,5 +52,4 @@ void	delete_textures(t_textures *textures)
 		mlx_delete_texture(textures->e_wall);
 	if (textures->w_wall)
 		mlx_delete_texture(textures->w_wall);
-    // need to delete images? at least screen
 }

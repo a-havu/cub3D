@@ -9,6 +9,8 @@ char	*arena_join(t_arena *arena, char const *s1, char const *s2)
 
 	if (!s1)
 		s1 = arena_strdup(arena, "");
+	if (!s1)
+		return (NULL);
 	i = 0;
 	k = 0;
 	total_len = ft_strlen(s1) + ft_strlen(s2);
@@ -43,8 +45,6 @@ char	*arena_strdup(t_arena *arena, const char *s)
 	new[i] = '\0';
 	return (new);
 }
-
-/*the number needs to be rounded to eights to please the chip*/
 
 size_t	round_to_eight(size_t num)
 {
