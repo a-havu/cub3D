@@ -56,8 +56,7 @@ void	count_symbols(t_game *game, int y, int x)
 					|| game->final_map[y][x] == 'W')
 				set_player_info(game, y, x);
 			else if (game->final_map[y][x] != '0'
-				&& game->final_map[y][x] != '1'
-				&& game->final_map[y][x] != '\n')
+				&& game->final_map[y][x] != '1')
 				ft_error(4, game);
 			x++;
 		}
