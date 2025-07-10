@@ -25,6 +25,7 @@ SOURCES			:=	srcs/main.c \
 					srcs/arena/arena_split.c \
 					srcs/arena/arena_utils.c \
 					srcs/minimap/minimap.c \
+					srcs/minimap/minimap_utils.c \
 					srcs/move_player.c \
 					srcs/movement.c \
 					srcs/utils/find_identifiers.c \

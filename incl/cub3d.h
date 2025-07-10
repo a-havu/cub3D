@@ -119,6 +119,8 @@ typedef struct s_minimap
 	int			tile_size;
 	mlx_image_t	*map;
 	mlx_image_t	*player;
+	uint32_t	colour;
+	float		scale_factor;
 }				t_minimap;
 
 typedef struct s_game
@@ -179,6 +181,9 @@ bool	is_identifier(char *element);
 
 // initialisation
 t_arena *create_arena(size_t capacity);
+void	draw_minimap_loop(t_game *game, int y, int x);
+void	init_minimap_values(t_game *game);
+void	init_player(t_game *game);
 mlx_t	*initialise_mlx(t_game *game);
 void	initialise_images(t_game *game);
 void	place_minimap(t_game *game);
@@ -197,7 +202,6 @@ size_t	round_to_eight(size_t num);
 // movement
 void	draw_player(t_game *game);
 void	key_input(mlx_key_data_t keydata, void *param);
-void	move_player(t_game *game, char axis, int dir);
 uint32_t     get_colour(int r, int g, int b);
 void    rayhook(t_game *game);//oid *param);
 void    draw(t_game *game, int x);
