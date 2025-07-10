@@ -30,10 +30,10 @@ void	initialise_images(t_game *game)
 	game->textures->w_wall = mlx_load_png(game->map->we_wall);
 	if (!game->textures->w_wall)
 		ft_error_graphics(game);
-	game->images.screen = mlx_new_image(game->mlx, MAX_W, MAX_H);
-	if (!game->images.screen)
+	game->screen = mlx_new_image(game->mlx, MAX_W, MAX_H);
+	if (!game->screen)
 		ft_error_graphics(game);
-	if (mlx_image_to_window(game->mlx, game->images.screen, 0, 0) == -1)
+	if (mlx_image_to_window(game->mlx, game->screen, 0, 0) == -1)
 		ft_error_graphics(game);
 }
 

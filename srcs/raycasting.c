@@ -101,7 +101,7 @@ void	raycasting(t_game *game)
 	unsigned int	x;
 
 	x = 0;
-	draw_cf(game->images.screen, game);
+	draw_cf(game->screen, game);
 	while (x < MAX_W)
 	{
 		calc_ray_n_delta(game, x);

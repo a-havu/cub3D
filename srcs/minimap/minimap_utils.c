@@ -1,16 +1,16 @@
 #include "cub3d.h"
 
-void	init_minimap_values(t_game *game)
+void	init_minimap_values(t_game *g)
 {
-	game->minimap->tile_size = TILE_SIZE;
-	if (game->map->height > 20)
+	g->minimap->tile_size = TILE_SIZE;
+	if (g->map->height > 20)
 	{
-		game->minimap->scale_factor = (float)20 / (float)(game->map->height);
-		game->minimap->tile_size = game->minimap->tile_size * game->minimap->scale_factor;
+		g->minimap->scale_fctr = (float)20 / (float)(g->map->height);
+		g->minimap->tile_size = g->minimap->tile_size * g->minimap->scale_fctr;
 	}
-	game->minimap->map = mlx_new_image(game->mlx, MAX_W / 2, MAX_H / 2);
-	if (!game->minimap->map)
-		ft_error_graphics(game);
+	g->minimap->map = mlx_new_image(g->mlx, MAX_W / 2, MAX_H / 2);
+	if (!g->minimap->map)
+		ft_error_graphics(g);
 }
 
 void	draw_minimap_loop(t_game *game, int y, int x)

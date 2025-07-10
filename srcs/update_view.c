@@ -64,7 +64,7 @@ static void	move_ud(t_game *game, double speed, int dir)
  * @param game  the game struct
  * @param dir   the direction the player moved
  */
-void	update_raycast(t_game *game, char axis, int dir)
+static void	update_raycast(t_game *game, char axis, int dir)
 {
 	double	speed;
 

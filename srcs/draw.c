@@ -58,7 +58,7 @@ static void	draw_wall(t_game *game, unsigned x, mlx_texture_t *wall)
 			game->tex_pos = wall->height - 1;
 		game->tex_pos += game->incr;
 		colour = get_pixel_colour(wall, game->tex.x, game->tex.y);
-		mlx_put_pixel(game->images.screen, x, y, colour);
+		mlx_put_pixel(game->screen, x, y, colour);
 		y++;
 	}
 }
