@@ -57,7 +57,8 @@ char	**copy_map(t_game *game, t_arena *arena)
 	char	**copy;
 
 	y = game->map->last_id + 1;
-	while (game->map->array[y][0] == '\n' || is_identifier(game->map->array[y]))
+	while (game->map->array[y][0] == '\0'
+		|| is_identifier(game->map->array[y]))
 		y++;
 	copy = arena_alloc(arena,
 			(game->map->char_count * sizeof(char)) + sizeof(char *));
