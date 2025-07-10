@@ -183,6 +183,7 @@ bool	is_identifier(char *element);
 t_arena *create_arena(size_t capacity);
 void	draw_minimap_loop(t_game *game, int y, int x);
 void	init_minimap_values(t_game *game);
+void	init_player(t_game *game);
 mlx_t	*initialise_mlx(t_game *game);
 void	initialise_images(t_game *game);
 void	place_minimap(t_game *game);

@@ -8,6 +8,7 @@ void	draw_player(t_game *game)
 	int			y;
 	int			x;
 	
+	init_player(game);
 	px = game->map->plr_pos.x * game->minimap->tile_size;
 	py = game->map->plr_pos.y * game->minimap->tile_size;
 	radius = game->minimap->tile_size / 4;

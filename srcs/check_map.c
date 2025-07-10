@@ -7,7 +7,7 @@ static void	convert_cub_to_one_d_array(t_game *game, int fd, t_arena *arena)
 	line = NULL;
 	game->map->one_d_array = arena_alloc(arena, sizeof(char *));
 	if (!game->map->one_d_array)
-		ft_error(1, game);
+		ft_error(5, game);
 	while (1)
 	{
 		line = arena_next_line(fd, arena);
