@@ -1,5 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   arena.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lguillen <lguillen@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/10 12:09:48 by lguillen          #+#    #+#             */
+/*   Updated: 2025/07/10 12:09:53 by lguillen         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
-#include <stdio.h>
 
 t_arena	*create_arena(size_t capacity)
 {
@@ -60,24 +71,5 @@ void	clean_arena(t_arena *arena)
 		if (current)
 			free(current);
 		current = temp;
-	}
-}
-
-//for testing
-void	print_arena_details(t_arena *arena)
-{
-	int		i;
-	t_arena	*current;
-
-	current = arena;
-	i = 0;
-	while (current)
-	{
-		ft_printf("Arena Node: %d\n", i + 1);
-		ft_printf("Arena Capacity: %zu\n", arena->capacity);
-		ft_printf("Arena Size: %zu\n", arena->size);
-		ft_printf("Arena data pointer: %p\n", arena->data);
-		++i;
-		current = current->next;
 	}
 }

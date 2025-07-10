@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_error.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lguillen <lguillen@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/10 12:11:49 by lguillen          #+#    #+#             */
+/*   Updated: 2025/07/10 12:11:50 by lguillen         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 void	ft_error(int num, t_game *game)
@@ -20,11 +32,10 @@ void	ft_error(int num, t_game *game)
 		ft_putstr_fd("\033[91mError\nMLX initialisation failed\n\033[0m", 2);
 	else if (num == 9)
 		ft_putstr_fd("\033[91mError\nfailed to open map file 🥺🥺\n\033[0m", 2);
-	else if (num == 666)
-		ft_putstr_fd("\033[91mhoplaa\n\033[0m", 2);//for error checking
 	clean_arena(game->arena);
 	delete_textures(game->textures);
-	mlx_terminate(game->mlx);
+	if (game->mlx)
+		mlx_terminate(game->mlx);
 	exit(EXIT_FAILURE);
 }
 
@@ -32,7 +43,8 @@ void	ft_error_graphics(t_game *game)
 {
 	ft_putstr_fd("\033[91mError\nGraphics failed🔮😤🥺\n\033[0m", 2);
 	delete_textures(game->textures);
-	mlx_terminate(game->mlx);
+	if (game->mlx)
+		mlx_terminate(game->mlx);
 	clean_arena(game->arena);
 	exit(EXIT_FAILURE);
 }

@@ -22,11 +22,10 @@ SOURCES			:=	srcs/main.c \
 					srcs/arena/arena.c \
 					srcs/arena/arena_next_line.c \
 					srcs/arena/arena_setsplit.c \
-					srcs/arena/arena_split.c \
 					srcs/arena/arena_utils.c \
 					srcs/minimap/minimap.c \
+					srcs/update_view.c \
 					srcs/minimap/minimap_utils.c \
-					srcs/movement.c \
 					srcs/utils/find_identifiers.c \
 					srcs/utils/flood_fill.c \
 					srcs/utils/parsing_utils.c \

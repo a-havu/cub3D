@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_map.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lguillen <lguillen@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/10 12:11:26 by lguillen          #+#    #+#             */
+/*   Updated: 2025/07/10 12:11:28 by lguillen         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 static void	convert_cub_to_one_d_array(t_game *game, int fd, t_arena *arena)
@@ -62,6 +74,8 @@ void	set_cf_colours(t_game *game, char *id, int info)
 		i++;
 	}
 	colours = arena_setsplit(game->arena, id, ",");
+	if (!colours)
+		ft_error(5, game);
 	i = 0;
 	while (colours[i])
 	{
@@ -75,8 +89,10 @@ void	set_cf_colours(t_game *game, char *id, int info)
 	}
 }
 
-/* splitting the created 1D array to extract the elements (texture paths & colour codes)*/
-
+/** Extracts map elements from map file
+ * @param game	the game struct
+ * @param arena	the memory arena
+ */
 static void	check_cub_elements(t_game *game, t_arena *arena)
 {
 	char	**elements;

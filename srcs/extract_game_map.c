@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   extract_game_map.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lguillen <lguillen@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/10 12:11:37 by lguillen          #+#    #+#             */
+/*   Updated: 2025/07/10 12:11:39 by lguillen         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 void	get_map_array(t_game *game, int fd, t_arena *arena)
@@ -16,7 +28,7 @@ void	get_map_array(t_game *game, int fd, t_arena *arena)
 		if (!line)
 			break ;
 		if (ft_strchr(line, '\n'))
-		 	*ft_strchr(line, '\n') = '\0';
+			*ft_strchr(line, '\n') = '\0';
 		if (ft_strlen(line) > game->map->width)
 			game->map->width = ft_strlen(line);
 		game->map->array[i] = arena_strdup(arena, line);
