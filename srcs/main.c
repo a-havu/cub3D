@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lguillen <lguillen@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ahavu <ahavu@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 12:12:19 by lguillen          #+#    #+#             */
-/*   Updated: 2025/07/10 12:12:20 by lguillen         ###   ########.fr       */
+/*   Updated: 2025/07/10 13:03:12 by ahavu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,16 @@ void	run_game(t_game *game)
 	t_textures	textures;
 
 	game->textures = &textures;
+	initialise_images(game);
 	game->mlx = initialise_mlx(game);
 	game->minimap = arena_alloc(game->arena, sizeof(t_minimap));
 	if (!game->minimap)
 		ft_error(5, game);
-	initialise_images(game);
+	game->screen = mlx_new_image(game->mlx, MAX_W, MAX_H);
+	if (!game->screen)
+		ft_error_graphics(game);
+	if (mlx_image_to_window(game->mlx, game->screen, 0, 0) == -1)
+		ft_error_graphics(game);
 	place_minimap(game);
 	mlx_loop_hook(game->mlx, update_view, game);
 	mlx_loop(game->mlx);

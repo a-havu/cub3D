@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_error.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lguillen <lguillen@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ahavu <ahavu@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 12:11:49 by lguillen          #+#    #+#             */
-/*   Updated: 2025/07/10 12:11:50 by lguillen         ###   ########.fr       */
+/*   Updated: 2025/07/10 12:27:37 by ahavu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_error(int num, t_game *game)
 	if (num == 1)
 		ft_putstr_fd("\033[91mError\nInitialising failed😤😤🥺\n\033[0m", 2);
 	else if (num == 2)
-		ft_putstr_fd("\033[91mError\nExtra players!👯‍♀️\033[0m", 2);
+		ft_putstr_fd("\033[91mError\nExtra players!👯‍♀️\n\033[0m", 2);
 	else if (num == 3)
 		ft_putstr_fd("\033[91mError\nCan't play with no players😔\n\033[0m", 2);
 	else if (num == 4)

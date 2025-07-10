@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialise.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lguillen <lguillen@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ahavu <ahavu@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 12:12:07 by lguillen          #+#    #+#             */
-/*   Updated: 2025/07/10 12:12:10 by lguillen         ###   ########.fr       */
+/*   Updated: 2025/07/10 12:23:18 by ahavu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 mlx_t	*initialise_mlx(t_game *game)
 {
-	game->mlx = mlx_init(MAX_W, MAX_H, "SWEN THE BUGBOI", true);
+	game->mlx = mlx_init(MAX_W, MAX_H, "SWEN THE BUGBOI", false);
 	if (!game->mlx)
 		ft_error(8, game);
 	return (game->mlx);

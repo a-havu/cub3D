@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graphics.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lguillen <lguillen@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ahavu <ahavu@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 12:11:58 by lguillen          #+#    #+#             */
-/*   Updated: 2025/07/10 12:12:00 by lguillen         ###   ########.fr       */
+/*   Updated: 2025/07/10 13:02:45 by ahavu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,6 @@ void	initialise_images(t_game *game)
 		ft_error_graphics(game);
 	game->textures->w_wall = mlx_load_png(game->map->we_wall);
 	if (!game->textures->w_wall)
-		ft_error_graphics(game);
-	game->screen = mlx_new_image(game->mlx, MAX_W, MAX_H);
-	if (!game->screen)
-		ft_error_graphics(game);
-	if (mlx_image_to_window(game->mlx, game->screen, 0, 0) == -1)
 		ft_error_graphics(game);
 }
 

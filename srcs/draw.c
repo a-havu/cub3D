@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lguillen <lguillen@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ahavu <ahavu@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 12:11:06 by lguillen          #+#    #+#             */
-/*   Updated: 2025/07/10 12:11:15 by lguillen         ###   ########.fr       */
+/*   Updated: 2025/07/10 13:00:50 by ahavu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,13 +82,13 @@ void	draw(t_game *game, int x)
 {
 	if (game->side == 0 && game->step.x < 0)
 	{
-		get_texture(game, game->textures->e_wall);
-		draw_wall(game, x, game->textures->e_wall);
+		get_texture(game, game->textures->w_wall);
+		draw_wall(game, x, game->textures->w_wall);
 	}
 	if (game->side == 0 && game->step.x > 0)
 	{
-		get_texture(game, game->textures->w_wall);
-		draw_wall(game, x, game->textures->w_wall);
+		get_texture(game, game->textures->e_wall);
+		draw_wall(game, x, game->textures->e_wall);
 	}
 	if (game->side == 1 && game->step.y < 0)
 	{
