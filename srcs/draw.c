@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   draw.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lguillen <lguillen@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/10 12:11:06 by lguillen          #+#    #+#             */
+/*   Updated: 2025/07/10 12:11:15 by lguillen         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 /** Gets colour of the pixel
@@ -5,7 +17,6 @@
  * @param x     the x-coordinate we are at
  * @param y     the y-coordinate corresponding to the x
  */
-
 static uint32_t	get_pixel_colour(mlx_texture_t *wall, uint32_t x, uint32_t y)
 {
 	uint8_t		*pixel;
