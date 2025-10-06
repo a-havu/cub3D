@@ -36,7 +36,7 @@ HEADERS			:= -I ./incl -I $(MLX_DIR)/include
 
 CC 				:= cc
 CFLAGS	:= -O2 -Wall -Wextra -Werror -I./incl
-DEBUG_FLAGS		:= -g #-fsanitize=address -fsanitize=undefined
+DEBUG_FLAGS		:= -g 
 
 all: $(NAME)
 
