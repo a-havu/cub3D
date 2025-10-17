@@ -3,15 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   flood_fill.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lguillen <lguillen@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ahavu <ahavu@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 12:13:29 by lguillen          #+#    #+#             */
-/*   Updated: 2025/07/10 12:13:30 by lguillen         ###   ########.fr       */
+/*   Updated: 2025/10/17 14:56:13 by ahavu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+/** check that the map is surrounded by walls (character 1) 
+ * by filling the map with the character A at every spot in the 2D array
+ * that isn't occupied by character 1
+*/
 static void	flood_fill(t_game *game, int y, int x)
 {
 	game->map_cpy[y][x] = 'A';
@@ -41,6 +45,8 @@ static void	flood_fill(t_game *game, int y, int x)
 		flood_fill(game, (y - 1), x);
 }
 
+/** repeatedly calls the flood fill function,
+ * starting from changing locations in the 2D array */
 void	execute_flood_fill(t_game *game)
 {
 	int	y;

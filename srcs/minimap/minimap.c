@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lguillen <lguillen@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ahavu <ahavu@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 12:12:35 by lguillen          #+#    #+#             */
-/*   Updated: 2025/07/10 12:12:37 by lguillen         ###   ########.fr       */
+/*   Updated: 2025/10/17 14:03:29 by ahavu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+/** find the player's position on the map given as argument,
+ * and draw the player instance on the minimap */
 void	draw_player(t_game *g)
 {
 	int			radius;
@@ -40,6 +42,8 @@ void	draw_player(t_game *g)
 		ft_error_graphics(g);
 }
 
+ /** inizialize the values in the minimap struct,
+  * as well as the colours, and draw the minimap on the screen */
 void	place_minimap(t_game *game)
 {
 	int			x;

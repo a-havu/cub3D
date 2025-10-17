@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lguillen <lguillen@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ahavu <ahavu@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 12:13:36 by lguillen          #+#    #+#             */
-/*   Updated: 2025/07/10 12:13:37 by lguillen         ###   ########.fr       */
+/*   Updated: 2025/10/17 14:51:16 by ahavu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@ bool	is_identifier(char *element)
 	return (false);
 }
 
+/**preliminary check for arguments; is the argument formatting okay,
+ * and can the .cub file given as argument be opened
+ */
 void	check_args(int argc, char *arg, t_game *game)
 {
 	if (argc != 2 || ft_strlen(arg) < 5)
@@ -54,6 +57,9 @@ static void	set_player_info(t_game *game, int y, int x)
 	game->final_map[y][x] = '0';
 }
 
+/** validate that there's the right amount of allowed symbols,
+ * and change empty spaces into 1's
+ */
 void	count_symbols(t_game *game, int y, int x)
 {
 	while (game->final_map[y])
